@@ -1,43 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ojetos;
 
-/**
- *
- * @author Giovanni
- */
-public class Estado {
+
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="ESTADO")
+public class Estado implements Serializable {
     
+    
+    @Id
+    @GeneratedValue
+    @Column(name = "ID_ESTADO")
     private int idEstado;
+    
+    @Column(name="DESCRIPCION")
     private String descripcion;
 
-    /**
-     * @return the idEstado
-     */
+    public Estado(){
+    
+    
+    }
+    
+    
     public int getIdEstado() {
         return idEstado;
     }
 
-    /**
-     * @param idEstado the idEstado to set
-     */
+    
+ 
     public void setIdEstado(int idEstado) {
         this.idEstado = idEstado;
     }
 
-    /**
-     * @return the descripcion
-     */
+
+    
+    
     public String getDescripcion() {
         return descripcion;
     }
 
-    /**
-     * @param descripcion the descripcion to set
-     */
+ 
+    
+    
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }

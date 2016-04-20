@@ -8,57 +8,44 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
+
 @Entity
-@Table(name="SERVIDORES")
-public class Servidores implements Serializable {
+@Table(name="MODULO")
+public class Modulo implements Serializable {
     
-  
     @Id
     @GeneratedValue
-    @Column(name = "ID_SERVIDOR")
-    private int idServidores;
+    @Column(name = "ID_MODULO")
+    private int idModulo;
     
     @Column(name="DESCRIPCION")
     private String descripcion;
     
-    @Column(name="IP")    
-    private String ip;
-
-    public Servidores(){
+   
+    public Modulo(){
         
     }
     
-    public int getIdServidores() {
-        return idServidores;
+    public int getIdModulo() {
+        return idModulo;
+    }
+
+
+    public void setIdModulo(int idModulo) {
+        this.idModulo = idModulo;
     }
 
   
-    
-    public void setIdServidores(int idServidores) {
-        this.idServidores = idServidores;
-    }
-
-  
-    
     public String getDescripcion() {
         return descripcion;
     }
 
-    
-    
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
-   
     
-    public String getIp() {
-        return ip;
-    }
-
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
+    
     
 }

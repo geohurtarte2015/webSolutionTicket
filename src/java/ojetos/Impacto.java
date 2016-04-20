@@ -5,35 +5,48 @@
  */
 package ojetos;
 
-public class Impacto {
+
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="IMPACTO")
+public class Impacto implements Serializable {
     
+    @Id
+    @GeneratedValue
+    @Column(name = "ID_IMPACTO")
     private int idImpacto;
+    
+    @Column(name="DESCRIPCION")
     private String descripcion;
 
-    /**
-     * @return the idImpacto
-     */
+    public Impacto(){
+    
+    }
+    
     public int getIdImpacto() {
         return idImpacto;
     }
 
-    /**
-     * @param idImpacto the idImpacto to set
-     */
+ 
+    
     public void setIdImpacto(int idImpacto) {
         this.idImpacto = idImpacto;
     }
 
-    /**
-     * @return the descripcion
-     */
+    
+
     public String getDescripcion() {
         return descripcion;
     }
 
-    /**
-     * @param descripcion the descripcion to set
-     */
+  
+    
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
