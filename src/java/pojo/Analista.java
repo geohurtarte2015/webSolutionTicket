@@ -1,5 +1,5 @@
 
-package ojetos;
+package pojo;
 
 
 import java.io.Serializable;
@@ -32,6 +32,15 @@ public class Analista implements Serializable {
     private String password;
     
     public Analista() {
+ 
+    }
+    
+    public Analista(String nombre, String apellido, String usuario, String password) {
+        
+        this.nombre=nombre;
+        this.apellido=apellido;
+        this.usuario=usuario;
+        this.password=password;
  
     }
     

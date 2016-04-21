@@ -8,12 +8,20 @@
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">hurtarte</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/db_students</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/db_tickets</property>
         <property name="show_sql">true</property>
         <property name="format_sql">false</property>
         <property name="connection.pool_size">1</property>  
         <property name="hbm2ddl.auto">create-drop</property>
-        <mapping class="pojo.University"/>
-        <mapping class="pojo.Student"/>    
+        <mapping class="pojo.Analista"/>
+        <mapping class="pojo.Estado"/>    
+        <mapping class="pojo.Impacto"/>
+        <mapping class="pojo.Modulo"/>
+        <mapping class="pojo.Raiz"/>
+        <mapping class="pojo.Seguimiento"/>     
+        <mapping class="pojo.Servicio"/>
+        <mapping class="pojo.ServicioModulo"/>
+        <mapping class="pojo.Servidor"/>
+        <mapping class="pojo.Ticket"/>         
     </session-factory>
 </hibernate-configuration>

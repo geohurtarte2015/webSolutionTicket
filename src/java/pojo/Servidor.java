@@ -1,5 +1,5 @@
 
-package ojetos;
+package pojo;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -9,14 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="SERVIDORES")
-public class Servidores implements Serializable {
+@Table(name="SERVIDOR")
+public class Servidor implements Serializable {
     
   
     @Id
     @GeneratedValue
     @Column(name = "ID_SERVIDOR")
-    private int idServidores;
+    private int idServidor;
     
     @Column(name="DESCRIPCION")
     private String descripcion;
@@ -24,18 +24,18 @@ public class Servidores implements Serializable {
     @Column(name="IP")    
     private String ip;
 
-    public Servidores(){
+    public Servidor(){
         
     }
     
-    public int getIdServidores() {
-        return idServidores;
+    public int getIdServidor() {
+        return idServidor;
     }
 
   
     
-    public void setIdServidores(int idServidores) {
-        this.idServidores = idServidores;
+    public void setIdServidor(int idServidores) {
+        this.idServidor = idServidores;
     }
 
   

@@ -1,8 +1,7 @@
 
-package ojetos;
+package pojo;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -27,12 +26,12 @@ private String descripcion;
 @Column(name="FECHA")
 private String fecha;
 
-@ManyToMany(mappedBy="SEGUIMIENTO")
+@ManyToMany(mappedBy="seguimientos")
 private  List<Ticket> tickets = new ArrayList<Ticket>();
 
 public Seguimiento(){
     
-}
+} 
 
  
     public int getIdSeguimiento() {
@@ -66,6 +65,16 @@ public Seguimiento(){
      */
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+  
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+   
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
     
 }

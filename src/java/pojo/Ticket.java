@@ -1,13 +1,18 @@
 
 
-package ojetos;
+package pojo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -35,6 +40,10 @@ public class Ticket implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_SERVICIO")
     private Servicio servicio;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name="ID_SERVIDOR")
+    private Servidor servidor;   
 
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_IMPACTO")
@@ -66,7 +75,19 @@ public class Ticket implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_RAIZ")
     private Raiz raiz;
-
+    
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "TICKET_SEGUIMIENTO", 
+        joinColumns = { @JoinColumn(name = "ID_TICKET") }, 
+        inverseJoinColumns = { @JoinColumn(name = "ID_SEGUIMIENTO") })
+    private List<Seguimiento> seguimientos = new ArrayList<Seguimiento>();    
+  
+    
+    public Ticket(){
+        
+    }
+             
    
     public int getIdTicket() {
         return idTicket;
@@ -204,6 +225,26 @@ public class Ticket implements Serializable {
 
    void setRaiz(Raiz raiz) {
         this.raiz = raiz;
+    }
+
+  
+    public List<Seguimiento> getSeguimientos() {
+        return seguimientos;
+    }
+
+  
+    public void setSeguimientos(List<Seguimiento> seguimientos) {
+        this.seguimientos = seguimientos;
+    }
+
+  
+    public Servicio getServidor() {
+        return servidor;
+    }
+
+   
+    public void setServidor(Servicio servidor) {
+        this.servidor = servidor;
     }
     
     

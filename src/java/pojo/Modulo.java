@@ -1,5 +1,5 @@
 
-package ojetos;
+package pojo;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -11,53 +11,57 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
+
 @Entity
-@Table(name = "SERVICIO")
-public class Servicio implements Serializable {
-    
+@Table(name="MODULO")
+public class Modulo implements Serializable {
     
     @Id
     @GeneratedValue
-    @Column(name = "ID_SERVICIO")  
-    private int idServicio;
+    @Column(name = "ID_MODULO")
+    private int idModulo;
     
     @Column(name="DESCRIPCION")
     private String descripcion;
     
-     
     @ManyToOne(optional = false)
-    @JoinColumn(name="ID_MODULO")
-    private Modulo modulo;
-
-
-
-    public int getIdServicioModulo() {
-        return idServicio;
+    @JoinColumn(name="ID_SERVICIO_MODULO")
+    private ServicioModulo servicioModulo;
+    
+   
+    public Modulo(){
+        
+    }
+    
+    public int getIdModulo() {
+        return idModulo;
     }
 
 
-    public void setIdServicioModulo(int idServicioModulo) {
-        this.idServicio = idServicioModulo;
+    public void setIdModulo(int idModulo) {
+        this.idModulo = idModulo;
     }
 
-
+  
     public String getDescripcion() {
         return descripcion;
     }
 
-  
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
    
-    public Modulo getModulo() {
-        return modulo;
+    public ServicioModulo getServicioModulo() {
+        return servicioModulo;
     }
 
-  
-    public void setModulo(Modulo modulo) {
-        this.modulo = modulo;
+   
+    public void setServicioModulo(ServicioModulo servicioModulo) {
+        this.servicioModulo = servicioModulo;
     }
+    
+    
     
 }
