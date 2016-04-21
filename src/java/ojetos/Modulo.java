@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -21,6 +23,10 @@ public class Modulo implements Serializable {
     
     @Column(name="DESCRIPCION")
     private String descripcion;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name="ID_SERVICIO_MODULO")
+    private ServicioModulo servicioModulo;
     
    
     public Modulo(){

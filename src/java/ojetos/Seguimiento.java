@@ -3,10 +3,13 @@ package ojetos;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,7 +25,10 @@ private int idSeguimiento;
 private String descripcion;
 
 @Column(name="FECHA")
-private Date fecha;
+private String fecha;
+
+@ManyToMany(mappedBy="SEGUIMIENTO")
+private  List<Ticket> tickets = new ArrayList<Ticket>();
 
 public Seguimiento(){
     
@@ -51,14 +57,14 @@ public Seguimiento(){
     /**
      * @return the fecha
      */
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
     /**
      * @param fecha the fecha to set
      */
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
     
