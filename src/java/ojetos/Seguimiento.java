@@ -24,6 +24,10 @@ private String descripcion;
 @Column(name="FECHA")
 private Date fecha;
 
+public Seguimiento(){
+    
+}
+
  
     public int getIdSeguimiento() {
         return idSeguimiento;
