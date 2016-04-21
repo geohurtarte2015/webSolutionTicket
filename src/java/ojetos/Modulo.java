@@ -51,6 +51,16 @@ public class Modulo implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+   
+    public ServicioModulo getServicioModulo() {
+        return servicioModulo;
+    }
+
+   
+    public void setServicioModulo(ServicioModulo servicioModulo) {
+        this.servicioModulo = servicioModulo;
+    }
     
     
     

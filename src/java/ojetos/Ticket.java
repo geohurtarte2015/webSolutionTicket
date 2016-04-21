@@ -3,7 +3,6 @@
 package ojetos;
 
 import java.io.Serializable;
-import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,8 +30,7 @@ public class Ticket implements Serializable {
     
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_ANALISTA")
-    private Analista analista;
-  
+    private Analista analista;  
     
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_SERVICIO")
@@ -41,18 +39,33 @@ public class Ticket implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_IMPACTO")
     private Impacto impacto;
-
+    
     @Column(name="FECHA_INICIO")    
     private String fechaInicio;
     
+    @Column(name="FECHA_FIN")    
+    private String fechaFin;       
     
-    private String fechaFin;
+    @Column(name="DESCRIPCION")    
     private String descripcion;
+    
+    @Column(name="CAUSA")
     private String causa;
+    
+    @Column(name="SOLUCION")
     private String solucion;
-    private int idEstado;
-    private int idSeguimiento;
-    private int idRaiz;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name="ID_ESTADO")
+    private Estado estado;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name="ID_SEGUIMIENTO")   
+    private Seguimiento seguimiento;
+   
+    @ManyToOne(optional = false)
+    @JoinColumn(name="ID_RAIZ")
+    private Raiz raiz;
 
    
     public int getIdTicket() {
@@ -82,27 +95,6 @@ public class Ticket implements Serializable {
    
     public void setFecha(String fecha) {
         this.fecha = fecha;
-    }
-
-
- 
-    public int getIdServicios() {
-        return idServicios;
-    }
-
-   
-    public void setIdServicios(int idServicios) {
-        this.idServicios = idServicios;
-    }
-
-  
-    public int getIdImpacto() {
-        return idImpacto;
-    }
-
-   
-    public void setIdImpacto(int idImpacto) {
-        this.idImpacto = idImpacto;
     }
 
     
@@ -156,33 +148,62 @@ public class Ticket implements Serializable {
     }
 
     
-    public int getIdEstado() {
-        return idEstado;
+    public Analista getAnalista() {
+        return analista;
+    }
+
+
+    public void setAnalista(Analista analista) {
+        this.analista = analista;
     }
 
    
-    public void setIdEstado(int idEstado) {
-        this.idEstado = idEstado;
+    public Servicio getServicio() {
+        return servicio;
+    }
+
+  
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
+    }
+
+   
+    public Impacto getImpacto() {
+        return impacto;
+    }
+
+   
+    public void setImpacto(Impacto impacto) {
+        this.impacto = impacto;
     }
 
  
-    public int getIdSeguimiento() {
-        return idSeguimiento;
+    public Estado getEstado() {
+        return estado;
     }
 
- 
-    public void setIdSeguimiento(int idSeguimiento) {
-        this.idSeguimiento = idSeguimiento;
+  
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    
+    public Seguimiento getSeguimiento() {
+        return seguimiento;
     }
 
    
-    public int getIdRaiz() {
-        return idRaiz;
+    public void setSeguimiento(Seguimiento seguimiento) {
+        this.seguimiento = seguimiento;
     }
 
-   
-    public void setIdRaiz(int idRaiz) {
-        this.idRaiz = idRaiz;
+  
+    public Raiz getRaiz() {
+        return raiz;
+    }
+
+   void setRaiz(Raiz raiz) {
+        this.raiz = raiz;
     }
     
     
