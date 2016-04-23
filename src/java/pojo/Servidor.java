@@ -23,9 +23,14 @@ public class Servidor implements Serializable {
     
     @Column(name="IP")    
     private String ip;
-
+    
     public Servidor(){
-        
+    
+    }
+
+    public Servidor(String descripcion, String ip){        
+        this.descripcion = descripcion;
+        this.ip = ip;
     }
     
     public int getIdServidor() {

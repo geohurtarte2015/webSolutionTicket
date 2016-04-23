@@ -30,6 +30,10 @@ public class ServicioModulo {
     public ServicioModulo() {
         
     }
+    
+    public ServicioModulo(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
     
     public int getIdServicioModulo() {

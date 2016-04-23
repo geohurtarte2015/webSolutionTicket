@@ -29,6 +29,11 @@ public class Impacto implements Serializable {
     
     }
     
+    public Impacto(String descripcion){
+        this.descripcion = descripcion;
+    }
+    
+    
     public int getIdImpacto() {
         return idImpacto;
     }

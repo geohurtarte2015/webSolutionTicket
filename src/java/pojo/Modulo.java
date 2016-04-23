@@ -33,6 +33,12 @@ public class Modulo implements Serializable {
         
     }
     
+     public Modulo(String descripcion){
+         this.descripcion = descripcion;
+    }
+    
+
+    
     public int getIdModulo() {
         return idModulo;
     }

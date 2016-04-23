@@ -24,6 +24,11 @@ public class Raiz implements Serializable {
     public Raiz(){
     
     }
+    
+     public Raiz(String descripcion){         
+         this.descripcion = descripcion;
+    }
+  
   
     public int getIdRaiz() {
         return idRaiz;

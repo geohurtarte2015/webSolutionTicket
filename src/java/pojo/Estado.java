@@ -28,6 +28,12 @@ public class Estado implements Serializable {
     
     }
     
+     public Estado(String descripcion){
+         
+         this.descripcion = descripcion;   
+    
+    }
+    
     
     public int getIdEstado() {
         return idEstado;

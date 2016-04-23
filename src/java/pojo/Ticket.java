@@ -236,17 +236,27 @@ public class Ticket implements Serializable {
     public void setSeguimientos(List<Seguimiento> seguimientos) {
         this.seguimientos = seguimientos;
     }
-
-  
-    public Servicio getServidor() {
-        return servidor;
+    
+    public void addSeguimiento(Seguimiento seguimiento)
+    {
+        this.seguimientos.add(seguimiento);
+        seguimiento.addTicket(this);
     }
 
    
-    public void setServidor(Servicio servidor) {
+    public Servidor getServidor() {
+        return servidor;
+    }
+
+    /**
+     * @param servidor the servidor to set
+     */
+    public void setServidor(Servidor servidor) {
         this.servidor = servidor;
     }
-    
+
+  
+
     
     
     
