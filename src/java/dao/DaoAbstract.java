@@ -71,35 +71,7 @@ public void SaveObjectManyToOne(Object object) throws HibernateException {
 
 }
 
-public int SaveObjectManyToMany(Object object) throws HibernateException {
-  
-   int id=0;
-    
-    try{
-    
-        initOperation();
-        id = (Integer) sesion.save(object);
-        tx.commit();
-        
-    
-    }catch(HibernateException he)
-    {
-        
-        trueExcepcion(he); 
-        throw he; 
-    
-    
-    } finally
-    {
-                
-        sesion.close();
-    
-    }
-    
-    return id;
-    
 
-}
 
 private void initOperation() throws HibernateException 
 

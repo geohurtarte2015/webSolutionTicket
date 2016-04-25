@@ -87,6 +87,13 @@ public class Ticket implements Serializable {
     public Ticket(){
         
     }
+    
+    public Ticket(String causa, String descripcion, String titulo, String solucion){        
+        this.causa=causa;
+        this.descripcion=descripcion;
+        this.titulo=titulo;
+        this.solucion=solucion;   
+    }
              
    
     public int getIdTicket() {
@@ -223,7 +230,7 @@ public class Ticket implements Serializable {
         return raiz;
     }
 
-   void setRaiz(Raiz raiz) {
+    public void setRaiz(Raiz raiz) {
         this.raiz = raiz;
     }
 
@@ -237,20 +244,13 @@ public class Ticket implements Serializable {
         this.seguimientos = seguimientos;
     }
     
-    public void addSeguimiento(Seguimiento seguimiento)
-    {
-        this.seguimientos.add(seguimiento);
-        seguimiento.addTicket(this);
-    }
 
    
     public Servidor getServidor() {
         return servidor;
     }
 
-    /**
-     * @param servidor the servidor to set
-     */
+  
     public void setServidor(Servidor servidor) {
         this.servidor = servidor;
     }

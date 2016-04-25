@@ -27,6 +27,11 @@ public class Servidor implements Serializable {
     public Servidor(){
     
     }
+    
+    public Servidor(String descripcion){
+        
+        this.descripcion=descripcion;
+    }
 
     public Servidor(String descripcion, String ip){        
         this.descripcion = descripcion;

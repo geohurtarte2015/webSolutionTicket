@@ -1,20 +1,15 @@
 package modelo;
 
-import static com.mchange.v2.log.MLog.config;
-import java.sql.Statement;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.c3p0.internal.C3P0ConnectionProvider;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
+import org.hibernate.internal.SessionFactoryImpl;
  
 public class HibernateUtil {
-    
-    Session session;
-    Statement st;
-    Configuration config;
      
     private static final SessionFactory sessionFactory;
-    
+     
     static{
         try{
             sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
@@ -26,17 +21,18 @@ public class HibernateUtil {
     }
      
     public static SessionFactory getSessionFactory() {
-    return sessionFactory;
+        return sessionFactory;
     }
     
-    public Configuration getConfiguration(){
-    return config;
-    }
-     
-    public Session getSession(){
-    return session;
-    }
-    
-  
+    private void closeSessionFactory(SessionFactory factory) { 
+   if(factory instanceof SessionFactoryImpl) {
+      SessionFactoryImpl sf = (SessionFactoryImpl)factory;
+      ConnectionProvider conn = sf.getConnectionProvider();
+      if(conn instanceof C3P0ConnectionProvider) { 
+        ((C3P0ConnectionProvider)conn).close(); 
+      }
+   }
+   factory.close();
+}
      
 }

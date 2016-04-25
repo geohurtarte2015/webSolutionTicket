@@ -30,6 +30,13 @@ public class Servicio implements Serializable {
     private Modulo modulo;
 
 
+    public Servicio(){
+        
+    }
+    
+    public Servicio(String descripcion){
+        this.descripcion = descripcion;
+    }
 
     public int getIdServicioModulo() {
         return idServicio;
