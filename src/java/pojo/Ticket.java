@@ -19,13 +19,13 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="TICKET")
-public class Ticket implements Serializable {
-
+@Table(name = "TICKET")
+public class Ticket {
+ 
     @Id
     @GeneratedValue
-    @Column(name="ID_TICKET")
-    private int idTicket;
+    @Column(name = "ID_TICKET")
+    private long idTicket;
     
     @Column(name="TITULO")
     private String titulo;
@@ -67,11 +67,8 @@ public class Ticket implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_ESTADO")
     private Estado estado;
+  
     
-    @ManyToOne(optional = false)
-    @JoinColumn(name="ID_SEGUIMIENTO")   
-    private Seguimiento seguimiento;
-   
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_RAIZ")
     private Raiz raiz;
@@ -81,8 +78,8 @@ public class Ticket implements Serializable {
     @JoinTable(name = "TICKET_SEGUIMIENTO", 
         joinColumns = { @JoinColumn(name = "ID_TICKET") }, 
         inverseJoinColumns = { @JoinColumn(name = "ID_SEGUIMIENTO") })
-    private List<Seguimiento> seguimientos = new ArrayList<Seguimiento>();    
-  
+    private List<Seguimiento> seguimientos = new ArrayList<Seguimiento>();
+    
     
     public Ticket(){
         
@@ -96,14 +93,13 @@ public class Ticket implements Serializable {
     }
              
    
-    public int getIdTicket() {
-        return idTicket;
-    }
-
-  
-    public void setIdTicket(int idTicket) {
-        this.idTicket = idTicket;
-    }
+        public long getId() {
+            return idTicket;
+        }
+ 
+        public void setId(long id) {
+            this.idTicket = id;
+        }
 
     
     public String getTitulo() {
@@ -213,16 +209,6 @@ public class Ticket implements Serializable {
   
     public void setEstado(Estado estado) {
         this.estado = estado;
-    }
-
-    
-    public Seguimiento getSeguimiento() {
-        return seguimiento;
-    }
-
-   
-    public void setSeguimiento(Seguimiento seguimiento) {
-        this.seguimiento = seguimiento;
     }
 
   

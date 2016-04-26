@@ -15,6 +15,8 @@ import dao.DaoSeguimiento;
 import dao.DaoServicio;
 import dao.DaoServicioModulo;
 import dao.DaoTicket;
+import modelo.HibernateUtil;
+import org.hibernate.Session;
 import pojo.Analista;
 import pojo.Estado;
 import pojo.Impacto;
@@ -45,63 +47,94 @@ public class Test {
        DaoSeguimiento daoSeguimiento = new DaoSeguimiento();
         
        
-       //Guarda ServicioModulo, Modulo y Servicio
-       ServicioModulo servicioModulo = new ServicioModulo("Bancasat");
-       daoServicioModulo.SaveObject(servicioModulo);
-        
-       Modulo modulo = new Modulo("Banca Empresarial");
-       modulo.setServicioModulo(servicioModulo);
-       daoModulo.SaveObjectManyToOne(modulo);
-       
-       Servicio servicio = new Servicio("Banca Empresarial");
-       servicio.setModulo(modulo);
-       daoServicio.SaveObjectManyToOne(servicio);
        
        
-       //Guarda Servidor
-       Servidor servidor = new Servidor("MALINAS","192.168.1.1");
-       daoServidor.SaveObject(servidor);
-      
        
-       //Guarda Impacto
-       Impacto impacto = new Impacto("Alto");
-       daoImpacto.SaveObject(impacto);
-      
-       
-        //Guarda Raiz
-       Raiz raiz = new Raiz("Portal");
-       daoRaiz.SaveObject(raiz);
        
        //Guarda Analista
         Analista analista = new Analista("Giovanni","Hurtarte","geo","hurtarte2016");
-        daoAnalista.SaveObject((Analista) analista);
         
         
         //Guarda Estado
         Estado estado = new Estado("Activo");
         Estado estado2 = new Estado("Cerrado");
-        daoEstado.SaveObject((Estado)estado);
-        daoEstado.SaveObject((Estado)estado2);
+       
+        //Guarda Impacto
+       Impacto impacto = new Impacto("Alto");
+       
+       //Guarda Servidor
+       Servidor servidor = new Servidor("MALINAS","192.168.1.1");
+       
+       
+        //Guarda Raiz
+       Raiz raiz = new Raiz("Portal");
+       
+       //Seguimiento
+       Seguimiento seguimiento = new Seguimiento("Seguimiento de caso Ticket","25/04/2016");                
+       Seguimiento seguimiento2 = new Seguimiento("Seguimiento3 de caso Ticket","25/04/2016"); 
+             
+        
+        //Guarda ServicioModulo, Modulo y Servicio
+       ServicioModulo servicioModulo = new ServicioModulo("Bancasat");
+       
+        
+       Modulo modulo = new Modulo("Banca Empresarial");
+       modulo.setServicioModulo(servicioModulo);
+      
+       
+       Servicio servicio = new Servicio("Banca Empresarial");
+       servicio.setModulo(modulo);
         
         
         //Guarda Ticket
         Ticket ticket = new Ticket("Causa","Descripcion del Ticket","Solucion N Casos","Test Ticket");
-        Seguimiento seguimiento = new Seguimiento("Seguimiento de caso Ticket","25/04/2016");                
-        Seguimiento seguimiento2 = new Seguimiento("Seguimiento3 de caso Ticket","25/04/2016");   
+          
         
-        ticket.getSeguimientos().add(seguimiento);
-
-        seguimiento.getTickets().add(ticket);
+      
         
         ticket.setAnalista(analista);
         ticket.setEstado(estado);
         ticket.setImpacto(impacto);
         ticket.setRaiz(raiz);
+        ticket.setServidor(servidor);
+        ticket.getSeguimientos().add(seguimiento);
+        ticket.getSeguimientos().add(seguimiento2);      
         ticket.setServicio(servicio);
-        ticket.setServidor(servidor);        
-      
+       
+        
+        
+        
+        
+        daoImpacto.SaveObjectManyToOne(servidor);
+        daoEstado.SaveObjectManyToOne((Estado)estado); 
+        daoImpacto.SaveObjectManyToOne(impacto);
+        daoRaiz.SaveObjectManyToOne(raiz);        
+        daoAnalista.SaveObjectManyToOne((Analista) analista);
+        daoSeguimiento.SaveObject((Seguimiento)seguimiento);
+        daoSeguimiento.SaveObject((Seguimiento)seguimiento2);
+        daoServicioModulo.SaveObjectManyToOne(servicioModulo);
+        daoModulo.SaveObjectManyToOne(modulo);
+        daoServicio.SaveObjectManyToOne(servicio);
         daoTicket.SaveObjectManyToOne(ticket);
         
+//        
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        session.beginTransaction(); 
+//        session.persist(servidor);
+//        session.persist(estado);              
+//        session.persist(impacto);
+//        session.persist(raiz);
+//        session.persist(analista);
+//        session.persist(seguimiento);
+//        session.persist(seguimiento2);
+//        session.persist(servicioModulo);
+//        session.persist(modulo);
+//        session.persist(servicio);       
+//        session.persist(ticket);
+//        
+//        session.getTransaction().commit();
+//        session.close();
+//        
     }
     
 }

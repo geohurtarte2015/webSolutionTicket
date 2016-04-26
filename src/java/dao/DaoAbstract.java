@@ -22,7 +22,7 @@ public int SaveObject(Object object) throws HibernateException {
     try{
     
         initOperation();
-        id = (Integer) sesion.save(object);
+        id =  (int) (long) sesion.save(object);
         tx.commit();
         
     
