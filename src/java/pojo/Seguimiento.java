@@ -19,7 +19,7 @@ public class Seguimiento implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_SEGUIMIENTO")
-     private long id;
+     private int id;
  
     @Column(name = "DESCRIPCION")
       String descripcion;   
@@ -62,11 +62,11 @@ public class Seguimiento implements Serializable {
         this.descripcion = descripcion;
     }
     
-     public long getId() {
+     public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
  

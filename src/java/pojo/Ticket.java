@@ -3,7 +3,11 @@
 package pojo;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,29 +29,13 @@ public class Ticket {
     @Id
     @GeneratedValue
     @Column(name = "ID_TICKET")
-    private long idTicket;
+    private int idTicket;
     
     @Column(name="TITULO")
     private String titulo;
     
     @Column(name="FECHA")
     private String fecha;
-    
-    @ManyToOne(optional = false)
-    @JoinColumn(name="ID_ANALISTA")
-    private Analista analista;  
-    
-    @ManyToOne(optional = false)
-    @JoinColumn(name="ID_SERVICIO")
-    private Servicio servicio;
-    
-    @ManyToOne(optional = false)
-    @JoinColumn(name="ID_SERVIDOR")
-    private Servidor servidor;   
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name="ID_IMPACTO")
-    private Impacto impacto;
     
     @Column(name="FECHA_INICIO")    
     private String fechaInicio;
@@ -63,6 +51,23 @@ public class Ticket {
     
     @Column(name="SOLUCION")
     private String solucion;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name="ID_ANALISTA")
+    private Analista analista;  
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name="ID_SERVICIO")
+    private Servicio servicio;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name="ID_SERVIDOR")
+    private Servidor servidor;   
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name="ID_IMPACTO")
+    private Impacto impacto;  
+    
     
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_ESTADO")
@@ -85,19 +90,28 @@ public class Ticket {
         
     }
     
-    public Ticket(String causa, String descripcion, String titulo, String solucion){        
+    public Ticket(String titulo, String fechaInicio, String fechaFin, String descripcion, String causa, String solucion){        
+        
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date fechaActual = Calendar.getInstance().getTime();   
+        String hoy = df.format(fechaActual);
+        
         this.causa=causa;
         this.descripcion=descripcion;
         this.titulo=titulo;
         this.solucion=solucion;   
+        this.fechaFin=fechaFin;
+        this.fechaInicio=fechaInicio;   
+        this.fecha=hoy;
+        
     }
              
    
-        public long getId() {
+        public int getId() {
             return idTicket;
         }
  
-        public void setId(long id) {
+        public void setId(int id) {
             this.idTicket = id;
         }
 

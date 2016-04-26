@@ -2,7 +2,7 @@
 package dao;
 
 
-public class DaoModulo extends DaoAbstract{
+public class DaoModulo {
     
     
     
