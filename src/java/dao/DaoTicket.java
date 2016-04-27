@@ -1,4 +1,3 @@
-
 package dao;
 
 import modelo.HibernateUtil;
@@ -92,8 +91,6 @@ public class DaoTicket {
     
        }
     }
-   
-   
    
     private void initOperation() throws HibernateException 
 

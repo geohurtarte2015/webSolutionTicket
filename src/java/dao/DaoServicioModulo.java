@@ -9,19 +9,15 @@ import modelo.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import pojo.Impacto;
 import pojo.ServicioModulo;
 
-/**
- *
- * @author Giovanni
- */
+
 public class DaoServicioModulo{
     
     private Session sesion;
     private Transaction tx;
     
-    public void save(ServicioModulo servicioModulo ) throws HibernateException {
+    public void save(ServicioModulo servicioModulo) throws HibernateException {
   
     try{     
   

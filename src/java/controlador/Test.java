@@ -1,8 +1,8 @@
 
 package controlador;
 
-import modelo.HibernateUtil;
-import org.hibernate.Session;
+import dao.DaoModulo;
+import dao.DaoServicio;
 import dao.DaoTicket;
 import pojo.Analista;
 import pojo.Estado;
@@ -23,6 +23,9 @@ public class Test {
     public static void main(String[] args){
         
         DaoTicket daoTicket = new DaoTicket();
+        DaoModulo daoModulo = new DaoModulo();
+        DaoServicio daoServicio = new DaoServicio();
+        
     
        
        //Crea objeto Analista
@@ -50,13 +53,15 @@ public class Test {
         //Crea objetos ServicioModulo, Modulo y Servicio
         ServicioModulo servicioModulo = new ServicioModulo("Bancasat");
         Modulo modulo = new Modulo("Banca Empresarial");
+        
+        
+        
         modulo.setServicioModulo(servicioModulo);      
         Servicio servicio = new Servicio("Banca Empresarial");
         servicio.setModulo(modulo);        
         
         //Crea objeto Ticket
         Ticket ticket = new Ticket("Titulo","fecha","fecha Inicio","Fecha Final","Causa","Descripcion"); 
-        
         
         
         //Guarda en base de datos y hace persistencia datos con todos los objetos incluidos

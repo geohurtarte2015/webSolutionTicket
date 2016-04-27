@@ -13,7 +13,7 @@ public class DaoAnalista {
    private Session sesion;
     private Transaction tx;
     
-   public void save(Analista analista ) throws HibernateException {
+   public void save(Analista analista) throws HibernateException {
   
     try{     
   
