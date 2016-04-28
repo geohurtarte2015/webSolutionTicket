@@ -21,31 +21,61 @@ public class DaoTicket {
     
     private Session sesion;
     private Transaction tx;
-    
-   public void save(Servidor servidor, Estado estado, Impacto impacto, Raiz raiz,Analista analista,
-   Seguimiento seguimiento,ServicioModulo servicioModulo, Modulo modulo,Servicio servicio, Ticket ticket ) throws HibernateException {
+   
+    public void save(int idServidor, int idEstado, int idImpacto, int idRaiz, int idAnalista,
+   Seguimiento seguimiento,int idServicioModulo, int idModulo,int idServicio, Ticket ticket ) throws HibernateException {
   
     try{
+        //inicia persitencia y  guarda (commit)
+        initOperation();
+        Servidor servidor = 
+        (Servidor)sesion.get(Servidor.class, idServidor); 
+        
+        Estado estado = 
+        (Estado)sesion.get(Estado.class, idEstado); 
+        
+        Impacto impacto = 
+        (Impacto)sesion.get(Impacto.class, idImpacto); 
+        
+        Raiz raiz = 
+        (Raiz)sesion.get(Raiz.class, idRaiz);
+        
+        Analista analista = 
+        (Analista)sesion.get(Analista.class, idAnalista);
+
+        ServicioModulo servicioModulo = 
+        (ServicioModulo)sesion.get(ServicioModulo.class, idServicioModulo); 
+        
+        Modulo modulo = 
+        (Modulo)sesion.get(Modulo.class, idModulo); 
+        
+        Servicio servicio = 
+        (Servicio)sesion.get(Servicio.class, idServicio); 
+
+        
+        
         //Arma el objeto
         ticket.setAnalista(analista);
         ticket.setEstado(estado);
         ticket.setImpacto(impacto);
         ticket.setRaiz(raiz);
         ticket.setServidor(servidor);
+        ticket.setServicio(servicio); 
+        ticket.setModulo(modulo);
+        ticket.setServicioModulo(servicioModulo);
         ticket.getSeguimientos().add(seguimiento);          
-        ticket.setServicio(servicio);                
+      
     
-        //inicia persitencia y  guarda (commit)
-        initOperation();
+   
         sesion.persist(servidor);
         sesion.persist(estado);              
         sesion.persist(impacto);
         sesion.persist(raiz);
         sesion.persist(analista);
-        sesion.persist(seguimiento);     
         sesion.persist(servicioModulo);
         sesion.persist(modulo);
-        sesion.persist(servicio);       
+        sesion.persist(servicio);
+        sesion.persist(seguimiento);   
         sesion.persist(ticket);
         tx.commit();
         
@@ -68,6 +98,7 @@ public class DaoTicket {
 
 }
 
+   
    public void addSeguimiento(int idTicket, Seguimiento seguimiento )
    {
   

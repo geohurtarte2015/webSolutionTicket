@@ -61,6 +61,15 @@ public class Ticket {
     private Servicio servicio;
     
     @ManyToOne(optional = false)
+    @JoinColumn(name="ID_MODULO")
+    private Modulo modulo;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name="ID_SERVICIO_MODULO")
+    private ServicioModulo servicioModulo;
+    
+    
+    @ManyToOne(optional = false)
     @JoinColumn(name="ID_SERVIDOR")
     private Servidor servidor;   
 
@@ -253,6 +262,24 @@ public class Ticket {
   
     public void setServidor(Servidor servidor) {
         this.servidor = servidor;
+    }
+
+    public Modulo getModulo() {
+        return modulo;
+    }
+
+    public void setModulo(Modulo modulo) {
+        this.modulo = modulo;
+    }
+
+  
+    public ServicioModulo getServicioModulo() {
+        return servicioModulo;
+    }
+
+   
+    public void setServicioModulo(ServicioModulo servicioModulo) {
+        this.servicioModulo = servicioModulo;
     }
 
   

@@ -1,11 +1,14 @@
 
 package dao;
 
+import java.util.List;
 import modelo.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import pojo.Estado;
 import pojo.Modulo;
+import pojo.Seguimiento;
 import pojo.Servicio;
 import pojo.ServicioModulo;
 
@@ -14,23 +17,10 @@ public class DaoServicio  {
     private Session sesion;
     private Transaction tx;
     
-    public void save(Servicio servicio, int idModulo, int idServicioModulo) throws HibernateException {
+    public void save(Servicio servicio ) throws HibernateException {
   
-    try{
-        
-         Modulo modulo = 
-        (Modulo)sesion.get(Modulo.class, idModulo); 
-             
-        ServicioModulo servicioModulo = 
-        (ServicioModulo)sesion.get(ServicioModulo.class, idServicioModulo); 
-        
-        modulo.setServicioModulo(servicioModulo);
-        servicio.setModulo(modulo);
-        
+    try{      
         initOperation();
-        
-        sesion.persist(servicioModulo);
-        sesion.persist(modulo);
         sesion.persist(servicio);        
         tx.commit();
         
@@ -52,6 +42,88 @@ public class DaoServicio  {
     
 
 }
+    
+    public List<Servicio> listAll(){
+       
+       List<Servicio> servicios = null;
+       
+       try{
+           initOperation();
+           servicios= sesion.createQuery("from Servicio").list();           
+       } finally
+       {
+        sesion.close();
+       }
+       
+       return servicios;
+   }   
+    
+    public Servicio getOne(int idServicio){
+       Servicio servicio = null;
+       try{
+           
+           initOperation();
+           servicio = (Servicio) sesion.get(Servicio.class, idServicio);           
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return servicio;
+   }
+   
+    public Servicio update(int idServicio, String descripcion){
+     Servicio servicio = null;
+       try{           
+           initOperation();
+           servicio = (Servicio) sesion.get(Servicio.class, idServicio);  
+           servicio.setDescripcion(descripcion);
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return servicio;
+   
+   
+   }
+   
+    public Servicio delete(int idServicio){
+     Servicio servicio = null;
+       try{           
+           initOperation();
+           servicio = (Servicio) sesion.get(Servicio.class, idServicio);                    
+           sesion.delete(servicio);
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return servicio;
+   
+   
+   }
+    
+    
+
 
     private void initOperation() throws HibernateException 
 

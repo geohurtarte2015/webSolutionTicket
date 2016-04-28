@@ -1,6 +1,7 @@
 
 package dao;
 
+import java.util.List;
 import modelo.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -13,7 +14,7 @@ public class DaoEstado {
     private Session sesion;
     private Transaction tx;
     
-    public void save(Estado estado ) throws HibernateException {
+   public void save(Estado estado ) throws HibernateException {
   
     try{     
   
@@ -39,6 +40,86 @@ public class DaoEstado {
     
 
 }
+   
+   public List<Estado> listAll(){
+       
+       List<Estado> estados = null;
+       
+       try{
+           initOperation();
+           estados= sesion.createQuery("from Estado").list();           
+       } finally
+       {
+        sesion.close();
+       }
+       
+       return estados;
+   }   
+    
+   public Estado getOne(int idEstado){
+       Estado estado = null;
+       try{
+           
+           initOperation();
+           estado = (Estado) sesion.get(Estado.class, idEstado);           
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return estado;
+   }
+   
+   public Estado update(int idEstado, String descripcion){
+     Estado estado = null;
+       try{           
+           initOperation();
+           estado = (Estado) sesion.get(Estado.class, idEstado);  
+           estado.setDescripcion(descripcion);
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return estado;
+   
+   
+   }
+   
+    public Estado delete(int idEstado){
+     Estado estado = null;
+       try{           
+           initOperation();
+           estado = (Estado) sesion.get(Estado.class, idEstado);                    
+           sesion.delete(estado);
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return estado;
+   
+   
+   }
+
 
     private void initOperation() throws HibernateException 
 

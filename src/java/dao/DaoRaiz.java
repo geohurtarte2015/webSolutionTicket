@@ -1,10 +1,14 @@
 
 package dao;
 
+import java.util.List;
 import modelo.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import pojo.Estado;
+import pojo.Impacto;
+import pojo.Modulo;
 import pojo.Raiz;
 
 
@@ -40,6 +44,89 @@ public class DaoRaiz  {
     
 
 }
+    
+    public List<Raiz> listAll(){
+       
+       List<Raiz> raices = null;
+       
+       try{
+           initOperation();
+           raices= sesion.createQuery("from Raiz").list();           
+       } finally
+       {
+        sesion.close();
+       }
+       
+       return raices;
+   }   
+    
+    public Raiz getOne(int idRaiz){
+       Raiz raiz = null;
+       try{
+           
+           initOperation();
+           raiz = (Raiz) sesion.get(Raiz.class, idRaiz);           
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return raiz;
+   }
+   
+    public Raiz update(int idRaiz, String descripcion){
+     Raiz raiz = null;
+       try{           
+           initOperation();
+           raiz = (Raiz) sesion.get(Raiz.class, idRaiz);  
+           raiz.setDescripcion(descripcion);
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return raiz;
+   
+   
+   }
+   
+    public Raiz delete(int idRaiz){
+     Raiz raiz = null;
+       try{           
+           initOperation();
+           raiz = (Raiz) sesion.get(Raiz.class, idRaiz);                    
+           sesion.delete(raiz);
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return raiz;
+   
+   
+   }
+    
+    
+    
+
 
     private void initOperation() throws HibernateException 
 

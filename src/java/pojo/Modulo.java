@@ -24,10 +24,7 @@ public class Modulo implements Serializable {
     @Column(name="DESCRIPCION")
     private String descripcion;
     
-    @ManyToOne(optional = false)
-    @JoinColumn(name="ID_SERVICIO_MODULO")
-    private ServicioModulo servicioModulo;
-    
+
    
     public Modulo(){
         
@@ -59,15 +56,5 @@ public class Modulo implements Serializable {
     }
 
    
-    public ServicioModulo getServicioModulo() {
-        return servicioModulo;
-    }
-
-   
-    public void setServicioModulo(ServicioModulo servicioModulo) {
-        this.servicioModulo = servicioModulo;
-    }
-    
-    
     
 }

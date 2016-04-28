@@ -1,9 +1,12 @@
 package dao;
 
+import java.util.List;
 import modelo.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import pojo.Estado;
+import pojo.Impacto;
 import pojo.Modulo;
 import pojo.ServicioModulo;
 import pojo.Ticket;
@@ -15,19 +18,10 @@ public class DaoModulo {
     private Session sesion;
     private Transaction tx;
     
-    public void save(Modulo modulo,int idServicioModulo) throws HibernateException {
+    public void save(Modulo modulo) throws HibernateException {
   
-    try{     
-        ServicioModulo servicioModulo = 
-            (ServicioModulo)sesion.get(ServicioModulo.class, idServicioModulo); 
-        
-      
+    try{  
         initOperation();
-        
-        modulo.setServicioModulo(servicioModulo);
-        
-        
-        sesion.persist(servicioModulo);
         sesion.persist(modulo);        
         tx.commit();
         
@@ -49,6 +43,88 @@ public class DaoModulo {
     
 
 }
+    
+    public List<Modulo> listAll(){
+       
+       List<Modulo> modulos = null;
+       
+       try{
+           initOperation();
+           modulos= sesion.createQuery("from Modulo").list();           
+       } finally
+       {
+        sesion.close();
+       }
+       
+       return modulos;
+   }   
+    
+      
+    public Modulo getOne(int idModulo){
+       Modulo modulo = null;
+       try{
+           
+           initOperation();
+           modulo = (Modulo) sesion.get(Modulo.class, idModulo);           
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return modulo;
+   }
+   
+    public Modulo update(int idModulo, String descripcion){
+     Modulo modulo = null;
+       try{           
+           initOperation();
+           modulo = (Modulo) sesion.get(Modulo.class, idModulo);  
+           modulo.setDescripcion(descripcion);
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return modulo;
+   
+   
+   }
+   
+    public Modulo delete(int idModulo){
+     Modulo modulo = null;
+       try{           
+           initOperation();
+           modulo = (Modulo) sesion.get(Modulo.class, idModulo);                    
+           sesion.delete(modulo);
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return modulo;
+   
+   
+   }
+    
+    
 
     private void initOperation() throws HibernateException 
 

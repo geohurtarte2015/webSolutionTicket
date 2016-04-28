@@ -22,12 +22,7 @@ public class Servicio implements Serializable {
     private int idServicio;
     
     @Column(name="DESCRIPCION")
-    private String descripcion;
-    
-     
-    @ManyToOne(optional = false)
-    @JoinColumn(name="ID_MODULO")
-    private Modulo modulo;
+    private String descripcion;    
 
 
     public Servicio(){
@@ -56,15 +51,7 @@ public class Servicio implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
    
-    public Modulo getModulo() {
-        return modulo;
-    }
 
-  
-    public void setModulo(Modulo modulo) {
-        this.modulo = modulo;
-    }
     
 }

@@ -1,6 +1,7 @@
 
 package dao;
 
+import java.util.List;
 import modelo.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -39,6 +40,93 @@ public class DaoAnalista {
     
 
 }
+   
+   public List<Analista> listAll(){
+       
+       List<Analista> analistas = null;
+       
+       try{
+           initOperation();
+           analistas= sesion.createQuery("from Analista").list();           
+       } finally
+       {
+        sesion.close();
+       }
+       
+       return analistas;
+   }   
+   
+
+           
+   public Analista getOne(int idAnalista){
+       Analista analista = null;
+       try{
+           
+           initOperation();
+           analista = (Analista) sesion.get(Analista.class, idAnalista);           
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return analista;
+   }
+   
+   public Analista update(int idAnalista, String nombre, String apellido, String password, String usuario){
+     Analista analista = null;
+       try{           
+           initOperation();
+           analista = (Analista) sesion.get(Analista.class, idAnalista);  
+           analista.setNombre(nombre);
+           analista.setApellido(apellido);
+           analista.setUsuario(usuario);
+           analista.setPassword(password);           
+           sesion.update(analista);
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return analista;
+   
+   
+   }
+   
+    public Analista delete(int idAnalista){
+     Analista analista = null;
+       try{           
+           initOperation();
+           analista = (Analista) sesion.get(Analista.class, idAnalista);                    
+           sesion.delete(analista);
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+       }
+       
+       
+       return analista;
+   
+   
+   }
+    
+    
 
     private void initOperation() throws HibernateException 
 
