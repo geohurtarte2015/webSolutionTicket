@@ -122,8 +122,7 @@ public class DaoEstado {
    
    
    }
-
-
+        
     private void initOperation() throws HibernateException 
 
     {

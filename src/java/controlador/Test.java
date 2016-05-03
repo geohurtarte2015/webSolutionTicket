@@ -80,21 +80,21 @@ public class Test {
         Servicio servicio = new Servicio("Banca Empresarial"); 
         daoServicio.save(servicio);
     
-      
+    */  
         
-        //Seguimiento
-        //Seguimiento seguimiento2 = new Seguimiento("Seguimiento de caso Ticket","25/04/2016"); 
+   
+        Seguimiento seguimiento2 = new Seguimiento("Seguimiento de caso Ticket","25/04/2016"); 
         Seguimiento seguimiento = new Seguimiento("Ticket Modificado","28/04/2016");    
         
         
         //Crea objeto Ticket
         Ticket ticket = new Ticket("Test Ticket","03/05/2016","03/05/2016","Fecha Final","Causa","Descripcion de prueba"); 
-        
+     
         
         //Guarda en base de datos y hace persistencia datos con todos los objetos incluidos
         daoTicket.save(1, 1, 1, 1,1, seguimiento, 1, 1, 1, ticket);
         
-        */
+  
     
         /*
         //agrega seguimientos despues de haber guardado un ticket
