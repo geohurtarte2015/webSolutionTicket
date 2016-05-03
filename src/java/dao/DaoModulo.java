@@ -60,7 +60,7 @@ public class DaoModulo {
    }   
     
       
-    public Modulo getOne(int idModulo){
+    public Modulo getByIdObject(int idModulo){
        Modulo modulo = null;
        try{
            
@@ -86,6 +86,8 @@ public class DaoModulo {
            initOperation();
            modulo = (Modulo) sesion.get(Modulo.class, idModulo);  
            modulo.setDescripcion(descripcion);
+           sesion.update(tx);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -108,6 +110,8 @@ public class DaoModulo {
            initOperation();
            modulo = (Modulo) sesion.get(Modulo.class, idModulo);                    
            sesion.delete(modulo);
+           tx.commit();
+ 
        }catch(HibernateException he){
        
         trueExcepcion(he); 

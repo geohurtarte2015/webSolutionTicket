@@ -63,7 +63,7 @@ public class DaoServicioModulo{
        return servicioModulos;
    }   
     
-    public ServicioModulo getOne(int idServicioModulo){
+    public ServicioModulo getByIdObject(int idServicioModulo){
        ServicioModulo servicioModulo = null;
        try{
            
@@ -89,6 +89,8 @@ public class DaoServicioModulo{
            initOperation();
            servicioModulo = (ServicioModulo) sesion.get(ServicioModulo.class, idServicioModulo);  
            servicioModulo.setDescripcion(descripcion);
+           sesion.update(servicioModulo);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -111,6 +113,7 @@ public class DaoServicioModulo{
            initOperation();
            servicioModulo = (ServicioModulo) sesion.get(ServicioModulo.class, idServicioModulo);                    
            sesion.delete(servicioModulo);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 

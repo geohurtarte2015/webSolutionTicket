@@ -60,12 +60,14 @@ public class DaoRaiz  {
        return raices;
    }   
     
-    public Raiz getOne(int idRaiz){
+    public Raiz getByIdObject(int idRaiz){
        Raiz raiz = null;
        try{
            
            initOperation();
-           raiz = (Raiz) sesion.get(Raiz.class, idRaiz);           
+           raiz = (Raiz) sesion.get(Raiz.class, idRaiz);  
+           sesion.update(raiz);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -86,7 +88,11 @@ public class DaoRaiz  {
            initOperation();
            raiz = (Raiz) sesion.get(Raiz.class, idRaiz);  
            raiz.setDescripcion(descripcion);
+           sesion.update(tx);
+           tx.commit();
+           
        }catch(HibernateException he){
+           
        
         trueExcepcion(he); 
         throw he; 
@@ -108,6 +114,7 @@ public class DaoRaiz  {
            initOperation();
            raiz = (Raiz) sesion.get(Raiz.class, idRaiz);                    
            sesion.delete(raiz);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -124,9 +131,6 @@ public class DaoRaiz  {
    
    }
     
-    
-    
-
 
     private void initOperation() throws HibernateException 
 

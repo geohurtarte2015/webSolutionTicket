@@ -58,12 +58,14 @@ public class DaoServicio  {
        return servicios;
    }   
     
-    public Servicio getOne(int idServicio){
+    public Servicio getByIdObject(int idServicio){
        Servicio servicio = null;
        try{
            
            initOperation();
-           servicio = (Servicio) sesion.get(Servicio.class, idServicio);           
+           servicio = (Servicio) sesion.get(Servicio.class, idServicio); 
+           sesion.update(servicio);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -84,6 +86,8 @@ public class DaoServicio  {
            initOperation();
            servicio = (Servicio) sesion.get(Servicio.class, idServicio);  
            servicio.setDescripcion(descripcion);
+           sesion.update(tx);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -106,6 +110,7 @@ public class DaoServicio  {
            initOperation();
            servicio = (Servicio) sesion.get(Servicio.class, idServicio);                    
            sesion.delete(servicio);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 

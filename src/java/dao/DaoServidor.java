@@ -59,12 +59,13 @@ public class DaoServidor {
        return servidores;
    }   
     
-    public Servidor getOne(int idServidor){
+    public Servidor getByIdObject(int idServidor){
        Servidor servidor = null;
        try{
            
            initOperation();
-           servidor = (Servidor) sesion.get(Servidor.class, idServidor);           
+           servidor = (Servidor) sesion.get(Servidor.class, idServidor);  
+           
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -86,6 +87,8 @@ public class DaoServidor {
            servidor = (Servidor) sesion.get(Servidor.class, idServidor);  
            servidor.setDescripcion(descripcion);
            servidor.setIp(ip);
+           sesion.update(servidor);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -108,6 +111,7 @@ public class DaoServidor {
            initOperation();
            servidor = (Servidor) sesion.get(Servidor.class, idServidor);                    
            sesion.delete(servidor);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 

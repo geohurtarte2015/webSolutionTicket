@@ -35,7 +35,7 @@
                                     <input class="form-control" placeholder="Password" name="password" type="password" value="">
                                 </div>
                                 
-                                <a href="index.html" class="btn btn-lg btn-success btn-block">Inicio</a>
+                                <a href="principal.jsp" class="btn btn-lg btn-success btn-block">Inicio</a>
                             </fieldset>
                         </form>
                     </div>

@@ -56,7 +56,7 @@ public class DaoEstado {
        return estados;
    }   
     
-   public Estado getOne(int idEstado){
+   public Estado getByIdObject(int idEstado){
        Estado estado = null;
        try{
            
@@ -82,6 +82,8 @@ public class DaoEstado {
            initOperation();
            estado = (Estado) sesion.get(Estado.class, idEstado);  
            estado.setDescripcion(descripcion);
+           sesion.update(estado);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -104,6 +106,7 @@ public class DaoEstado {
            initOperation();
            estado = (Estado) sesion.get(Estado.class, idEstado);                    
            sesion.delete(estado);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 

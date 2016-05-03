@@ -58,7 +58,7 @@ public class DaoSeguimiento {
        return seguimientos;
    }   
     
-    public Seguimiento getOne(int idSeguimiento){
+    public Seguimiento getByIdObject(int idSeguimiento){
        Seguimiento seguimiento = null;
        try{
            
@@ -84,6 +84,8 @@ public class DaoSeguimiento {
            initOperation();
            seguimiento = (Seguimiento) sesion.get(Seguimiento.class, idSeguimiento);  
            seguimiento.setDescripcion(descripcion);
+           sesion.update(seguimiento);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -106,6 +108,7 @@ public class DaoSeguimiento {
            initOperation();
            seguimiento = (Seguimiento) sesion.get(Seguimiento.class, seguimiento);                    
            sesion.delete(seguimiento);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 

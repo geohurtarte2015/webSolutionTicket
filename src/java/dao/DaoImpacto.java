@@ -57,7 +57,7 @@ public class DaoImpacto  {
        return impactos;
    }   
     
-    public Impacto getOne(int idImpacto){
+    public Impacto getByIdObject(int idImpacto){
        Impacto impacto = null;
        try{
            
@@ -83,6 +83,8 @@ public class DaoImpacto  {
            initOperation();
            impacto = (Impacto) sesion.get(Estado.class, idImpacto);  
            impacto.setDescripcion(descripcion);
+           sesion.update(impacto);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -105,6 +107,7 @@ public class DaoImpacto  {
            initOperation();
            impacto = (Impacto) sesion.get(Impacto.class, idImpacto);                    
            sesion.delete(impacto);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 

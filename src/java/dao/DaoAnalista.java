@@ -54,11 +54,9 @@ public class DaoAnalista {
        }
        
        return analistas;
-   }   
-   
-
+   }      
            
-   public Analista getOne(int idAnalista){
+   public Analista getByIdObject(int idAnalista){
        Analista analista = null;
        try{
            
@@ -88,6 +86,7 @@ public class DaoAnalista {
            analista.setUsuario(usuario);
            analista.setPassword(password);           
            sesion.update(analista);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -110,6 +109,7 @@ public class DaoAnalista {
            initOperation();
            analista = (Analista) sesion.get(Analista.class, idAnalista);                    
            sesion.delete(analista);
+           tx.commit();
        }catch(HibernateException he){
        
         trueExcepcion(he); 
