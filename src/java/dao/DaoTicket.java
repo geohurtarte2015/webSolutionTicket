@@ -106,9 +106,11 @@ public class DaoTicket {
        try{
            initOperation();
            tickets= sesion.createQuery("from Ticket").list(); 
+      
        } finally
        {
         sesion.close();
+        
        }
        
        return tickets;
@@ -119,7 +121,8 @@ public class DaoTicket {
        try{
            
            initOperation();
-           ticket = (Ticket) sesion.get(Ticket.class, idTicket);           
+           ticket = (Ticket) sesion.get(Ticket.class, idTicket);    
+         
        }catch(HibernateException he){
        
         trueExcepcion(he); 

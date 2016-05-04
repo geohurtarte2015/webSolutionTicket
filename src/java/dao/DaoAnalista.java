@@ -12,7 +12,7 @@ public class DaoAnalista {
     
     
    private Session sesion;
-    private Transaction tx;
+   private Transaction tx;
     
    public void save(Analista analista) throws HibernateException {
   
@@ -51,6 +51,7 @@ public class DaoAnalista {
        } finally
        {
         sesion.close();
+        
        }
        
        return analistas;
@@ -95,6 +96,7 @@ public class DaoAnalista {
        } finally {
            
            sesion.close();
+    
        }
        
        

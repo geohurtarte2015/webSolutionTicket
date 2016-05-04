@@ -82,7 +82,7 @@ public class Test {
     
     */  
         
-   
+   /*
         Seguimiento seguimiento2 = new Seguimiento("Seguimiento de caso Ticket","25/04/2016"); 
         Seguimiento seguimiento = new Seguimiento("Ticket Modificado","28/04/2016");    
         
@@ -94,7 +94,7 @@ public class Test {
         //Guarda en base de datos y hace persistencia datos con todos los objetos incluidos
         daoTicket.save(1, 1, 1, 1,1, seguimiento, 1, 1, 1, ticket);
         
-  
+  */
     
         /*
         //agrega seguimientos despues de haber guardado un ticket
@@ -125,7 +125,7 @@ public class Test {
        
    
        
-       /*
+       
         //obtiene Ticket
         for (Iterator iterator =  daoTicket.listAll().iterator(); 
             iterator.hasNext();){
@@ -138,7 +138,7 @@ public class Test {
 
                 
         System.out.println("Ticket cargado");
-        */
+   
        
 
     }

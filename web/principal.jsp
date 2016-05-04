@@ -12,42 +12,73 @@
     <meta name="author" content="">
 
     <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    
+        <!-- Bootstrap Core CSS -->
+        <link href="plantilla/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap Core CSS -->
-    <link href="plantilla/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- MetisMenu CSS -->
+        <link href="plantilla/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
-    <!-- MetisMenu CSS -->
-    <link href="plantilla/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+        <!-- DataTables CSS -->
+        <link href="plantilla/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
 
-    <!-- Timeline CSS -->
-    <link href="plantilla/dist/css/timeline.css" rel="stylesheet">
+        <!-- DataTables Responsive CSS -->
+        <link href="plantilla/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="plantilla/dist/css/sb-admin-2.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="plantilla/dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Morris Charts CSS -->
-    <link href="plantilla/bower_components/morrisjs/morris.css" rel="stylesheet">
+        <!-- Custom Fonts -->
+        <link href="plantilla/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        
+        <!-- jQuery -->
+        <script src="plantilla/bower_components/jquery/dist/jquery.min.js"></script>
 
-    <!-- Custom Fonts -->
-    <link href="plantilla/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <!-- Bootstrap Core JavaScript -->
+        <script src="plantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <script>
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="plantilla/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+        <!-- DataTables JavaScript -->
+        <script src="plantilla/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script src="plantilla/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="plantilla/dist/js/sb-admin-2.js"></script>
+
+       <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+       <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+       <!--[if lt IE 9]>
+           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+       <![endif]-->
+       <script>
     $(document).ready(function() {
-    $('#table_ticket').DataTable();
-    } );
+    $('#table_ticket').DataTable({           
+
+             "bFilter": false,
+              "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                    if ( aData[0] == "2" )
+                    {
+                        $('td', nRow).css('background-color', '#d9534f');
+                    }
+                    else if ( aData[0] == "9" )
+                    {
+                        $('td', nRow).css('background-color', '#f0ad4e');
+                    }
+                }
+           
+            
+            });  
+    });
     </script>
 
 </head>
 
 <body>
 
-   <body>
+
 
     <div id="wrapper">
 
@@ -504,15 +535,15 @@
                                     for(Ticket ticket: daoTicket.listAll()){
                                 %>    
                                 <tr>
-                                    <td id="idTicket"   align="left"><%= ticket.getId() %></td>
+                                    <td id="idTicket" align="center"><%= ticket.getId() %></td>
                                     
-                                    <td id="titulo"  align="left"><%= ticket.getTitulo() %></td>
+                                    <td id="titulo"  align="center"><%= ticket.getTitulo() %></td>
                                     
-                                    <td id="titulo"  align="left"><%= ticket.getAnalista().getNombre() %></td>
+                                    <td id="titulo"  align="center"><%= ticket.getAnalista().getNombre() %></td>
                                        
-                                    <td id="titulo"  align="left"><%= ticket.getCausa() %></td>
+                                    <td id="titulo"  align="center"><%= ticket.getCausa() %></td>
                                           
-                                    <td id="titulo"  align="left"><%= ticket.getFecha() %></td>
+                                    <td id="titulo"  align="center"><%= ticket.getFecha() %></td>
                                      
                                 </tr>
                                 <%}%>
@@ -541,22 +572,7 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="plantilla/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="plantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="plantilla/bower_components/metisMenu/dist/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="plantilla/bower_components/raphael/raphael-min.js"></script>
-    <script src="plantilla/bower_components/morrisjs/morris.min.js"></script>
-    <script src="plantilla/js/morris-data.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="plantilla/dist/js/sb-admin-2.js"></script>
+   
 
 </body>
 
