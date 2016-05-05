@@ -4,6 +4,8 @@
     Author     : Giovanni
 --%>
 
+<%@page import="pojo.Seguimiento"%>
+<%@page import="dao.DaoSeguimiento"%>
 <%@page import="pojo.Ticket"%>
 <%@page import="dao.DaoTicket"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -45,12 +47,24 @@
 
         <!-- Custom Theme JavaScript -->
         <script src="plantilla/dist/js/sb-admin-2.js"></script>
+        
+        <script>
+        var para = document.createElement("p");
+        var node = document.createTextNode("This is new.");
+        para.appendChild(node);
+
+        var element = document.getElementById("div1");
+        var child = document.getElementById("p1");
+        element.insertBefore(para,child);
+        </script>
+        
+        
     </head>
     <body>
        
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Collapsible Accordion Panel Group
+                            Historial de seguimientos
                         </div>
                         <!-- .panel-heading -->
                         <div class="panel-body">
@@ -58,36 +72,34 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a class="collapsed" aria-expanded="false" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Collapsible Group Item #1</a>
+                                            <a class="collapsed" aria-expanded="false" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Seguimientos</a>
                                         </h4>
                                     </div>
                                     <div style="height: 0px;" aria-expanded="false" id="collapseOne" class="panel-collapse collapse">
                                         <div class="panel-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a aria-expanded="false" class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Collapsible Group Item #2</a>
-                                        </h4>
-                                    </div>
-                                    <div style="height: 0px;" aria-expanded="false" id="collapseTwo" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a aria-expanded="false" class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Collapsible Group Item #3</a>
-                                        </h4>
-                                    </div>
-                                    <div aria-expanded="false" id="collapseThree" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                            
+                                            <table id="table_seguimiento" class="table table-striped table-bordered table-hover">         
+                                    <thead>
+                                    <tr>
+                                    <th>Fecha</th>
+                                    <th>Descripcion</th>                                   
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <%
+                                        DaoSeguimiento daoSeguimiento= new DaoSeguimiento();
+                                        for(Seguimiento seguimiento: daoSeguimiento.listAll()){
+                                    %>    
+                                    <tr>
+                                        <td id="idTicket" align="center"><%= seguimiento.getFecha() %></td>
+
+                                        <td id="titulo"  align="center"><%= seguimiento.getDescripcion() %></td>
+
+                                    </tr>
+                                    <%}%>
+                                    </tbody>  
+                                    </table>
+                                           
                                         </div>
                                     </div>
                                 </div>
