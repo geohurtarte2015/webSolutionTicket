@@ -11,8 +11,7 @@ import dao.DaoSeguimiento;
 import dao.DaoServicioModulo;
 import dao.DaoTicket;
 import dao.DaoServidor;
-import java.util.Iterator; 
-
+import java.util.Iterator;
 import pojo.Analista;
 import pojo.Estado;
 import pojo.Impacto;
@@ -44,7 +43,7 @@ public class Test {
         
       
     
- /*
+        /*
         
         //Crea objeto Analista
         Analista analista = new Analista("Cristian","Hurtarte","geo","hurtarte2016");     
@@ -80,25 +79,33 @@ public class Test {
         Servicio servicio = new Servicio("Banca Empresarial"); 
         daoServicio.save(servicio);
     
-    */  
+
         
-   /*
+   
         Seguimiento seguimiento2 = new Seguimiento("Seguimiento de caso Ticket","25/04/2016"); 
-        Seguimiento seguimiento = new Seguimiento("Ticket Modificado","28/04/2016");    
         
+        */
+        
+        Seguimiento seguimiento = new Seguimiento("             ","28/04/2016");    
+           
+     
         
         //Crea objeto Ticket
         Ticket ticket = new Ticket("Test Ticket","03/05/2016","03/05/2016","Fecha Final","Causa","Descripcion de prueba"); 
      
         
         //Guarda en base de datos y hace persistencia datos con todos los objetos incluidos
-        daoTicket.save(1, 1, 1, 1,1, seguimiento, 1, 1, 1, ticket);
+        daoTicket.save(1, 1, 1, 1,1,1, 1, 1, ticket);
         
-  */
-    
-        /*
+        
+        //VALIDA SI SEGUIMIENTO ESTA EN BLANCO O NO
+        if (!seguimiento.getDescripcion().trim().isEmpty() && seguimiento.getDescripcion()!=null){
         //agrega seguimientos despues de haber guardado un ticket
-        daoTicket.addSeguimiento(1, seguimiento2);        
+                daoTicket.addSeguimiento(1, seguimiento);  
+        }
+    
+        
+             
         
         
        /*
@@ -122,19 +129,7 @@ public class Test {
 
          */
        
-       
-   
-       
-       
-        //obtiene Ticket
-        for (Iterator iterator =  daoTicket.listAll().iterator(); 
-            iterator.hasNext();){
-            Ticket ticket = (Ticket) iterator.next(); 
-            System.out.println(ticket.getId()+" ");
-             System.out.println(ticket.getAnalista().getNombre()+" ");
-             System.out.println(ticket.getAnalista().getApellido()+" ");     
-            System.out.println(ticket.getCausa()); 
-         }
+     
 
                 
         System.out.println("Ticket cargado");

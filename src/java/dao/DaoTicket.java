@@ -24,7 +24,7 @@ public class DaoTicket {
    private Transaction tx;
    
    public void save(int idServidor, int idEstado, int idImpacto, int idRaiz, int idAnalista,
-   Seguimiento seguimiento,int idServicioModulo, int idModulo,int idServicio, Ticket ticket ) throws HibernateException {
+   int idServicioModulo, int idModulo,int idServicio, Ticket ticket ) throws HibernateException {
   
     try{
         //inicia persitencia y  guarda (commit)
@@ -65,7 +65,7 @@ public class DaoTicket {
         ticket.setServicio(servicio); 
         ticket.setModulo(modulo);
         ticket.setServicioModulo(servicioModulo);
-        ticket.getSeguimientos().add(seguimiento);          
+       
       
    
         sesion.persist(servidor);
@@ -75,8 +75,7 @@ public class DaoTicket {
         sesion.persist(analista);
         sesion.persist(servicioModulo);
         sesion.persist(modulo);
-        sesion.persist(servicio);
-        sesion.persist(seguimiento);   
+        sesion.persist(servicio);  
         sesion.persist(ticket);
         tx.commit();
         

@@ -416,7 +416,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Dashboard</h1>
+                    <h1 class="page-header">Tickets Generales</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -512,46 +512,50 @@
                 </div>
             </div>
             <!-- /.row -->
+            
+            
+            
+            
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default">
+                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Tickets 
-                            
-                            <div class="center-block">
-                                <table id="table_ticket" class="display">         
-                                <thead>
-                                <tr>
-                                <th>Id Ticket</th>
-                                <th>Titulo</th>
-                                <th>Analista</th>
-                                <th>Causa</th>
-                                <th>Fecha</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <%
-                                    DaoTicket daoTicket= new DaoTicket();
-                                    for(Ticket ticket: daoTicket.listAll()){
-                                %>    
-                                <tr>
-                                    <td id="idTicket" align="center"><%= ticket.getId() %></td>
-                                    
-                                    <td id="titulo"  align="center"><%= ticket.getTitulo() %></td>
-                                    
-                                    <td id="titulo"  align="center"><%= ticket.getAnalista().getNombre() %></td>
-                                       
-                                    <td id="titulo"  align="center"><%= ticket.getCausa() %></td>
-                                          
-                                    <td id="titulo"  align="center"><%= ticket.getFecha() %></td>
-                                     
-                                </tr>
-                                <%}%>
-                                </tbody>  
-                               </table>
-                            </div>
-                        
-                            
+                            Tickets
+                        </div>
+                                <div class="panel-body">
+                                  <div class="table-responsive">
+                                    <table id="table_ticket" class="table table-striped table-bordered table-hover">         
+                                    <thead>
+                                    <tr>
+                                    <th>Id</th>
+                                    <th>Titulo</th>
+                                    <th>Analista</th>
+                                    <th>Causa</th>
+                                    <th>Fecha</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <%
+                                        DaoTicket daoTicket= new DaoTicket();
+                                        for(Ticket ticket: daoTicket.listAll()){
+                                    %>    
+                                    <tr>
+                                        <td id="idTicket" align="center"><%= ticket.getId() %></td>
+
+                                        <td id="titulo"  align="center"><%= ticket.getTitulo() %></td>
+
+                                        <td id="titulo"  align="center"><%= ticket.getAnalista().getNombre() %></td>
+
+                                        <td id="titulo"  align="center"><%= ticket.getCausa() %></td>
+
+                                        <td id="titulo"  align="center"><%= ticket.getFecha() %></td>
+
+                                    </tr>
+                                    <%}%>
+                                    </tbody>  
+                                    </table>
+                                </div>
+                            </div> 
                         </div>
                         
                         
@@ -563,6 +567,10 @@
                     </div>            
                  
                 </div>
+            
+            </div>
+ 
+            
             
             </div>
             <!-- /.row -->

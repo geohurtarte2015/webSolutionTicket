@@ -19,7 +19,7 @@ public class DaoSeguimiento {
     public void save(Seguimiento seguimiento ) throws HibernateException {
   
     try{     
-  
+        
         initOperation();
         sesion.persist(seguimiento);        
         tx.commit();
