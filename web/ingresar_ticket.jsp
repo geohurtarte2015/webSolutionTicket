@@ -1,5 +1,3 @@
-<%@page import="pojo.Ticket"%>
-<%@page import="dao.DaoTicket"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,73 +10,29 @@
     <meta name="author" content="">
 
     <title>SB Admin 2 - Bootstrap Admin Theme</title>
-    
-        <!-- Bootstrap Core CSS -->
-        <link href="plantilla/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- MetisMenu CSS -->
-        <link href="plantilla/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="plantilla/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- DataTables CSS -->
-        <link href="plantilla/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="plantilla/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
-        <!-- DataTables Responsive CSS -->
-        <link href="plantilla/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="plantilla/dist/css/sb-admin-2.css" rel="stylesheet">
 
-        <!-- Custom CSS -->
-        <link href="plantilla/dist/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="plantilla/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-        <!-- Custom Fonts -->
-        <link href="plantilla/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        
-        <!-- jQuery -->
-        <script src="plantilla/bower_components/jquery/dist/jquery.min.js"></script>
-
-        <!-- Bootstrap Core JavaScript -->
-        <script src="plantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-        <!-- Metis Menu Plugin JavaScript -->
-        <script src="plantilla/bower_components/metisMenu/dist/metisMenu.min.js"></script>
-
-        <!-- DataTables JavaScript -->
-        <script src="plantilla/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-        <script src="plantilla/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-
-        <!-- Custom Theme JavaScript -->
-        <script src="plantilla/dist/js/sb-admin-2.js"></script>
-
-       <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-       <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-       <!--[if lt IE 9]>
-           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-       <![endif]-->
-       <script>
-    $(document).ready(function() {
-    $('#table_ticket').DataTable({           
-
-             "bFilter": false,
-              "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                    if ( aData[0] == "2" )
-                    {
-                        $('td', nRow).css('background-color', '#d9534f');
-                    }
-                    else if ( aData[0] == "9" )
-                    {
-                        $('td', nRow).css('background-color', '#f0ad4e');
-                    }
-                }
-           
-            
-            });  
-    });
-    </script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 </head>
 
 <body>
-
-
 
     <div id="wrapper">
 
@@ -312,10 +266,10 @@
                             <div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
+                                    <button class="btn btn-default" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
                             </div>
                             <!-- /input-group -->
                         </li>
@@ -394,11 +348,11 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <li>
+                        <li class="active">
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="blank.html">Blank Page</a>
+                                    <a class="active" href="blank.html">Blank Page</a>
                                 </li>
                                 <li>
                                     <a href="login.html">Login Page</a>
@@ -413,174 +367,48 @@
             <!-- /.navbar-static-side -->
         </nav>
 
+        <!-- Page Content -->
         <div id="page-wrapper">
-            <div class="row">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header"></h1>
+                        
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                
+                
                 <div class="col-lg-12">
-                    <h1 class="page-header">Tickets Generales</h1>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Mantenimiento de Tickets</div>
+                        
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->
+            
+                <!-- /.row -->
             </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-comments fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
-                                    <div>Todos los Tickets</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">Mostrar</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-tasks fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>Pend. hoy</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">Mostrar</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-yellow">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-shopping-cart fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
-                                    <div>Pend. mayor a 1 dias</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">Mostrar</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-support fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>Pend. mayor a 2 dias</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">Mostrar</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.row -->
-            
-            
-            
-            
-            <div class="row">
-                <div class="col-lg-12">
-                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Tickets
-                        </div>
-                                <div class="panel-body">
-                                  <div class="table-responsive">
-                                    <table id="table_ticket" class="table table-striped table-bordered table-hover">         
-                                    <thead>
-                                    <tr>
-                                    <th>Id</th>
-                                    <th>Titulo</th>
-                                    <th>Analista</th>
-                                    <th>Causa</th>
-                                    <th>Fecha</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <%
-                                        DaoTicket daoTicket= new DaoTicket();
-                                        for(Ticket ticket: daoTicket.listAll()){
-                                    %>    
-                                    <tr>
-                                        <td id="idTicket" align="center"><%= ticket.getId() %></td>
-
-                                        <td id="titulo"  align="center"><%= ticket.getTitulo() %></td>
-
-                                        <td id="titulo"  align="center"><%= ticket.getAnalista().getNombre() %></td>
-
-                                        <td id="titulo"  align="center"><%= ticket.getCausa() %></td>
-
-                                        <td id="titulo"  align="center"><%= ticket.getFecha() %></td>
-
-                                    </tr>
-                                    <%}%>
-                                    </tbody>  
-                                    </table>
-                                </div>
-                            </div> 
-                        </div>
-                        
-                        
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-             
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>            
-                 
-                </div>
-            
-            </div>
- 
-            
-            
-            </div>
-            <!-- /.row -->
+            <!-- /.container-fluid -->
         </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
 
-   
+    <!-- jQuery -->
+    <script src="plantilla/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="plantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="plantilla/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
 
 </body>
 
