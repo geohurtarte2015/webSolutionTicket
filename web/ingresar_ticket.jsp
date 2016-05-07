@@ -393,6 +393,7 @@
                                     <div class="form-group">
                                             <label>Servicio</label>
                                             <select class="form-control">
+                                                <option>seleccionar</option>
                                                 <option>Banca para Ti</option>
                                                 <option>Banca Empresarial Antigua</option>
                                                 <option>Banca Empresarial Nueva</option>
@@ -400,46 +401,13 @@
                                                 <option>Agente</option>
                                             </select>
                                         </div> <!-- /.Servicio -->
-                                    <div class="form-group">
-                                            <label>Modulo</label>
-                                            <select class="form-control">
-                                                <option>Notificacion Mensajitos</option>
-                                                <option>Transferencia a Terceros</option>
-                                                <option>Banca Empresarial Nueva</option>
-                                                <option>Remesas</option>
-                                                <option>Bancacel</option>
-                                            </select>
-                                        </div> <!-- /.Modulo -->
-                                    <div class="form-group">
-                                            <label>Servicio Modulo</label>
-                                            <select class="form-control">
-                                                <option>Remesas MoneyGram</option>
-                                                <option>Remesas Intermex</option>
-                                                <option>Remesas Uniteller</option>
-                                                <option>Remesas Ria</option>
-                                                <option>Remesas Vigo</option>
-                                            </select>
-                                        </div> <!-- /.Servicio Modulo -->
                                     
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                            <label>Titulo Ticket</label>
-                                            <input class="form-control" placeholder="Titulo">
-                                    </div> <!-- /.Titulo -->
-                                    <div class="form-group">
-                                            <label>Servicio</label>
-                                            <select class="form-control">
-                                                <option>Banca para Ti</option>
-                                                <option>Banca Empresarial Antigua</option>
-                                                <option>Banca Empresarial Nueva</option>
-                                                <option>Remesas</option>
-                                                <option>Agente</option>
-                                            </select>
-                                        </div> <!-- /.Servicio -->
-                                    <div class="form-group">
                                             <label>Modulo</label>
                                             <select class="form-control">
+                                                <option>seleccionar</option>
                                                 <option>Notificacion Mensajitos</option>
                                                 <option>Transferencia a Terceros</option>
                                                 <option>Banca Empresarial Nueva</option>
@@ -450,51 +418,36 @@
                                     <div class="form-group">
                                             <label>Servicio Modulo</label>
                                             <select class="form-control">
+                                                <option>seleccionar</option>
                                                 <option>Remesas MoneyGram</option>
                                                 <option>Remesas Intermex</option>
                                                 <option>Remesas Uniteller</option>
                                                 <option>Remesas Ria</option>
                                                 <option>Remesas Vigo</option>
                                             </select>
-                                        </div> <!-- /.Servicio Modulo -->
-                                    
+                                        </div> <!-- /.Servicio Modulo -->                                
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                            <label>Titulo Ticket</label>
-                                            <input class="form-control" placeholder="Titulo">
-                                    </div> <!-- /.Titulo -->
-                                    <div class="form-group">
-                                            <label>Servicio</label>
+                                            <label>Servidor</label>
                                             <select class="form-control">
-                                                <option>Banca para Ti</option>
-                                                <option>Banca Empresarial Antigua</option>
-                                                <option>Banca Empresarial Nueva</option>
-                                                <option>Remesas</option>
-                                                <option>Agente</option>
+                                                <option>seleccionar</option>
+                                                <option>Malinas</option>
+                                                <option>Anton</option>
+                                                <option>Paphos</option>
+                                                <option>Palanga</option>
+                                                <option>Asker</option>
                                             </select>
-                                        </div> <!-- /.Servicio -->
+                                        </div> <!-- /.Servidor -->               
                                     <div class="form-group">
-                                            <label>Modulo</label>
+                                            <label>Impacto</label>
                                             <select class="form-control">
-                                                <option>Notificacion Mensajitos</option>
-                                                <option>Transferencia a Terceros</option>
-                                                <option>Banca Empresarial Nueva</option>
-                                                <option>Remesas</option>
-                                                <option>Bancacel</option>
+                                                <option>Seleccionar</option>
+                                                <option>Alto</option>
+                                                <option>Medio</option>
+                                                <option>Bajo</option>
                                             </select>
-                                        </div> <!-- /.Modulo -->
-                                    <div class="form-group">
-                                            <label>Servicio Modulo</label>
-                                            <select class="form-control">
-                                                <option>Remesas MoneyGram</option>
-                                                <option>Remesas Intermex</option>
-                                                <option>Remesas Uniteller</option>
-                                                <option>Remesas Ria</option>
-                                                <option>Remesas Vigo</option>
-                                            </select>
-                                        </div> <!-- /.Servicio Modulo -->
-                                    
+                                        </div> <!-- /.Impacto -->  
                                 </div>
                             </div>
                             
