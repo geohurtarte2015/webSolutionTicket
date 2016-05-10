@@ -475,7 +475,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">124</div>
-                                    <div>Pend. mayor a 1 dias</div>
+                                    <div>Pend. mayor a 1 dia</div>
                                 </div>
                             </div>
                         </div>

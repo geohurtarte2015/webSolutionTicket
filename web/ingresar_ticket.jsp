@@ -1,3 +1,5 @@
+<%@page import="pojo.Seguimiento"%>
+<%@page import="dao.DaoSeguimiento"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,9 +12,15 @@
     <meta name="author" content="">
 
     <title>SB Admin 2 - Bootstrap Admin Theme</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="plantilla/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap DateTimePicker -->
+     <link rel="stylesheet" type="text/css" media="screen" href="plantilla/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+     <link href="bootdate/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+     <script type="text/javascript" src="plantilla/js/jquery-1.9.1.min.js"></script>
+     <script type="text/javascript" src="plantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+     <script src="plantilla/js/moment.js"></script>
+     <script src="bootdate/src/js/bootstrap-datetimepicker.js"></script>
+ 
 
     <!-- MetisMenu CSS -->
     <link href="plantilla/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
@@ -384,12 +392,17 @@
                         <div class="panel-heading">Mantenimiento de Tickets</div>                        
                         <!-- /.panel-body -->
                         <div class="panel-body">
+                            
                             <div class="row">                            
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                            <label>Titulo Ticket</label>
+                                            <label>Titulo del Ticket</label>
                                             <input class="form-control" placeholder="Titulo">
-                                    </div> <!-- /.Titulo -->
+                                    </div> 
+                                </div>
+                            </div><!-- /.Titulo -->
+                            <div class="row">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                             <label>Servicio</label>
                                             <select class="form-control">
@@ -400,9 +413,9 @@
                                                 <option>Remesas</option>
                                                 <option>Agente</option>
                                             </select>
-                                        </div> <!-- /.Servicio -->
+                                        </div> 
                                     
-                                </div>
+                                </div>     
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                             <label>Modulo</label>
@@ -415,6 +428,8 @@
                                                 <option>Bancacel</option>
                                             </select>
                                         </div> <!-- /.Modulo -->
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                             <label>Servicio Modulo</label>
                                             <select class="form-control">
@@ -427,9 +442,11 @@
                                             </select>
                                         </div> <!-- /.Servicio Modulo -->                                
                                 </div>
+                            </div> <!-- /.Modulos Servicios -->
+                            <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                            <label>Servidor</label>
+                                            <label>Nombre Servidor</label>
                                             <select class="form-control">
                                                 <option>seleccionar</option>
                                                 <option>Malinas</option>
@@ -438,7 +455,9 @@
                                                 <option>Palanga</option>
                                                 <option>Asker</option>
                                             </select>
-                                        </div> <!-- /.Servidor -->               
+                                        </div> <!-- /.Servidor -->  
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                             <label>Impacto</label>
                                             <select class="form-control">
@@ -449,8 +468,93 @@
                                             </select>
                                         </div> <!-- /.Impacto -->  
                                 </div>
+                                
+                            </div><!-- /.Impacto en Servidor -->
+                            <div class="row">
+                                <div class='col-lg-4'>
+                                    <div class="form-group">
+                                        <label>Fecha Inicio del Evento</label>
+                                        <div class='input-group date' id='fechainicio'>                                            
+                                            <input type='text' class="form-control" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='col-lg-4'>
+                                    <div class="form-group">
+                                        <label>Fecha Final del Evento</label>
+                                        <div class='input-group date' id='fechafinal'>                                            
+                                            <input type='text' class="form-control" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>   
+                             </div><!-- /.Fecha Inicio y Final eventos -->
+                            <div class="row">
+                                <div class='col-lg-4'>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="comment">Descripción</label>
+                                            <textarea class="form-control" rows="5" id="descripcion"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='col-lg-4'>
+                                    <div class="form-group">                                        
+                                        <label for="comment">Causa</label>
+                                            <textarea class="form-control" rows="5" id="causa"></textarea>
+                                    </div>
+                                </div>
+                                 <div class='col-lg-4'>
+                                    <div class="form-group">                                     
+                                        <label for="comment">Solución</label>
+                                            <textarea class="form-control" rows="5" id="solucion"></textarea>
+                                    </div>
+                                </div>  
+                             </div><!-- /.Descripcion, solucion y causa --> 
+                            <div class="row">
+                                    
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" aria-expanded="false" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Seguimiento de Eventos</a>
+                                        </h4>
+                                    </div>
+                                    <div style="height: 0px;" aria-expanded="false" id="collapseOne" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                                <table id="table_ticket" class="table table-striped table-bordered table-hover">         
+                                    <thead>
+                                    <tr>
+                                    <th>Fecha</th>
+                                    <th>Descripción
+                                    </th>                                  
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <%
+                                        DaoSeguimiento daoSeguimiento= new DaoSeguimiento();
+                                        for(Seguimiento seguimiento: daoSeguimiento.listAll()){
+                                    %>    
+                                    <tr>
+                                        <td id="idTicket" align="center"><%= seguimiento.getFecha() %></td>
+
+                                        <td id="titulo"  align="center"><%= seguimiento.getDescripcion() %></td>
+                                    </tr>
+                                    <%}%>
+                                    </tbody>  
+                                    </table>
+                               
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>   
+                                
                             </div>
-                            
                         </div>
                         
                     </div>
@@ -467,17 +571,20 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="plantilla/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="plantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="plantilla/bower_components/metisMenu/dist/metisMenu.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="../dist/js/sb-admin-2.js"></script>
+    <!-- DateTimePicker Bootstrap -->
+    <script type="text/javascript">
+                  $(function () {
+                    $('#fechainicio').datetimepicker({
+                        format: "DD-MM-YYYY hh:mm a"                      
+                        });
+                    });
+                    
+                   $(function () {
+                    $('#fechafinal').datetimepicker({
+                        format: "DD-MM-YYYY hh:mm a"                      
+                        });
+                    });
+   </script>
 
 </body>
 
