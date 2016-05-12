@@ -5,10 +5,13 @@
  */
 package controlador;
 
-import dao.DaoTicket;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import dao.DaoSeguimiento;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,43 +19,55 @@ import javax.servlet.http.HttpServletResponse;
 import pojo.Seguimiento;
 
 
-public class GuardarSeguimiento extends HttpServlet {
+/**
+ *
+ * @author Giovanni
+ */
+public class ServletDataTable extends HttpServlet {
 
-
+    public ServletDataTable() {
+        super();
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-  
+     
     }
 
+   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();           
+            DaoSeguimiento daoSeguimiento = new DaoSeguimiento();
+            List<Seguimiento> seguimiento = daoSeguimiento.listAll();
+            List<Student> students = StudentDataService.getStudentList();
+
+
+            DataTableObject dataTableObject = new DataTableObject();
+            dataTableObject.setAaData(students);
+
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(dataTableObject);
+            out.print(json);
+        
     }
 
-
+   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
         
-        try {
-                Seguimiento seguimiento = new Seguimiento("Esto es una prueba Feliz dia de la madre","10/05/2016");  
-                DaoTicket daoTicket = new DaoTicket();
-                daoTicket.addSeguimiento(2, seguimiento);  
-               
-                response.sendRedirect("test.jsp");
-             
-        } finally {            
-            out.close();
-        }
+             doGet(request, response);
+
     }
 
- 
+
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

@@ -46,7 +46,7 @@ public class Seguimiento implements Serializable {
         return tickets;
     }
  
-    public void setStudents(List<Ticket> tickets) {
+    public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
     
