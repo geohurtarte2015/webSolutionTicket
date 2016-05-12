@@ -4,9 +4,11 @@ package pojo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
  
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -28,7 +30,7 @@ public class Seguimiento implements Serializable {
      private String fecha;
      
      
-    @ManyToMany(mappedBy="seguimientos")
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="seguimientos")
     private List<Ticket> tickets = new ArrayList<Ticket>();
      
     public Seguimiento(){

@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -88,7 +89,7 @@ public class Ticket {
     private Raiz raiz;
     
     
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "TICKET_SEGUIMIENTO", 
         joinColumns = { @JoinColumn(name = "ID_TICKET") }, 
         inverseJoinColumns = { @JoinColumn(name = "ID_SEGUIMIENTO") })
