@@ -4,9 +4,17 @@
         <servlet-name>ServletDataTable</servlet-name>
         <servlet-class>controlador.ServletDataTable</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletEditarTicket</servlet-name>
+        <servlet-class>controlador.ServletEditarTicket</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletDataTable</servlet-name>
         <url-pattern>/ServletDataTable</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletEditarTicket</servlet-name>
+        <url-pattern>/ServletEditarTicket</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

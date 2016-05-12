@@ -2,7 +2,6 @@ package controlador;
 
 
 import java.util.List;
-import pojo.Seguimiento;
 
 public class DataTableObject {
 
