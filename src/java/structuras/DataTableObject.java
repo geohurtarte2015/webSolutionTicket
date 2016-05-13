@@ -1,7 +1,8 @@
-package controlador;
+package structuras;
 
 
 import java.util.List;
+import pojo.Ticket;
 
 public class DataTableObject {
 
@@ -10,7 +11,7 @@ public class DataTableObject {
  
  String sColumns;
  
- List<Student> aaData;
+ List<Object> aaData;
  
 
  public String getsEcho() {
@@ -29,11 +30,11 @@ public class DataTableObject {
   this.sColumns = sColumns;
  }
 
- public List<Student> getAaData() {
+ public List<Object> getAaData() {
   return aaData;
  }
 
- public void setAaData(List<Student> aaData) {
+ public void setAaData(List<Object> aaData) {
   this.aaData = aaData;
  }
  

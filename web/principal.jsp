@@ -544,14 +544,14 @@
 
                                         <td id="titulo"  align="center"><%= ticket.getTitulo() %></td>
 
-                                        <td id="titulo"  align="center"><%= ticket.getAnalista().getNombre() %></td>
+                                        <td id="analista"  align="center"><%= ticket.getAnalista().getNombre() %></td>
 
-                                        <td id="titulo"  align="center"><%= ticket.getCausa() %></td>
+                                        <td id="causa"  align="center"><%= ticket.getCausa() %></td>
 
-                                        <td id="titulo"  align="center"><%= ticket.getFecha() %></td>
+                                        <td id="fecha"  align="center"><%= ticket.getFecha() %></td>
                                         
                                         <td   id="editar" style="width: 25px; text-align: center;">
-                                        <a href="Buscar?cedula=<%= ticket.getId()%>">
+                                        <a href="ServletEditarTicket?idTicket=<%= ticket.getId()%>">
                                         <img  src="img/pencil.png" width="16" height="16"  border="0" />       
                                         </a>                            
                                         </td>

@@ -17,7 +17,24 @@ and open the template in the editor.
         <script type="text/javascript" src="plantilla/js/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="plantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="plantilla/js/moment.js"></script>
-	<script src="bootdate/src/js/bootstrap-datetimepicker.js"></script>
+	<script src="bootdate/src/js/bootstrap-datetimepicker.js"></script>  
+        
+         
+        <!-- DataTables JavaScript -->
+        <script src="plantilla/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script src="plantilla/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+        
+        <!-- DataTables CSS -->
+        <link href="plantilla/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+       
+        
+        <script type="text/javascript" charset="utf-8">
+                $(document).ready(function() {
+                 $('#example').DataTable( {
+                     "ajax": "ServletVerTicket"
+                 } );
+             } );
+            </script>
         
     </head>
 <body>
@@ -188,16 +205,15 @@ and open the template in the editor.
                        
                                         
                                
-                              <div class="modal fade" id="myModalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
-                           
+                            <div style="display: none;" class="modal fade" id="myModalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <div class="modal-header">                                         
-                                                <button type="button" class="close" id="myBtnSeguimientoHide">×</button>
-                                                <h4 class="modal-title" id="myModalLabel1">Seguimientos</h4>
+                                        <div class="modal-header">
+                                            <button type="button" class="close" id="myBtnSeguimientoHide" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                                         </div>
-                                        <form role="form" action="GuardarSeguimiento" method="post" enctype="multipart/form-data">
                                         <div class="modal-body">
+                                    
                                           <div class="row">
                                                 <div class='col-lg-4'>
                                                     <div class="form-group">
@@ -206,43 +222,32 @@ and open the template in the editor.
                                                         </div>
                                                     </div>
                                                 </div>
-                                          </div>  
-                                        </div> 
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" id="myBtnSeguimientoHide2">Cerrar</button>
-                                            <button type="submit" name="GuardarSeguimiento" onClick="location.href='test.jsp'" class="btn btn-primary" >Guardar</button>
-                                        
-                                        </div>
-                                        </form>
-                                         <table id="table_ticket" class="table table-striped table-bordered table-hover">  
-                                           
-                                             <thead>
-                                                 <tr>
-                                                     <th>Fecha</th>
-                                                     <th>Descripción
-                                                     </th>                                  
-                                                 </tr>
-                                             </thead>
-                                             <tbody>
-                                                 <%
-                                                     DaoSeguimiento daoSeguimiento = new DaoSeguimiento();
-                                                     for (Seguimiento seguimiento : daoSeguimiento.listAll()) {
-                                                 %>    
-                                                 <tr>
-                                                     <td id="idTicket" align="center"><%= seguimiento.getFecha()%></td>
-
-                                                     <td id="titulo"  align="center"><%= seguimiento.getDescripcion()%></td>
-                                                 </tr>
-                                                 <%}%>
-                                             </tbody>  
-                                         </table>
+                                          </div>
+                                            
+                                          <button type="button" class="btn btn-default" id="myBtnSeguimientoHide2">Close</button>
+                                          <button type="button" class="btn btn-primary">Save changes</button>
+                                              
+                                         
                                         </div>
                                         <div class="modal-footer">
-                                    
+                                            
+                                            <table id="example2" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
+                                          
+                                            <thead>
+                                                <tr>
+                                                <th>id</th>
+                                                <th>descripcion</th>
+                                                <th>fecha</th>      
+                                                </tr>
+                                            </thead>
+                                            
+                                            </table>
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->
                                 </div>
+                                <!-- /.modal-dialog -->
+                            </div>
                                 <!-- /.modal-dialog -->
                             </div>
                                 <!-- /.modal-dialog -->
@@ -261,15 +266,22 @@ and open the template in the editor.
                 </div>
               
             </div>
-        </div>
+        
   <script type="text/javascript">
-                  $(function () {
+            
+                    $(document).ready(function() {
+                    $('#example2').DataTable( {
+                     "ajax": "ServletVerTicket"
+                    });
+                    });
+             
+                    $(function () {
                     $('#fechainicio').datetimepicker({
                         format: "DD-MM-YYYY hh:mm:ss a"                      
                         });
                     });
                     
-                   $(function () {
+                    $(function () {
                     $('#fechafinal').datetimepicker({
                         format: "DD-MM-YYYY hh:mm:ss a"                      
                         });
@@ -277,7 +289,9 @@ and open the template in the editor.
                     
                     $(document).ready(function(){
                         $("#myBtnSeguimientoShow").click(function(){
-                            $("#myModalSeguimiento").modal();                         
+                            
+                            $("#myModalSeguimiento").modal();
+                          
                         });
                     });
                     
@@ -292,20 +306,6 @@ and open the template in the editor.
                             $("#myModalSeguimiento").modal("hide");
                         });
                     });
-                    
-                    function loadDoc() {
-                    var xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange = function() 
-                    {
-                        if (xhttp.readyState == 4 && xhttp.status == 200) 
-                        {
-                            document.getElementById("demo").innerHTML = xhttp.responseText;
-                        }
-                    };
-  xhttp.open("GET", "demo_get2.asp?fname=Henry&lname=Ford", true);
-  xhttp.send();
-}
-                    
                    
    </script>
 </body>

@@ -1,6 +1,7 @@
 
 package controlador;
 
+import structuras.DataTableObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dao.DaoSeguimiento;
@@ -29,14 +30,20 @@ public class ServletEditarTicket extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          response.setContentType("application/json");
+        
+            int idTicket = Integer.parseInt(request.getParameter("idTicket"));
+            
+            response.setContentType("application/json");
             PrintWriter out = response.getWriter();           
             DaoTicket daoTicket = new DaoTicket();  
             
-            List<Ticket> tickets = daoTicket.listAll();
-
+            
+            
+            Ticket ticket = daoTicket.getByIdObject(idTicket);
+            
 
             DataTableObject dataTableObject = new DataTableObject();
+            dataTableObject.setAaData((List<Object>) ticket);
      
 
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -51,9 +58,6 @@ public class ServletEditarTicket extends HttpServlet {
           doGet(request, response);
     }
 
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+
 
 }

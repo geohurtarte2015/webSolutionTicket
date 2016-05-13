@@ -5,60 +5,108 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
-	
-	<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.8.3.min.js"></script>
+      <link rel="stylesheet" type="text/css" media="screen" href="plantilla/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+        <link href="bootdate/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+        <script type="text/javascript" src="plantilla/js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="plantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="plantilla/js/moment.js"></script>
+	<script src="bootdate/src/js/bootstrap-datetimepicker.js"></script>
         
         
-        <!-- Bootstrap Core CSS -->
-        <link href="plantilla/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
-        <!-- MetisMenu CSS -->
-        <link href="plantilla/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-
+        <!-- DataTables JavaScript -->
+        <script src="plantilla/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script src="plantilla/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+        
         <!-- DataTables CSS -->
         <link href="plantilla/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-
-        <!-- DataTables Responsive CSS -->
-        <link href="plantilla/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-
-        <!-- jQuery -->
-        <script src="plantilla/bower_components/jquery/dist/jquery.min.js"></script> 
         
-        <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-        
-         <!-- DataTables JavaScript -->
-        <script src="plantilla/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+
+
         
         <script type="text/javascript" charset="utf-8">
                 $(document).ready(function() {
                  $('#example').DataTable( {
-                     "ajax": "ServletDataTable",
-                     "columns": [
-                         { "data": "Name" },                         
-                         { "data": "Mark" }
-                     ]
+                     "ajax": "ServletVerTicket"
                  } );
              } );
-            </script>
+        </script>
   
         
         
 
         <title>Data Table with Ajax</title>
     </head>
+    
+    
+    
     <body>
-        <h1>Tabla por Ajax</h1>
-        <table id="example" class="display" cellspacing="0" width="100%">
-            <thead>
-            <tr>
-            <th>Name</th>
-            <th>Mark</th>           
-            </tr>
-            </thead>        
-        </table>
         
         
-
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Modals
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <!-- Button trigger modal -->
+                            <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                                Launch Demo Modal
+                            </button>
+                            <!-- Modal -->
+                            <div style="display: none;" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                    
+                                          <div class="row">
+                                                <div class='col-lg-4'>
+                                                    <div class="form-group">
+                                                        <div class="form-group">                                    
+                                                            <textarea class="form-control" style="min-width: 100%; margin: 0px -391.672px 0px 0px; width: 562px; height: 138px;" rows="5" id="descripcionSeguimiento"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                          </div>
+                                            
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                          <button type="button" class="btn btn-primary">Save changes</button>
+                                              
+                                         
+                                        </div>
+                                        <div class="modal-footer">
+                                            
+                                            <table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
+                                          
+                                            <thead>
+                                                <tr>
+                                                <th>id</th>
+                                                <th>descripcion</th>
+                                                <th>fecha</th>      
+                                                </tr>
+                                            </thead>
+                                            
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+                        </div>
+                        <!-- .panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                
+         
+               
+                    
+                    
+                
+                  
     </body>
 </html>
