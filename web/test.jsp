@@ -27,15 +27,7 @@ and open the template in the editor.
         <!-- DataTables CSS -->
         <link href="plantilla/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
        
-        
-        <script type="text/javascript" charset="utf-8">
-                $(document).ready(function() {
-                 $('#example').DataTable( {
-                     "ajax": "ServletVerTicket"
-                 } );
-             } );
-            </script>
-        
+
     </head>
 <body>
         <div class="container">
@@ -271,7 +263,8 @@ and open the template in the editor.
             
                     $(document).ready(function() {
                     $('#example2').DataTable( {
-                     "ajax": "ServletVerTicket"
+                     "ajax": "ServletVerTicket",
+                     
                     });
                     });
              

@@ -39,7 +39,7 @@ public class ServletVerTicket extends HttpServlet {
         
             //int idTicket = Integer.parseInt(request.getParameter("idTicket"));
             //temporal
-            int idTicket = 1;
+            int idTicket = 2;
             
             
             response.setContentType("application/json");

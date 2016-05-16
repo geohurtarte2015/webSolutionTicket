@@ -26,7 +26,15 @@
         <script type="text/javascript" charset="utf-8">
                 $(document).ready(function() {
                  $('#example').DataTable( {
-                     "ajax": "ServletVerTicket"
+                     "ajax": "ServletVerTicket",
+                     "global" : false,
+                     "lengthMenu": [[ 2, -1], [ 2,"All"]],
+                     "dataType" : "json",
+                      success : function(responseText) {
+                      $('#example').dataTable( {
+                      "data": responseText
+                        });
+                      }
                  } );
              } );
         </script>
@@ -61,20 +69,20 @@
                                             <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                                         </div>
                                         <div class="modal-body">
-                                    
+                                         <form role="form" action="ServletGuardarSeguimiento" method="post">
                                           <div class="row">
                                                 <div class='col-lg-4'>
                                                     <div class="form-group">
                                                         <div class="form-group">                                    
-                                                            <textarea class="form-control" style="min-width: 100%; margin: 0px -391.672px 0px 0px; width: 562px; height: 138px;" rows="5" id="descripcionSeguimiento"></textarea>
+                                                            <textarea class="form-control" style="min-width: 100%; margin: 0px -391.672px 0px 0px; width: 562px; height: 138px;" rows="5" name="descripcionSeguimiento"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
                                           </div>
                                             
                                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                          <button type="button" class="btn btn-primary">Save changes</button>
-                                              
+                                          <button  type="submit" class="btn btn-primary">Save changes</button>
+                                         </form>     
                                          
                                         </div>
                                         <div class="modal-footer">
