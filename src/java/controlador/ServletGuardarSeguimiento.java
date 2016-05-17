@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import dao.DaoTicket;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -75,9 +76,12 @@ public class ServletGuardarSeguimiento extends HttpServlet {
             }
             
             dataTableObject.setAaData(objectSeguimientos);     
-
+            
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(dataTableObject);            
+            String json = gson.toJson(dataTableObject);
+            out.print(json);
+            
+                        
     }
 
    

@@ -24,8 +24,10 @@
 
         
         <script type="text/javascript" charset="utf-8">
+            
                 $(document).ready(function() {
-                 $('#example').DataTable( {
+                    
+                    $('#example').DataTable( {
                      "ajax": "ServletVerTicket",
                      "global" : false,
                      "lengthMenu": [[ 2, -1], [ 2,"All"]],
@@ -36,7 +38,43 @@
                         });
                       }
                  } );
-             } );
+            } );
+            
+            
+            $('#submit').click(function(event) {  // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...               
+                var seguimientoVar = $('#descripcionSeguimiento').val();            
+                $.get("ServletGuardarSeguimiento", function(responseJson) {    // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+                    descripcionSeguimiento : seguimientoVar,            
+                    global : false,   
+                    dataType : "json",
+                    },function(responseText) {
+                        $('#example').dataTable( {
+                            "data": responseText
+                            });
+                     });
+                        
+            });
+            
+            
+            $(document).ready(function() {
+		$('#submit').click(function(event) {
+			var nombreVar = $('#nombre').val();
+			var apellidoVar = $('#apellido').val();
+			var edadVar = $('#edad').val();
+			// Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
+			$.post('ActionServlet', {
+				nombre : nombreVar,
+				apellido: apellidoVar,
+				edad: edadVar
+			}, function(responseText) {
+				$('#tabla').html(responseText);
+			});
+		});
+	});
+          
+          
+          
+            
         </script>
   
         
@@ -69,7 +107,7 @@
                                             <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                                         </div>
                                         <div class="modal-body">
-                                         <form role="form" action="ServletGuardarSeguimiento" method="post">
+                                         <form role="form" id="infseguimiento">
                                           <div class="row">
                                                 <div class='col-lg-4'>
                                                     <div class="form-group">
@@ -81,7 +119,7 @@
                                           </div>
                                             
                                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                          <button  type="submit" class="btn btn-primary">Save changes</button>
+                                          <button  type="button" id="submit" class="btn btn-primary">Save changes</button>
                                          </form>     
                                          
                                         </div>
