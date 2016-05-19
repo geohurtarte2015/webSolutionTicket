@@ -12,6 +12,11 @@
 	<script src="plantilla/js/moment.js"></script>
 	<script src="bootdate/src/js/bootstrap-datetimepicker.js"></script>
         
+        <script src="https://cdn.datatables.net/plug-ins/1.10.11/api/fnAddDataAndDisplay.js"></script>
+
+
+        
+        
         
         <!-- DataTables JavaScript -->
         <script src="plantilla/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
@@ -25,21 +30,27 @@
         
         <script type="text/javascript" charset="utf-8">
             
-                $(document).ready(function() {
+            $(document).ready(function() {
                     
-                    $('#example').DataTable( {
-                     "ajax": "ServletVerTicket",
-                     "global" : false,
-                     "lengthMenu": [[ 2, -1], [ 2,"All"]],
-                     "dataType" : "json",
-                      success : function(responseText) {
-                        $('#example').dataTable( {
-                        "data": responseText
-                        });
-                      }
-                    } );
+             $('#example').DataTable( {
+                    "ajax": "ServletVerTicket",
+                    "global" : false,
+                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
+                    "dataType" : "json",
+                     success : function(responseText) {
+                       $('#example').dataTable( {
+                       "data": responseText
+                       });
+                     }
+                     
+                 });
+                 
+                 
+                 
+               
+             
             
-                $("#submit").click(function(){
+                $("#submit").click(function(){                    
                     $.ajax({
                     type: "GET",
                     url: "ServletGuardarSeguimiento",
@@ -47,14 +58,23 @@
                     async : false,
                     data: $("#infseguimiento").serialize(),
                     success : function(responseText) {
+      
                         $('#example').dataTable( {
                         "data": responseText
                         });
                       }
                     });
+                        
+                $('#example').DataTable.fnClearTable();      
+                $('#example').each(function() {
+                    dt = $(this).DataTable();
+                    dt.fnDraw();
                 });
-    
-               });
+              
+                });
+                
+              
+            });
             
             
            
@@ -117,8 +137,8 @@
                                             <thead>
                                                 <tr>
                                                 <th>id</th>
-                                                <th>descripcion</th>
-                                                <th>fecha</th>      
+                                                <th>fecha</th>
+                                                <th>descripcion</th>      
                                                 </tr>
                                             </thead>
                                             
