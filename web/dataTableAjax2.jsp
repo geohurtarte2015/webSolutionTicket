@@ -32,7 +32,7 @@
             
             $(document).ready(function() {
                     
-             $('#example').DataTable( {
+            var t= $('#example').DataTable( {
                     "ajax": "ServletVerTicket",
                     "global" : false,
                     "lengthMenu": [[ 2, -1], [ 2,"All"]],
@@ -46,10 +46,6 @@
                  });
                  
                  
-                 
-               
-             
-            
                 $("#submit").click(function(){                    
                     $.ajax({
                     type: "GET",
@@ -58,21 +54,18 @@
                     async : false,
                     data: $("#infseguimiento").serialize(),
                     success : function(responseText) {
-      
                         $('#example').dataTable( {
                         "data": responseText
                         });
                       }
                     });
-                        
-                $('#example').DataTable.fnClearTable();      
-                $('#example').each(function() {
-                    dt = $(this).DataTable();
-                    dt.fnDraw();
+                    
+                    
+                    //recarga los datos nuevamente en el dataTable por ajax
+                    t.ajax.reload();
+               
                 });
-              
-                });
-                
+
               
             });
             
