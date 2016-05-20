@@ -39,7 +39,11 @@ public class ServletGuardarSeguimiento extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         int idTicket = 2;
+        
+        //String valTicket = String.valueOf(request.getParameter("idTicket"));
+            
+            //int idTicket = Integer.parseInt(valTicket);
+            int idTicket=2;               
             
             DaoTicket daoTicket = new DaoTicket(); 
             
@@ -85,12 +89,12 @@ public class ServletGuardarSeguimiento extends HttpServlet {
     }
 
    
-        @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
           doGet(request, response);
         
-        }
+    }
     
         
 }

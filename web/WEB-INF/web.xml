@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>ServletEditarTicket</servlet-name>
-        <servlet-class>controlador.ServletEditarTicket</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ServletVerTicket</servlet-name>
         <servlet-class>controlador.ServletVerTicket</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>ServletEditarTicket</servlet-name>
-        <url-pattern>/ServletEditarTicket</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletVerTicket</servlet-name>
         <url-pattern>/ServletVerTicket</url-pattern>

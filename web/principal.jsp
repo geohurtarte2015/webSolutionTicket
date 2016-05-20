@@ -55,6 +55,42 @@
        <![endif]-->
        <script>
     $(document).ready(function() {
+     var t= $('#example').DataTable( {
+                    "ajax": "ServletVerTicket",
+                    "global" : false,
+                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
+                    "dataType" : "json",
+                     success : function(responseText) {
+                       $('#example').dataTable( {
+                       "data": responseText
+                       });
+                     }
+                     
+                 });
+     
+     
+                 
+    $("#submit").click(function(){                    
+                    $.ajax({
+                    type: "GET",
+                    url: "ServletGuardarSeguimiento",
+                    global: false,
+                    async : false,
+                    data: $("#infseguimiento").serialize(),
+                    success : function(responseText) {
+                        $('#example').dataTable( {
+                        "data": responseText
+                        });
+                      }
+                    });
+                    
+                    
+                    //recarga los datos nuevamente en el dataTable por ajax
+                    t.ajax.reload();
+               
+                });   
+        
+        
     $('#table_ticket').DataTable({           
 
              "bFilter": false,
@@ -70,8 +106,17 @@
                 }
            
             
-            });  
+            }); 
+            
+     t.ajax.reload();   
+          
+            
     });
+    
+    
+    
+    
+    
     </script>
 
 </head>
@@ -551,7 +596,7 @@
                                         <td id="fecha"  align="center"><%= ticket.getFecha() %></td>
                                         
                                         <td   id="editar" style="width: 25px; text-align: center;">
-                                        <a href="ServletEditarTicket?idTicket=<%= ticket.getId()%>">
+                                        <a href="ServletVerTicket?idTicket=<%= ticket.getId()%>" data-toggle="modal" data-target="#myModal">
                                         <img  src="img/pencil.png" width="16" height="16"  border="0" />       
                                         </a>                            
                                         </td>
@@ -567,6 +612,51 @@
                         
                         <!-- /.panel-heading -->
                         <div class="panel-body">
+                             <!-- Modal -->
+                            <div style="display: none;" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                         <form role="form" action="/" id="infseguimiento">
+                                          <div class="row">
+                                                <div class='col-lg-4'>
+                                                    <div class="form-group">
+                                                        <div class="form-group">                                    
+                                                            <textarea class="form-control" style="min-width: 100%; margin: 0px -391.672px 0px 0px; width: 562px; height: 138px;" rows="5" name="descripcionSeguimiento"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                          </div>
+                                            
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                          <button  type="button" id="submit" class="btn btn-primary">Save changes</button>
+                                         </form>     
+                                         
+                                        </div>
+                                        <div class="modal-footer">
+                                            
+                                            <table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
+                                          
+                                            <thead>
+                                                <tr>
+                                                <th>id</th>
+                                                <th>fecha</th>
+                                                <th>descripcion</th>      
+                                                </tr>
+                                            </thead>
+                                            
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
              
                         </div>
                         <!-- /.panel-body -->

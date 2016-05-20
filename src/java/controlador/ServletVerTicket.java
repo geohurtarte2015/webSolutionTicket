@@ -37,9 +37,13 @@ public class ServletVerTicket extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-            //int idTicket = Integer.parseInt(request.getParameter("idTicket"));
+          String valTicket = String.valueOf(request.getParameter("idTicket"));
+            
+          int idTicket = Integer.parseInt(valTicket);
+        
+            //int idTicket = Integer.parseInt(request.getParameter("idTicketSel"));
             //temporal
-            int idTicket = 2;
+            //int idTicket = 2;
             
             
             response.setContentType("application/json");

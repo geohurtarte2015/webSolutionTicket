@@ -46,7 +46,7 @@
                  });
                  
                  
-                $("#submit").click(function(){                    
+            $("#submit").click(function(){                    
                     $.ajax({
                     type: "GET",
                     url: "ServletGuardarSeguimiento",
