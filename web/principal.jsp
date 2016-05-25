@@ -55,6 +55,16 @@
        <![endif]-->
        <script>
     $(document).ready(function() {
+    
+     $("#linkClick").click(function() {
+        alert("Hello");
+    });
+     
+     $("#linkClick2").click(function() {
+        alert("Esta es otra prueba");
+    });
+    
+    
      var t= $('#example').DataTable( {
                     "ajax": "ServletVerTicket",
                     "global" : false,
@@ -617,7 +627,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
                                             <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                                         </div>
                                         <div class="modal-body">
