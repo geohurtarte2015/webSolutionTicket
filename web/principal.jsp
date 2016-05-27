@@ -54,18 +54,11 @@
            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
        <![endif]-->
        <script>
+   
+    
     $(document).ready(function() {
     
-     $("#linkClick").click(function() {
-        alert("Hello");
-    });
-     
-     $("#linkClick2").click(function() {
-        alert("Esta es otra prueba");
-    });
-    
-    
-     var t= $('#example').DataTable( {
+    var t= $('#example').DataTable( {
                     "ajax": "ServletVerTicket",
                     "global" : false,
                     "lengthMenu": [[ 2, -1], [ 2,"All"]],
@@ -77,7 +70,31 @@
                      }
                      
                  });
+     t.ajax.reload(); 
+    
+      
+     $('a[href="#dialog"]').click(function(){
+         var idTicket = $(this).attr("name");
+         
+         alert(idTicket);
+         
+         $.ajax({
+                    type: "GET",
+                    url: "ServletVerTicket",
+                    global: false,
+                    async : false,
+                    data: {
+                            idTicket: idTicket
+                            },
+                    success : function(responseText) {
+                        $('#example').dataTable( {
+                        "data": responseText
+                        });
+                      }
+         
+                });   
      
+     });  
      
                  
     $("#submit").click(function(){                    
@@ -101,7 +118,7 @@
                 });   
         
         
-    $('#table_ticket').DataTable({           
+        $('#table_ticket').DataTable({           
 
              "bFilter": false,
               "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
@@ -118,8 +135,8 @@
             
             }); 
             
-     t.ajax.reload();   
-          
+  
+   
             
     });
     
@@ -610,6 +627,12 @@
                                         <img  src="img/pencil.png" width="16" height="16"  border="0" />       
                                         </a>                            
                                         </td>
+                                        <td   id="test" style="width: 25px; text-align: center;">
+                                        <a href="#dialog" name="<%= ticket.getId()%>"  id="linkFunction">
+                                          
+                                        <img  src="img/lupa.png" width="16" height="16"  border="0" />       
+                                        </a>                            
+                                        </td>
 
                                     </tr>
                                     <%}%>
@@ -619,7 +642,7 @@
                             </div> 
                         </div>
                         
-                        
+                       
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                              <!-- Modal -->
@@ -627,7 +650,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                                             <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                                         </div>
                                         <div class="modal-body">
