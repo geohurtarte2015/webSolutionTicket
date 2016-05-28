@@ -38,7 +38,11 @@ public class ServletVerTicket extends HttpServlet {
             throws ServletException, IOException {
         
           String valTicket = String.valueOf(request.getParameter("idTicket"));
-            
+          
+          if(valTicket != null && !valTicket.isEmpty()){
+              valTicket="2";
+          }
+          
           int idTicket = Integer.parseInt(valTicket);
         
             //int idTicket = Integer.parseInt(request.getParameter("idTicketSel"));

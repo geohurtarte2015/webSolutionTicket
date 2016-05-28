@@ -52,15 +52,8 @@
                     url: "ServletGuardarSeguimiento",
                     global: false,
                     async : false,
-                    data: $("#infseguimiento").serialize(),
-                    success : function(responseText) {
-                        $('#example').dataTable( {
-                        "data": responseText
-                        });
-                      }
+                    data: $("#infseguimiento").serialize()
                     });
-                    
-                    
                     //recarga los datos nuevamente en el dataTable por ajax
                     t.ajax.reload();
                
