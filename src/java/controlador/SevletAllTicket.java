@@ -5,7 +5,6 @@
  */
 package controlador;
 
-import structuras.DataTableObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dao.DaoTicket;
@@ -14,19 +13,18 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import pojo.Seguimiento;
 import pojo.Ticket;
+import structuras.DataTableObject;
 
 
-public class ServletVerTicket extends HttpServlet {
-    
-    
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+public class SevletAllTicket extends HttpServlet {
+
+ protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
   
@@ -37,19 +35,13 @@ public class ServletVerTicket extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-          String valTicket = String.valueOf(request.getParameter("idTicket"));
-          
-          if(valTicket.equals("null") && valTicket.isEmpty()){
-              valTicket="2";
-          }
-          
-        
-          
-          int idTicket = Integer.parseInt(valTicket);
+          //String valTicket = String.valueOf(request.getParameter("idTicket"));
+            
+          //int idTicket = Integer.parseInt(valTicket);
         
             //int idTicket = Integer.parseInt(request.getParameter("idTicketSel"));
             //temporal
-             //idTicket = 2;
+            int idTicket = 2;
             
             
             response.setContentType("application/json");
@@ -89,6 +81,5 @@ public class ServletVerTicket extends HttpServlet {
             throws ServletException, IOException {
           doGet(request, response);
     }
-
 
 }

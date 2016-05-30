@@ -122,11 +122,12 @@
                             idTicket: idTicket
                             },
                     success : function(json) {
-                        t.fnClearTable();
-                        t.DataTable({
-                            "data": json
-                   
-                        });
+                        
+                        //var myJsonString = JSON.stringify(json);
+                        
+                        t.clear().draw();                  
+                        t.rows.add(dataSet);
+                        t.columns.adjust().draw();
                       }
                 });
                 

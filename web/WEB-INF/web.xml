@@ -4,9 +4,17 @@
         <servlet-name>ServletVerTicket</servlet-name>
         <servlet-class>controlador.ServletVerTicket</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SevletAllTicket</servlet-name>
+        <servlet-class>controlador.SevletAllTicket</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletVerTicket</servlet-name>
         <url-pattern>/ServletVerTicket</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SevletAllTicket</servlet-name>
+        <url-pattern>/SevletAllTicket</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

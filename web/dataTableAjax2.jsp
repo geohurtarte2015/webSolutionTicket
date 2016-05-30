@@ -36,13 +36,7 @@
                     "ajax": "ServletVerTicket",
                     "global" : false,
                     "lengthMenu": [[ 2, -1], [ 2,"All"]],
-                    "dataType" : "json",
-                     success : function(responseText) {
-                       $('#example').dataTable( {
-                       "data": responseText
-                       });
-                     }
-                     
+                    "dataType" : "json"
                  });
                  
                  
