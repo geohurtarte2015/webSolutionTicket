@@ -23,7 +23,7 @@ import pojo.Seguimiento;
 import pojo.Ticket;
 
 
-public class ServletVerTicket extends HttpServlet {
+public class ServletVerTicketOriginal extends HttpServlet {
     
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -39,8 +39,6 @@ public class ServletVerTicket extends HttpServlet {
         
           String valTicket = String.valueOf(request.getParameter("idTicket"));
           
-          valTicket ="2";
-          
           if(valTicket.equals("null") && valTicket.isEmpty()){
               valTicket="2";
           }
@@ -51,7 +49,7 @@ public class ServletVerTicket extends HttpServlet {
         
             //int idTicket = Integer.parseInt(request.getParameter("idTicketSel"));
             //temporal
-            
+            //idTicket = 2;
             
             
             response.setContentType("application/json");
