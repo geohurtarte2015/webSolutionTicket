@@ -5,6 +5,10 @@
         <servlet-class>controlador.ServletVerTicket</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ServletVerSeguimientos</servlet-name>
+        <servlet-class>controlador.ServletVerSeguimientos</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>SevletAllTicket</servlet-name>
         <servlet-class>controlador.SevletAllTicket</servlet-class>
     </servlet>
@@ -12,6 +16,10 @@
         <servlet-name>test4</servlet-name>
         <servlet-class>controlador.test4</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletVerSeguimientos</servlet-name>
+        <url-pattern>/ServletVerSeguimientos</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletVerTicket</servlet-name>
         <url-pattern>/ServletVerTicket</url-pattern>

@@ -36,12 +36,12 @@ public class ServletVerTicket extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+          
+          
+          String valTicket = String.valueOf(request.getParameter("ticket"));
+          
         
-          String valTicket = String.valueOf(request.getParameter("idTicket"));
-          
-          valTicket ="2";
-          
-          if(valTicket.equals("null") && valTicket.isEmpty()){
+          if(valTicket.equals("null")|| valTicket.equals(null)|| valTicket==null){
               valTicket="2";
           }
           

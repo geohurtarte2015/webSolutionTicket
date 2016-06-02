@@ -5,59 +5,58 @@
  */
 package controlador;
 
+import structuras.DataTableObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dao.DaoTicket;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import pojo.Seguimiento;
 import pojo.Ticket;
-import structuras.DataTableObject;
-
-/**
- *
- * @author Giovanni
- */
-@WebServlet(name = "ServletGuardarSeguimiento", urlPatterns = {"/ServletGuardarSeguimiento"})
-public class ServletGuardarSeguimiento extends HttpServlet {
 
 
+public class ServletVerSeguimientos extends HttpServlet {
+    
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-     
+        response.setContentType("text/html;charset=UTF-8");
+  
     }
 
+ 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-          String valTicket = String.valueOf(request.getParameter("ticket"));
+          String valTicket = String.valueOf(request.getParameter("idTicket"));
+          
+          //valTicket ="2";
+          
+          if(valTicket.equals("null") && valTicket.isEmpty()){
+              valTicket="2";
+          }
+          
+        
+          
+          int idTicket = Integer.parseInt(valTicket);
+        
+            //int idTicket = Integer.parseInt(request.getParameter("idTicketSel"));
+            //temporal
             
-            int idTicket = Integer.parseInt(valTicket);
-            //int idTicket=2;               
-            
-            DaoTicket daoTicket = new DaoTicket(); 
             
             
-            //Guarda ticket
-            Seguimiento seguimientoTicket= new Seguimiento(request.getParameter("descripcionSeguimiento").toUpperCase(),"28/04/2016");    
-            
-            //VALIDA SI SEGUIMIENTO ESTA EN BLANCO O NO
-            if (!seguimientoTicket.getDescripcion().trim().isEmpty() && seguimientoTicket.getDescripcion()!=null){
-            //agrega seguimientos despues de haber guardado un ticket
-                daoTicket.addSeguimiento(idTicket, seguimientoTicket);  
-            }
-    
             response.setContentType("application/json");
+            PrintWriter out = response.getWriter();           
+            DaoTicket daoTicket = new DaoTicket();  
             
             Ticket ticket = daoTicket.getByIdObject(idTicket);
             List<Seguimiento> seguimientos = ticket.getSeguimientos(); 
@@ -78,14 +77,10 @@ public class ServletGuardarSeguimiento extends HttpServlet {
             object.add(seguimiento.getDescripcion());
             objectSeguimientos.add(object);
             }
-            
-            dataTableObject.setAaData(objectSeguimientos);     
-            
+          
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(dataTableObject);
+            String json = gson.toJson(objectSeguimientos);
             out.print(json);
-            
-                        
     }
 
    
@@ -93,8 +88,7 @@ public class ServletGuardarSeguimiento extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
           doGet(request, response);
-        
     }
-    
-        
+
+
 }

@@ -55,28 +55,42 @@
        <![endif]-->
        <script>
    
+
+    var ticket;
     
     $(document).ready(function() {
         
-        
-        
-         var t= $('#example').DataTable( {
-                    "ajax": "ServletVerTicket",
+      
+       
+      //INICIALIZACION DEL DATA_TABLE 
+      var t= $('#example').DataTable( {
+                    "ajax" : {
+                        "url": "ServletVerTicket",
+                        "type": "POST",
+                        "data" : function(d){
+                            d.ticket = ticket;
+                            }
+                    },
                     "global" : false,
                     "lengthMenu": [[ 2, -1], [ 2,"All"]],
                     "dataType" : "json"
                  });
     
 
-      
+      //VER CARGA DE SEGUIMIENTOS POR TICKET ID
      $('a[href="#dialog"]').click(function(){
-         var idTicket = $(this).attr("name");
-         
-         alert(idTicket);
-                 
+           idTicket = $(this).attr("name");
+           ticket = $(this).attr("name");
+           
+           //LIMPIA EL DATA_TABLE
+            t.clear().draw();
+           
+           //recarga los datos nuevamente en el dataTable por ajax
+           t.ajax.reload();          
+            /*
          $.ajax({
-                    type: "GET",
-                    url: "ServletVerTicket",                    
+                   type: "GET",
+                    url: "ServletVerSeguimientos",                    
                     global: false,
                     async : false,
                     dataType : "json",
@@ -84,65 +98,65 @@
                             idTicket: idTicket
                             },
                     success : function(json) {
-                        
-                        //var myJsonString = JSON.stringify(json);
-                        
-                        t.clear().draw();                  
-                        t.rows.add(json);
-                        t.columns.adjust().draw();
+                        //se carga la nueva informacion
+                        t.clear().draw();   //LIMPIA LA TABLA                
+                        t.rows.add(json);   //AGREGA LA INFORMACION DE RESULTADO JSON
+                        t.columns.adjust().draw(); //DIBUJA LA TABLA DE NUEVO 
                       }
                 });
-                
-                
-          t.ajax.reload(); 
-     
-     });  
-     
+  */    
+        });  
+      
+      
+     //GUARDA NUEVO SEGUIMIENTO     
+     $("#submit").click(function(){ 
+           descripcionSeguimiento=$('#txtSeguimiento').val();
+            alert(descripcionSeguimiento);
                  
-            $("#submit").click(function(){                    
                     $.ajax({
                     type: "GET",
                     url: "ServletGuardarSeguimiento",
                     global: false,
                     async : false,
-                    data: $("#infseguimiento").serialize()
+                    data: {
+                        descripcionSeguimiento: descripcionSeguimiento,
+                        ticket: ticket
+                    }
                     });
-                    //recarga los datos nuevamente en el dataTable por ajax
-                    t.ajax.reload();
-               
-                });
-                   
                     
                     //recarga los datos nuevamente en el dataTable por ajax
-                   
+                     t.ajax.reload();
                
-                });   
-       
-        
-        $('#table_ticket').DataTable({           
+                });
+                
+             $('#table_ticket').DataTable({           
 
              "bFilter": false,
               "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                    if ( aData[0] == "2" )
+                    if ( aData[0] == "1" )
                     {
                         $('td', nRow).css('background-color', '#d9534f');
                     }
-                    else if ( aData[0] == "9" )
+                    else if ( aData[0] == "2" )
                     {
                         $('td', nRow).css('background-color', '#f0ad4e');
                     }
                 }
            
             
-            }); 
+            });  
+                   
+               
+   });   
+       
+        
+        
             
   
-   
-            
-    });
+
     
     
-    
+
     
     
     </script>
@@ -587,8 +601,6 @@
             <!-- /.row -->
             
             
-            
-            
             <div class="row">
                 <div class="col-lg-12">
                      <div class="panel panel-default">
@@ -656,12 +668,12 @@
                                             <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                                         </div>
                                         <div class="modal-body">
-                                         <form role="form" action="/" id="infseguimiento">
+                  
                                           <div class="row">
                                                 <div class='col-lg-4'>
                                                     <div class="form-group">
                                                         <div class="form-group">                                    
-                                                            <textarea class="form-control" style="min-width: 100%; margin: 0px -391.672px 0px 0px; width: 562px; height: 138px;" rows="5" name="descripcionSeguimiento"></textarea>
+                                                            <textarea id="txtSeguimiento" class="form-control" style="min-width: 100%; margin: 0px -391.672px 0px 0px; width: 562px; height: 138px;" rows="5" name="descripcionSeguimiento"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -669,7 +681,7 @@
                                             
                                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                           <button  type="button" id="submit" class="btn btn-primary">Save changes</button>
-                                         </form>     
+                                          
                                          
                                         </div>
                                         <div class="modal-footer">
