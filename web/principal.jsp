@@ -133,7 +133,7 @@
 
              "bFilter": false,
               "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                    if ( aData[0] == "1" )
+                    if ( aData[0] == "10" )
                     {
                         $('td', nRow).css('background-color', '#d9534f');
                     }
@@ -617,6 +617,8 @@
                                     <th>Analista</th>
                                     <th>Causa</th>
                                     <th>Fecha</th>
+                                    <th></th>
+                                    <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>

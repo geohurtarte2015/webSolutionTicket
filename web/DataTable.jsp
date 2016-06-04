@@ -54,11 +54,11 @@
 
              "bFilter": false,
               "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                    if ( aData[0] == "1" )
+                    if ( aData[0] == "2" )
                     {
                         $('td', nRow).css('background-color', '#d9534f');
                     }
-                    else if ( aData[3] == "22" )
+                    else if ( aData[0] == "11" )
                     {
                         $('td', nRow).css('background-color', '#f0ad4e');
                     }
@@ -83,6 +83,8 @@
                <th>Analista</th>
                 <th>Causa</th>
                 <th>Fecha</th>
+                <th></th>
+                
             </tr>
         </thead>
         <tfoot>
@@ -92,6 +94,7 @@
                <th>Analista</th>
                 <th>Causa</th>
                 <th>Fecha</th>
+                <th></th>
             </tr>
         </tfoot>
         <tbody>
@@ -109,6 +112,13 @@
                 <td id="causa"  align="center"><%= ticket.getCausa() %></td>
 
                 <td id="fecha"  align="center"><%= ticket.getFecha() %></td>
+                
+                <td   id="test" style="width: 25px; text-align: center;">
+                       <a href="#dialog" name="<%= ticket.getId()%>"  id="linkFunction" data-toggle="modal" data-target="#myModal">
+                                          
+                        <img  src="img/lupa.png" width="16" height="16"  border="0" />       
+                        </a>                            
+                 </td>
               
             </tr>
             <%}%>
