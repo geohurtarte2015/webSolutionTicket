@@ -14,6 +14,8 @@ and open the template in the editor.
         
         <link rel="stylesheet" type="text/css" media="screen" href="plantilla/bower_components/bootstrap/dist/css/bootstrap.min.css" />
         <link href="bootdate/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+        
+        
         <script type="text/javascript" src="plantilla/js/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="plantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="plantilla/js/moment.js"></script>
@@ -44,7 +46,7 @@ and open the template in the editor.
                                 Launch Demo Modal
                             </button>
                             <!-- Modal -->
-              <div style="display: none;" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                             <div style="display: none;" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                  <div class="modal-dialog modal-lg">
                    <div class="modal-content">
                         <div class="modal-header">                                           
@@ -193,9 +195,7 @@ and open the template in the editor.
                
                                             
                              </div>
-                       
-                       
-                                        
+                         
                                
                             <div style="display: none;" class="modal fade" id="myModalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -263,7 +263,7 @@ and open the template in the editor.
             
                     $(document).ready(function() {
                     $('#example2').DataTable( {
-                     "ajax": "ServletVerTicket",
+                     "ajax": "ServletVerTicket"
                      
                     });
                     });

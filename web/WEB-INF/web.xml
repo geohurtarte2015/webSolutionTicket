@@ -5,32 +5,24 @@
         <servlet-class>controlador.ServletVerTicket</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletVerSeguimientos</servlet-name>
-        <servlet-class>controlador.ServletVerSeguimientos</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SevletAllTicket</servlet-name>
-        <servlet-class>controlador.SevletAllTicket</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>test4</servlet-name>
         <servlet-class>controlador.test4</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>ServletVerSeguimientos</servlet-name>
-        <url-pattern>/ServletVerSeguimientos</url-pattern>
-    </servlet-mapping>
+    <servlet>
+        <servlet-name>ServletGuardarTicket</servlet-name>
+        <servlet-class>controlador.ServletGuardarTicket</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletVerTicket</servlet-name>
         <url-pattern>/ServletVerTicket</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SevletAllTicket</servlet-name>
-        <url-pattern>/SevletAllTicket</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>test4</servlet-name>
         <url-pattern>/test4</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletGuardarTicket</servlet-name>
+        <url-pattern>/ServletGuardarTicket</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

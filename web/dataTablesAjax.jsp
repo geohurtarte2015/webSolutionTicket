@@ -1,4 +1,6 @@
 
+<%@page import="pojo.Analista"%>
+<%@page import="dao.DaoAnalista"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -30,46 +32,15 @@
          <!-- DataTables JavaScript -->
         <script src="plantilla/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
         
-        <script type="text/javascript" charset="utf-8">
-            $(document).ready(function() {
-            $(".table1").dataTable( {
-            "bProcessing": false,
-            "bServerSide": false,
-            "sAjaxSource": "ServletDataTable",
-            "bJQueryUI": true,
-            "aoColumns": [
-            { "mData": "Name" },
-            { "mData": "Mark" }   
-                ]    } ); 
-            } );
-            </script>
         
-
-        <title>Data Table with Ajax</title>
-    </head>
-    <body>
-        <h1>Tabla por Ajax</h1>
-        <table class="display table1" cellspacing="0" width="100%">
-            <thead>
-            <tr>
-            <th width="10%">Name</th>
-            <th width="10%">Mark</th>           
-            </tr>
-            </thead>
-        </table>
-        
-        <h1>Tabla por Ajax</h1>
-        <table name="table2" cellspacing="0" width="100%">
-            <thead>
-            <tr>
-            <th width="10%">Name</th>
-            <th width="10%">Mark</th>           
-            </tr>
-            </thead>
-        </table>
- 
-        
-        
+        <%                          
+                        DaoAnalista daoAnalista = new DaoAnalista();
+                        Analista analista = new Analista();
+                        analista = daoAnalista.getByIdObject(1);
+                    %>
+                    
+                    
+                    <p><%= analista.getNombre()+" "+analista.getApellido() %></p>
 
     </body>
 </html>

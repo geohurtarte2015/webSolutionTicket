@@ -1,3 +1,17 @@
+<%@page import="pojo.Analista"%>
+<%@page import="dao.DaoAnalista"%>
+<%@page import="pojo.Estado"%>
+<%@page import="dao.DaoEstado"%>
+<%@page import="pojo.Impacto"%>
+<%@page import="dao.DaoImpacto"%>
+<%@page import="pojo.Servidor"%>
+<%@page import="dao.DaoServidor"%>
+<%@page import="pojo.ServicioModulo"%>
+<%@page import="dao.DaoServicioModulo"%>
+<%@page import="pojo.Modulo"%>
+<%@page import="dao.DaoModulo"%>
+<%@page import="pojo.Servicio"%>
+<%@page import="dao.DaoServicio"%>
 <%@page import="pojo.Ticket"%>
 <%@page import="dao.DaoTicket"%>
 <!DOCTYPE html>
@@ -11,7 +25,26 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>Web Solution Ticket 1.0</title>
+    
+       
+    
+        <link rel="stylesheet" type="text/css" media="screen" href="plantilla/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+        <link href="bootdate/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+        
+        
+        <script type="text/javascript" src="plantilla/js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="plantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="plantilla/js/moment.js"></script>
+	<script src="bootdate/src/js/bootstrap-datetimepicker.js"></script>  
+        
+         
+        <!-- DataTables JavaScript -->
+        <script src="plantilla/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script src="plantilla/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+        
+        <!-- DataTables CSS -->
+        <link href="plantilla/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet"> 
     
         <!-- Bootstrap Core CSS -->
         <link href="plantilla/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -22,20 +55,15 @@
         <!-- DataTables CSS -->
         <link href="plantilla/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
 
-        <!-- DataTables Responsive CSS -->
-        <link href="plantilla/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-
         <!-- Custom CSS -->
         <link href="plantilla/dist/css/sb-admin-2.css" rel="stylesheet">
 
         <!-- Custom Fonts -->
         <link href="plantilla/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         
-        <!-- jQuery -->
-        <script src="plantilla/bower_components/jquery/dist/jquery.min.js"></script>
+        
 
-        <!-- Bootstrap Core JavaScript -->
-        <script src="plantilla/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        
 
         <!-- Metis Menu Plugin JavaScript -->
         <script src="plantilla/bower_components/metisMenu/dist/metisMenu.min.js"></script>
@@ -53,17 +81,16 @@
            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
        <![endif]-->
-       <script>
-   
-
-    var ticket;
-    
+    <script>
+     var ticket;
+ 
+     
     $(document).ready(function() {
-        
       
-       
-      //INICIALIZACION DEL DATA_TABLE 
-      var t= $('#example').DataTable( {
+      
+         
+     //INICIALIZACION DEL DATA_TABLE SEGUIMIENTOS "example"
+     var t= $('#example').DataTable( {
                     "ajax" : {
                         "url": "ServletVerTicket",
                         "type": "POST",
@@ -77,9 +104,9 @@
                  });
     
 
-      //VER CARGA DE SEGUIMIENTOS POR TICKET ID
+      //LLAMADA DE CARGA POR AJAX DE SEGUIMIENTOS POR TICKET ID
      $('a[href="#dialog"]').click(function(){
-           idTicket = $(this).attr("name");
+        
            ticket = $(this).attr("name");
            
            //LIMPIA EL DATA_TABLE
@@ -108,10 +135,9 @@
         });  
       
       
-     //GUARDA NUEVO SEGUIMIENTO     
+     //PARAMETROS POR AJAX PARA GUARDAR NUEVO SEGUIMIENTO     
      $("#submit").click(function(){ 
            descripcionSeguimiento=$('#txtSeguimiento').val();
-            alert(descripcionSeguimiento);
                  
                     $.ajax({
                     type: "GET",
@@ -126,10 +152,11 @@
                     
                     //recarga los datos nuevamente en el dataTable por ajax
                      t.ajax.reload();
-               
+                     alert("Seguimiento Guardado");
                 });
                 
-             $('#table_ticket').DataTable({           
+      //INICIALIZACION DEL DATA_TABLE TICKETS  "table_ticket"
+      var tableTicket= $('#table_ticket').DataTable({           
 
              "bFilter": false,
               "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
@@ -142,22 +169,54 @@
                         $('td', nRow).css('background-color', '#f0ad4e');
                     }
                 }
+                
+        });             
+      
+      //PARAMETROS POR AJAX PARA GUARDAR NUEVO TICKET     
+     $("#guardarticket").click(function(){ 
+         
+           titulo=$('#titulotxt').val();
+
+           servicio=$('select[id=serviciotxt]').val();
+           modulo=$('select[id=modulotxt]').val();
+           servicioModulo=$('select[id=serviciomodulotxt]').val();           
+           nombreServidor=$('select[id=nombreservidortxt]').val();           
+           impacto=$('select[id=impactotxt]').val();
+           estado=$('select[id=estadotxt]').val();
            
-            
-            });  
-                   
+           analista = $('#idAnalista').val();
+           fechaInicio=$('#fechainiciotxt').val();
+           fechaFin=$('#fechafinaltxt').val();
+           descripcion=$('#descripciontxt').val();
+           causa=$('#causatxt').val();
+           solucion=$('#soluciontxt').val();
+                 
+                    $.ajax({
+                    type: "GET",
+                    url: "ServletGuardarTicket",
+                    global: false,
+                    async : false,
+                    data: { titulo: titulo,
+                        servicio: servicio,
+                        modulo: modulo,
+                        servicioModulo: servicioModulo,
+                        nombreServidor: nombreServidor,
+                        impacto: impacto,
+                        fechaInicio: fechaInicio,
+                        fechaFin: fechaFin,
+                        descripcion: descripcion,
+                        causa: causa,
+                        solucion: solucion,
+                        estado: estado
+                       
+                    }
+                    });
+                    
+                    //recarga los datos nuevamente en el dataTable por ajax
+                     alert("Ticket Guardado");
+                });
                
-   });   
-       
-        
-        
-            
-  
-
-    
-    
-
-    
+   });
     
     </script>
 
@@ -178,7 +237,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+                <a class="navbar-brand" href="index.html">Web Solution Ticket v1.0</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -504,6 +563,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Tickets Generales</h1>
+                    <%                          
+                        DaoAnalista daoAnalista = new DaoAnalista();
+                        Analista analista = new Analista();
+                        analista = daoAnalista.getByIdObject(1);
+                    %>
+                    <h4  class="page-header">Analista: <%= analista.getNombre()+" "+analista.getApellido() %>  <p hidden="true" id="idAnalista">1</p></h4>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -643,7 +708,7 @@
                                         </a>                            
                                         </td>
                                         <td   id="test" style="width: 25px; text-align: center;">
-                                        <a href="#dialog" name="<%= ticket.getId()%>"  id="linkFunction" data-toggle="modal" data-target="#myModal">
+                                        <a href="#dialog" name="<%= ticket.getId()%>"  id="linkFunction" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">
                                           
                                         <img  src="img/lupa.png" width="16" height="16"  border="0" />       
                                         </a>                            
@@ -659,31 +724,212 @@
                         </div>
                         
                        
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                             <!-- Modal -->
-                            <div style="display: none;" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                <!-- Modal -->
+                 <div style="display: none;" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                 <div class="modal-dialog modal-lg">
+                   <div class="modal-content">
+                        <div class="modal-header">                                           
+                            <h4 class="modal-title" id="myModalLabel">Mantenimiento Ticket</h4>
+                        </div>
+                   <div class="modal-body">
+                                          
+                     <div class="panel panel-default">
+                                     
+                                            <!-- /.panel-body -->
+                          <div class="panel-body">
+                            
+                            <div class="row">                            
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                            <label>Titulo del Ticket</label>
+                                            <input class="form-control" id="titulotxt" placeholder="Titulo">
+                                    </div>
+                                </div>
+                            </div><!-- /.Titulo -->
+                              
+                            <div class="row">
+                                
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                            <label>Servicio</label>
+                                            <select id="serviciotxt" class="form-control">
+                                                <option>seleccionar</option> 
+                                                <%
+                                                    DaoServicio daoServicio= new DaoServicio();
+                                                    for(Servicio servicio: daoServicio.listAll()){
+                                                %>  
+                                                <option name="option" value=<%= servicio.getIdServicioModulo() %>> <%= servicio.getDescripcion() %></option>  
+                                                <%}%> 
+                                            </select>
+                                        </div> 
+                                  
+                                </div>   
+                                
+                                 
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                            <label>Modulo</label>
+                                            <select id="modulotxt" class="form-control">
+                                                <option>seleccionar</option> 
+                                                 <%
+                                                    DaoModulo daoModulo= new DaoModulo();
+                                                    for(Modulo modulo: daoModulo.listAll()){
+                                                  %>
+                                                <option value=<%= modulo.getIdModulo() %>> <%= modulo.getDescripcion() %></option>      
+                                                 <%}%> 
+                                            </select>
+                                        </div> <!-- /.Modulo -->
+                                </div>
+                               
+                                
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                            <label>Servicio Modulo</label>
+                                            <select id="serviciomodulotxt" class="form-control">
+                                                <option>seleccionar</option> 
+                                                <%
+                                                    DaoServicioModulo daoServicioModulo= new DaoServicioModulo();
+                                                    for(ServicioModulo servicioModulo: daoServicioModulo.listAll()){
+                                                %>  
+                                                <option name="option" value=<%= servicioModulo.getIdServicioModulo() %>><%= servicioModulo.getDescripcion() %></option>
+                                                <%}%> 
+                                            </select>
+                                        </div> <!-- /.Servicio Modulo -->                                
+                                </div>
+                                            
+                            </div> <!-- /.Modulos Servicios -->
+                            <div class="row">
+                                
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                            <label>Nombre Servidor</label>
+                                            <select id="nombreservidortxt" class="form-control">
+                                                <option>seleccionar</option>
+                                                <%
+                                                    DaoServidor daoServidor= new DaoServidor();
+                                                    for(Servidor servidor: daoServidor.listAll()){
+                                                %>
+                                                <option value=<%= servidor.getIdServidor() %>><%= servidor.getDescripcion() %></option>                                               
+                                                 <%}%> 
+                                            </select>
+                                        </div> <!-- /.Servidor -->  
+                                </div>
+                                 
+                                 
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                            <label>Impacto</label>
+                                            <select id="impactotxt" class="form-control">
+                                                <option>Seleccionar</option>
+                                                <%
+                                                    DaoImpacto daoImpacto= new DaoImpacto();
+                                                    for(Impacto impacto: daoImpacto.listAll()){
+                                                %> 
+                                                <option value=<%= impacto.getIdImpacto() %>> <%= impacto.getDescripcion() %></option>  
+                                                <%}%>
+                                            </select>
+                                        </div> <!-- /.Impacto -->  
+                                </div>
+                                  
+                            </div><!-- /.Impacto en Servidor -->
+                            <div class="row">
+                                <div class='col-lg-4'>
+                                    <div class="form-group">
+                                        <label>Fecha Inicio del Evento</label>
+                                        <div class='input-group date' id='fechainicio'>                                            
+                                            <input type='text' id="fechainiciotxt" class="form-control" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='col-lg-4'>
+                                    <div class="form-group">
+                                        <label>Fecha Final del Evento</label>
+                                        <div class='input-group date'  id='fechafinal'>                                            
+                                            <input id="fechafinaltxt" type='text' class="form-control" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>   
+                             </div><!-- /.Fecha Inicio y Final eventos -->
+                             <div class="col-lg-4">
+                                    <div class="form-group">
+                                            <label>Estado</label>
+                                            <select id="estadotxt" class="form-control">
+                                                <option>Seleccionar</option>
+                                                <%
+                                                    DaoEstado daoEstado= new DaoEstado();
+                                                    for(Estado estado: daoEstado.listAll()){
+                                                %> 
+                                                <option value=<%= estado.getIdEstado() %>> <%= estado.getDescripcion() %></option>  
+                                                <%}%>
+                                            </select>
+                                        </div> <!-- /.Impacto -->  
+                                </div>
+                            <div class="row">
+                                <div class='col-lg-4'>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="comment">Descripción</label>
+                                            <textarea class="form-control" rows="5" id="descripciontxt"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='col-lg-4'>
+                                    <div class="form-group">                                        
+                                        <label for="comment">Causa</label>
+                                            <textarea class="form-control" rows="5" id="causatxt"></textarea>
+                                    </div>
+                                </div>
+                                 <div class='col-lg-4'>
+                                    <div class="form-group">                                     
+                                        <label for="comment">Solución</label>
+                                            <textarea class="form-control" rows="5" id="soluciontxt"></textarea>
+                                    </div>
+                                </div>  
+                             </div><!-- /.Descripcion, solucion y causa --> 
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                <button id="guardarticket" type="button" class="btn btn-primary">Guardar Ticket</button>
+                                <button type="button" class="btn btn-primary">Modificar Ticket</button>
+                                <button type="button" class="btn btn-primary " id="myBtnSeguimientoShow" >Crear Seguimiento</button>
+                            </div>
+                            </div>
+                                            
+                           </div>
+                       
+                       
+                                        
+                               
+                            <div style="display: none;" class="modal fade" id="myModalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                            <button type="button" class="close" id="myBtnSeguimientoHide" aria-hidden="true">×</button>
                                             <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                                         </div>
                                         <div class="modal-body">
-                  
+                                    
                                           <div class="row">
                                                 <div class='col-lg-4'>
                                                     <div class="form-group">
                                                         <div class="form-group">                                    
-                                                            <textarea id="txtSeguimiento" class="form-control" style="min-width: 100%; margin: 0px -391.672px 0px 0px; width: 562px; height: 138px;" rows="5" name="descripcionSeguimiento"></textarea>
+                                                            <textarea class="form-control" style="min-width: 100%; margin: 0px -391.672px 0px 0px; width: 562px; height: 138px;" rows="5" id="txtSeguimiento"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
                                           </div>
                                             
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                          <button  type="button" id="submit" class="btn btn-primary">Save changes</button>
-                                          
+                                          <button type="button" class="btn btn-default" id="myBtnSeguimientoHide2">Close</button>
+                                          <button type="button" id="submit" class="btn btn-primary">Save changes</button>
+                                              
                                          
                                         </div>
                                         <div class="modal-footer">
@@ -693,8 +939,8 @@
                                             <thead>
                                                 <tr>
                                                 <th>id</th>
-                                                <th>fecha</th>
-                                                <th>descripcion</th>      
+                                                <th>descripcion</th>
+                                                <th>fecha</th>      
                                                 </tr>
                                             </thead>
                                             
@@ -705,9 +951,18 @@
                                 </div>
                                 <!-- /.modal-dialog -->
                             </div>
-                            <!-- /.modal -->
+                                <!-- /.modal-dialog -->
+                            </div>
+                                <!-- /.modal-dialog -->
+                            
+                                <!-- /.modal-dialog -->
+                            
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                 <!-- /.modal -->
              
-                        </div>
+                </div>
                         <!-- /.panel-body -->
                     </div>            
                  
@@ -721,7 +976,41 @@
             <!-- /.row -->
      
 
-   
+  <script type="text/javascript">
+             
+                    $(function () {
+                    $('#fechainicio').datetimepicker({
+                        format: "DD-MM-YYYY hh:mm:ss a"                      
+                        });
+                    });
+                    
+                    $(function () {
+                    $('#fechafinal').datetimepicker({
+                        format: "DD-MM-YYYY hh:mm:ss a"                      
+                        });
+                    });
+                    
+                    $(document).ready(function(){
+                        $("#myBtnSeguimientoShow").click(function(){
+                            
+                            $("#myModalSeguimiento").modal();
+                          
+                        });
+                    });
+                    
+                    $(document).ready(function(){
+                        $("#myBtnSeguimientoHide").click(function(){
+                            $("#myModalSeguimiento").modal("hide");
+                        });
+                    });
+                    
+                    $(document).ready(function(){
+                        $("#myBtnSeguimientoHide2").click(function(){
+                            $("#myModalSeguimiento").modal("hide");
+                        });
+                    });
+                   
+   </script>   
 
 </body>
 

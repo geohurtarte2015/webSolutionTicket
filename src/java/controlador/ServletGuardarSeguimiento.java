@@ -11,7 +11,11 @@ import dao.DaoTicket;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -40,17 +44,20 @@ public class ServletGuardarSeguimiento extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-          String valTicket = String.valueOf(request.getParameter("ticket"));
+            String valTicket = String.valueOf(request.getParameter("ticket"));
             
-            int idTicket = Integer.parseInt(valTicket);
-            //int idTicket=2;               
+            int idTicket = Integer.parseInt(valTicket);              
             
             DaoTicket daoTicket = new DaoTicket(); 
             
+            //Instancia para fecha actual
+            Fecha newFecha = new Fecha();
+            
             
             //Guarda ticket
-            Seguimiento seguimientoTicket= new Seguimiento(request.getParameter("descripcionSeguimiento").toUpperCase(),"28/04/2016");    
+            Seguimiento seguimientoTicket= new Seguimiento(request.getParameter("descripcionSeguimiento"),newFecha.fechaHoy());    
             
+                       
             //VALIDA SI SEGUIMIENTO ESTA EN BLANCO O NO
             if (!seguimientoTicket.getDescripcion().trim().isEmpty() && seguimientoTicket.getDescripcion()!=null){
             //agrega seguimientos despues de haber guardado un ticket
