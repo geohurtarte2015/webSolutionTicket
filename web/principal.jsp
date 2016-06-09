@@ -856,9 +856,8 @@
                                             </span>
                                         </div>
                                     </div>
-                                </div>   
-                             </div><!-- /.Fecha Inicio y Final eventos -->
-                             <div class="col-lg-4">
+                                </div> 
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                             <label>Estado</label>
                                             <select id="estadotxt" class="form-control">
@@ -872,6 +871,8 @@
                                             </select>
                                         </div> <!-- /.Impacto -->  
                                 </div>
+                             </div><!-- /.Fecha Inicio y Final eventos -->
+                             
                             <div class="row">
                                 <div class='col-lg-4'>
                                     <div class="form-group">
