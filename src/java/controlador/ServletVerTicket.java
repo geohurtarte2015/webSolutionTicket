@@ -41,9 +41,9 @@ public class ServletVerTicket extends HttpServlet {
           String valTicket = String.valueOf(request.getParameter("ticket"));
           
         
-          if(valTicket.equals("null")|| valTicket.equals(null)|| valTicket==null){
-              valTicket="2";
-          }
+      if(valTicket.equals("null")|| valTicket.equals(null)|| valTicket==null){
+          valTicket="0";
+        }
           
         
           

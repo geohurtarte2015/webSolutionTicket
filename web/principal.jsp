@@ -61,9 +61,6 @@
         <!-- Custom Fonts -->
         <link href="plantilla/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         
-        
-
-        
 
         <!-- Metis Menu Plugin JavaScript -->
         <script src="plantilla/bower_components/metisMenu/dist/metisMenu.min.js"></script>
@@ -83,12 +80,11 @@
        <![endif]-->
     <script>
      var ticket;
- 
+     var valAnalista = $('#idAnalista').html();
+     
      
     $(document).ready(function() {
-      
-      
-         
+        
      //INICIALIZACION DEL DATA_TABLE SEGUIMIENTOS "example"
      var t= $('#example').DataTable( {
                     "ajax" : {
@@ -106,7 +102,8 @@
 
       //LLAMADA DE CARGA POR AJAX DE SEGUIMIENTOS POR TICKET ID
      $('a[href="#dialog"]').click(function(){
-        
+            
+           analista = document.getElementById("idUser").value; 
            ticket = $(this).attr("name");
            
            //LIMPIA EL DATA_TABLE
@@ -182,9 +179,8 @@
            servicioModulo=$('select[id=serviciomodulotxt]').val();           
            nombreServidor=$('select[id=nombreservidortxt]').val();           
            impacto=$('select[id=impactotxt]').val();
-           estado=$('select[id=estadotxt]').val();
-           
-           analista = $('#idAnalista').val();
+           estado=$('select[id=estadotxt]').val();       
+           analista = $('#idAnalista').html();
            fechaInicio=$('#fechainiciotxt').val();
            fechaFin=$('#fechafinaltxt').val();
            descripcion=$('#descripciontxt').val();
@@ -207,7 +203,8 @@
                         descripcion: descripcion,
                         causa: causa,
                         solucion: solucion,
-                        estado: estado
+                        estado: estado,
+                        analista: analista
                        
                     }
                     });
@@ -238,6 +235,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="index.html">Web Solution Ticket v1.0</a>
+                <a class="navbar-brand"></a><div hidden="true" id="idAnalista">1</div>
             </div>
             <!-- /.navbar-header -->
 
@@ -568,7 +566,7 @@
                         Analista analista = new Analista();
                         analista = daoAnalista.getByIdObject(1);
                     %>
-                    <h4  class="page-header">Analista: <%= analista.getNombre()+" "+analista.getApellido() %>  <p hidden="true" id="idAnalista">1</p></h4>
+                    <h4  class="page-header">Analista: <%= analista.getNombre()+" "+analista.getApellido() %> </h4>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

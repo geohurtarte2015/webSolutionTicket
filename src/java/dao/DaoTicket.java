@@ -32,10 +32,10 @@ public class DaoTicket {
         Servidor servidor = 
         (Servidor)sesion.get(Servidor.class, idServidor); 
         
-        Estado estado = 
+         Estado estado = 
         (Estado)sesion.get(Estado.class, idEstado); 
         
-        Impacto impacto = 
+         Impacto impacto = 
         (Impacto)sesion.get(Impacto.class, idImpacto); 
         
         Raiz raiz = 
@@ -120,8 +120,11 @@ public class DaoTicket {
        try{
            
            initOperation();
-           ticket = (Ticket) sesion.get(Ticket.class, idTicket);    
-         
+           ticket = (Ticket) sesion.get(Ticket.class, idTicket); 
+           if(ticket==null){
+               
+             ticket = new Ticket("","","","","","");
+           }
        }catch(HibernateException he){
        
         trueExcepcion(he); 
