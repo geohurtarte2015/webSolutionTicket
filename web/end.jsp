@@ -2,6 +2,11 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
+<%
+session.invalidate();//destruye la sesion
+%>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -26,21 +31,9 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Ingreso del Analista</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form method="post" role="form" action="Sesion">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Usuario" name="name" type="text" autofocus>
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="pass" type="password" value="">
-                                </div>
-                                
-                                <input type="submit" value="Ingresar" class="btn btn-lg btn-success btn-block"/>
-                            </fieldset>
-                        </form>
+                        <h2 class="panel-title">Hasta pronto! acaba de salir de la sesión</h2>
+                        <br>
+                        <h2 class="panel-title">Si desea ingresar nuevamente, ingrese <font color="red"><a href="index.jsp">aqui</a></font></h2> 
                     </div>
                 </div>
             </div>

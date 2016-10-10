@@ -45,18 +45,23 @@ public class ServletGuardarTicket extends HttpServlet {
             String idServicioModulo = String.valueOf(request.getParameter("servicioModulo"));
             String idServidor  = String.valueOf(request.getParameter("nombreServidor"));
             String idImpacto = String.valueOf(request.getParameter("impacto"));
+            String idRaiz= "1";
             String idAnalista = String.valueOf(request.getParameter("analista"));
             String fechaInicio = String.valueOf(request.getParameter("fechaInicio"));
             String fechaFin = String.valueOf(request.getParameter("fechaFin"));
             String descripcion = String.valueOf(request.getParameter("descripcion"));
             String causa = String.valueOf(request.getParameter("causa"));
-            String solucion = String.valueOf(request.getParameter("solucion"));            
+            String solucion = String.valueOf(request.getParameter("solucion"));   
+            
+            
             
             //Instancia de DAO
             DaoTicket daoTicket = new DaoTicket();  
             
             //Guarda ticket
             Ticket newTicket= new Ticket( titulo,  fechaInicio,  fechaFin,  descripcion,  causa,  solucion);
+            
+            daoTicket.save(Integer.parseInt(idServidor), Integer.parseInt(idEstado), Integer.parseInt(idImpacto),Integer.parseInt(idRaiz), Integer.parseInt(idAnalista),Integer.parseInt(idServicioModulo),Integer.parseInt(idModulo),Integer.parseInt(idServicio),newTicket);
             
             
             

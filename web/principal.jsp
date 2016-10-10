@@ -15,6 +15,12 @@
 <%@page import="pojo.Ticket"%>
 <%@page import="dao.DaoTicket"%>
 <!DOCTYPE html>
+<%  
+    int id = (int) session.getAttribute("id");  
+    String usuario = (String) session.getAttribute("user");    
+    String nombre = (String) session.getAttribute("nombre");
+    String apellido = (String) session.getAttribute("apellido");
+%>
 <html lang="en">
 
 <head>
@@ -180,7 +186,7 @@
            nombreServidor=$('select[id=nombreservidortxt]').val();           
            impacto=$('select[id=impactotxt]').val();
            estado=$('select[id=estadotxt]').val();       
-           analista = $('#idAnalista').html();
+           analista =<%=String.valueOf(id)%>;   
            fechaInicio=$('#fechainiciotxt').val();
            fechaFin=$('#fechafinaltxt').val();
            descripcion=$('#descripciontxt').val();
@@ -235,7 +241,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="index.html">Web Solution Ticket v1.0</a>
-                <a class="navbar-brand"></a><div hidden="true" id="idAnalista">1</div>
+                <a class="navbar-brand"><%=usuario%></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -440,7 +446,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="CerrarSesion"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -561,12 +567,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Tickets Generales</h1>
-                    <%                          
-                        DaoAnalista daoAnalista = new DaoAnalista();
-                        Analista analista = new Analista();
-                        analista = daoAnalista.getByIdObject(1);
-                    %>
-                    <h4  class="page-header">Analista: <%= analista.getNombre()+" "+analista.getApellido() %> </h4>
+                    
+                    <h4  class="page-header">Analista: <%= nombre+" "+apellido %> </h4>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

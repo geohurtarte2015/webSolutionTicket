@@ -3,9 +3,11 @@ package dao;
 
 import java.util.List;
 import modelo.HibernateUtil;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import pojo.Analista;
 
 public class DaoAnalista {
@@ -75,6 +77,33 @@ public class DaoAnalista {
        
        
        return analista;
+   }
+   
+   public List<Analista> getByCondition(String field, String value){
+       
+       List<Analista> results = null;
+       
+      try{
+           
+           initOperation();
+           Criteria analista =  sesion.createCriteria(Analista.class);  
+           analista.add(Restrictions.eq(field,value));
+            results = analista.list();
+           
+          
+       }catch(HibernateException he){
+       
+        trueExcepcion(he); 
+        throw he; 
+       
+       } finally {
+           
+           sesion.close();
+     
+       }
+     
+     
+      return results;
    }
    
    public Analista update(int idAnalista, String nombre, String apellido, String password, String usuario){
