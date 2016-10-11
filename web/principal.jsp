@@ -108,8 +108,7 @@
 
       //LLAMADA DE CARGA POR AJAX DE SEGUIMIENTOS POR TICKET ID
      $('a[href="#dialog"]').click(function(){
-            
-           analista = document.getElementById("idUser").value; 
+         
            ticket = $(this).attr("name");
            
            //LIMPIA EL DATA_TABLE
@@ -473,10 +472,10 @@
                             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Estadisticas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">Flot Charts</a>
+                                    <a href="flot.html">Estadisticas Charts</a>
                                 </li>
                                 <li>
                                     <a href="morris.html">Morris.js Charts</a>
@@ -485,76 +484,36 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+                            <a href="tables.html"><i class="fa fa-table fa-fw"></i>Reportes</a>
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
+                            <a href="forms.html"><i class="fa fa-sitemap fa-fw"></i>Campos<span class="fa arrow"></span></a></a>
+                              <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="panels-wells.html">Panels and Wells</a>
+                                    <a href="#" data-toggle="modal" data-target="#myModaAnalista" data-backdrop="static" data-keyboard="false">Analista</a>
+                                </li>  
+                                <li>
+                                    <a href="flot.html">Raiz</a>
                                 </li>
                                 <li>
-                                    <a href="buttons.html">Buttons</a>
+                                    <a href="morris.html">Estados</a>
                                 </li>
                                 <li>
-                                    <a href="notifications.html">Notifications</a>
+                                    <a href="morris.html">Impacto</a>
                                 </li>
                                 <li>
-                                    <a href="typography.html">Typography</a>
+                                    <a href="morris.html">Modulos</a>
                                 </li>
                                 <li>
-                                    <a href="icons.html"> Icons</a>
+                                    <a href="morris.html">Servicios</a>
+                                </li>
+                                 <li>
+                                    <a href="morris.html">SubServicio</a>
                                 </li>
                                 <li>
-                                    <a href="grid.html">Grid</a>
+                                    <a href="morris.html">Servidores</a>
                                 </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="#">Second Level Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Second Level Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="blank.html">Blank Page</a>
-                                </li>
-                                <li>
-                                    <a href="login.html">Login Page</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
+                              </ul>
                         </li>
                     </ul>
                 </div>
@@ -733,11 +692,11 @@
                         <div class="modal-header">                                           
                             <h4 class="modal-title" id="myModalLabel">Mantenimiento Ticket</h4>
                         </div>
-                   <div class="modal-body">
+                        <div class="modal-body">
                                           
                      <div class="panel panel-default">
                                      
-                                            <!-- /.panel-body -->
+                          <!-- /.panel-body -->
                           <div class="panel-body">
                             
                             <div class="row">                            
@@ -818,7 +777,7 @@
                                 </div>
                                  
                                  
-                                <div class="col-lg-4">
+                              <div class="col-lg-4">
                                     <div class="form-group">
                                             <label>Impacto</label>
                                             <select id="impactotxt" class="form-control">
@@ -902,14 +861,11 @@
                                 <button type="button" class="btn btn-primary">Modificar Ticket</button>
                                 <button type="button" class="btn btn-primary " id="myBtnSeguimientoShow" >Crear Seguimiento</button>
                             </div>
-                            </div>
+                     </div>
                                             
-                           </div>
-                       
-                       
-                                        
+                    </div>      
                                
-                            <div style="display: none;" class="modal fade" id="myModalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div style="display: none;" class="modal fade" id="myModalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -959,8 +915,82 @@
                                 <!-- /.modal-dialog -->
                             
                                     </div>
+                 <!-- /.modal-content -->
+                 </div>
+                 
+                 <div style="display: none;" class="modal fade" id="myModaAnalista" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" id="myBtnAnalistaHide" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Agregar Analista</h4>
+                                        </div>
+                                        
+                                   
+                                        
+                        <div class="modal-body">
+                                          
+                        <div class="panel panel-default">
+                                     
+                          <!-- /.panel-body -->
+                          <div class="panel-body">
+                            
+                            <div class="row">                            
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                            <label>Nombre</label>
+                                            <input class="form-control" name="AnalistaNombreTxt" id="AnalistaNombreTxt" placeholder="Nombre">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                            <label>Apellido</label>
+                                            <input class="form-control" name="ApellidoAnalistaTxt" id="ApellidoAnalistaTxt" placeholder="Apellido">
+                                    </div>
+                                </div>
+                            </div><!-- /.Nombre Apellido -->  
+                            
+                            <div class="row">                            
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                            <label>Usuario</label>
+                                            <input class="form-control" name="AnalistaUsuarioTxt" id="AnalistaUsuarioTxt" placeholder="Usuario">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                            <label>Password</label>
+                                            <input class="form-control" name="ApellidoUsuarioTxt" id="ApellidoPasswordTxt" placeholder="Password">
+                                    </div>
+                                </div>
+                            </div><!-- /.Usuario Contraseña -->  
+                             
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                <button id="guardartAnalista" type="button" class="btn btn-primary">Guardar</button>
+                                <button type="button" class="btn btn-primary">Modificar</button>
+                                <button type="button" class="btn btn-primary " id="myBtnAnalistaShow" >Crear</button>
+                            </div>
+                            <div class="modal-footer">
+                                <table id="tableAnalista" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
+                                          
+                                            <thead>
+                                                <tr>
+                                                <th>id</th>
+                                                <th>descripcion</th>
+                                                <th>fecha</th>      
+                                                </tr>
+                                            </thead>
+                                            
+                                </table>
+                            </div>
+                     </div>
+                                            
+                    </div>    
+                                    </div>
                                     <!-- /.modal-content -->
                                 </div>
+                                <!-- /.modal-dialog -->
+                 </div>   
                  <!-- /.modal -->
              
                 </div>
@@ -995,6 +1025,14 @@
                         $("#myBtnSeguimientoShow").click(function(){
                             
                             $("#myModalSeguimiento").modal();
+                          
+                        });
+                    });
+                    
+                    $(document).ready(function(){
+                        $("#myBtnAnalistaShow").click(function(){
+                            
+                            $("#myModalAnalista").modal();
                           
                         });
                     });

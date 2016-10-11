@@ -60,12 +60,7 @@ public class Sesion extends HttpServlet {
                 out.println("</html>");
             }
             
-//            if (valPassword){
-//            String usuarioAnalista = nombreAnalista.get(0).getUsuario();
-//            System.out.println(usuarioAnalista);
-//            }else{
-//            System.out.println("Password no valida!");
-//            }
+
             
          
             

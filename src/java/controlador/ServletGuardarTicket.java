@@ -45,7 +45,7 @@ public class ServletGuardarTicket extends HttpServlet {
             String idServicioModulo = String.valueOf(request.getParameter("servicioModulo"));
             String idServidor  = String.valueOf(request.getParameter("nombreServidor"));
             String idImpacto = String.valueOf(request.getParameter("impacto"));
-            String idRaiz= "1";
+            String idRaiz="1";
             String idAnalista = String.valueOf(request.getParameter("analista"));
             String fechaInicio = String.valueOf(request.getParameter("fechaInicio"));
             String fechaFin = String.valueOf(request.getParameter("fechaFin"));
