@@ -20,6 +20,18 @@
         <servlet-name>CerrarSesion</servlet-name>
         <servlet-class>controlador.CerrarSesion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletVerAnalista</servlet-name>
+        <servlet-class>controlador.ServletVerAnalista</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletGuardarAnalista</servlet-name>
+        <servlet-class>controlador.ServletGuardarAnalista</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletEliminarAnalista</servlet-name>
+        <servlet-class>controlador.ServletEliminarAnalista</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletVerTicket</servlet-name>
         <url-pattern>/ServletVerTicket</url-pattern>
@@ -39,6 +51,18 @@
     <servlet-mapping>
         <servlet-name>CerrarSesion</servlet-name>
         <url-pattern>/CerrarSesion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletVerAnalista</servlet-name>
+        <url-pattern>/ServletVerAnalista</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletGuardarAnalista</servlet-name>
+        <url-pattern>/ServletGuardarAnalista</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletEliminarAnalista</servlet-name>
+        <url-pattern>/ServletEliminarAnalista</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

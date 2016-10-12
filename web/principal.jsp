@@ -85,7 +85,8 @@
            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
        <![endif]-->
     <script>
-     var ticket;
+     var ticket;   
+     var idAnalista;
      var valAnalista = $('#idAnalista').html();
      
      
@@ -104,8 +105,69 @@
                     "lengthMenu": [[ 2, -1], [ 2,"All"]],
                     "dataType" : "json"
                  });
-    
-
+     
+     var tableAnalista= $('#table_analista').DataTable( {
+                    "ajax" : {
+                        "url": "ServletVerAnalista",
+                        "type": "GET"
+                    },
+                    "global" : false,
+                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
+                    "dataType" : "json",
+                    "columns" : [
+                     {"title": "Id"},
+                     {"title": "Apellido"},
+                     {"title": "Nombre"},
+                     {"title": "Usuario"},
+                     {"title": "Password"},
+                     {"title": ""},
+                     {"title": ""}
+                    ],
+                    "columnDefs": [ {
+                        "targets": 6,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogAnalista' id='seleccionarAnalista'>"+                          
+                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        },
+                        {
+                        "targets": 5,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogAnalista2' id='EliminarAnalista'>"+                          
+                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        }
+                        ]
+                    });
+                
+                
+                $('#table_analista tbody').on( 'click','#seleccionarAnalista', function () {
+                    var data = tableAnalista.row( $(this).parents('tr') ).data();
+                    alert( data[0] +" SELECCIONADO: "+ data[ 3 ] );
+               } );  
+               
+               $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {
+                    var data = tableAnalista.row( $(this).parents('tr') ).data();
+                      idAnalista=data[0];  
+                      
+                       $.ajax({
+                        type: "GET",
+                        url: "ServletEliminarAnalista",
+                        global: false,
+                        async : false,
+                        data: {
+                            idAnalista: idAnalista
+                        }
+                    });
+                    
+                    //recarga los datos nuevamente en el dataTable por ajax
+                     t.ajax.reload();
+                                       
+                    alert( idAnalista +" ELIMINADO "+ data[ 3 ] );
+                    
+               } );   
+        
+     
       //LLAMADA DE CARGA POR AJAX DE SEGUIMIENTOS POR TICKET ID
      $('a[href="#dialog"]').click(function(){
          
@@ -135,6 +197,7 @@
                 });
   */    
         });  
+
       
       
      //PARAMETROS POR AJAX PARA GUARDAR NUEVO SEGUIMIENTO     
@@ -157,23 +220,6 @@
                      alert("Seguimiento Guardado");
                 });
                 
-      //INICIALIZACION DEL DATA_TABLE TICKETS  "table_ticket"
-      var tableTicket= $('#table_ticket').DataTable({           
-
-             "bFilter": false,
-              "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                    if ( aData[0] == "10" )
-                    {
-                        $('td', nRow).css('background-color', '#d9534f');
-                    }
-                    else if ( aData[0] == "2" )
-                    {
-                        $('td', nRow).css('background-color', '#f0ad4e');
-                    }
-                }
-                
-        });             
-      
       //PARAMETROS POR AJAX PARA GUARDAR NUEVO TICKET     
      $("#guardarticket").click(function(){ 
          
@@ -900,7 +946,6 @@
                                                 <th>fecha</th>      
                                                 </tr>
                                             </thead>
-                                            
                                             </table>
                                         </div>
                                     </div>
@@ -922,7 +967,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <button type="button" class="close" id="myBtnAnalistaHide" aria-hidden="true">×</button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             <h4 class="modal-title" id="myModalLabel">Agregar Analista</h4>
                                         </div>
                                         
@@ -971,16 +1016,20 @@
                                 <button type="button" class="btn btn-primary " id="myBtnAnalistaShow" >Crear</button>
                             </div>
                             <div class="modal-footer">
-                                <table id="tableAnalista" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
+                                <table id="table_analista" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
                                           
-                                            <thead>
+                                             <thead>
                                                 <tr>
-                                                <th>id</th>
-                                                <th>descripcion</th>
-                                                <th>fecha</th>      
+                                                <th>Id</th>
+                                                <th>Apellido</th>
+                                                <th>Nombre</th>
+                                                <th>Usuario</th>
+                                                <th>Password</th> 
+                                                <th>test</th>
+                                                <th>test2</th>
                                                 </tr>
-                                            </thead>
-                                            
+                                             </thead>
+                                             
                                 </table>
                             </div>
                      </div>
@@ -1037,11 +1086,21 @@
                         });
                     });
                     
+                    
+                    
                     $(document).ready(function(){
                         $("#myBtnSeguimientoHide").click(function(){
                             $("#myModalSeguimiento").modal("hide");
                         });
                     });
+                    
+                    
+                    $(document).ready(function(){
+                        $("#myBtnAnalistaHide").click(function(){
+                            $("#myModaAnalista").modal("hide");
+                        });
+                    });
+                    
                     
                     $(document).ready(function(){
                         $("#myBtnSeguimientoHide2").click(function(){
