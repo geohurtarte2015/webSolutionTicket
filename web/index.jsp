@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- Bootstrap Core CSS -->
         <link href="plantilla/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -29,7 +30,7 @@
                         <h3 class="panel-title">Ingreso del Analista</h3>
                     </div>
                     <div class="panel-body">
-                        <form method="post" role="form" action="Sesion">
+                        <form  method="post" role="form" action="Sesion">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Usuario" name="name" type="text" autofocus>

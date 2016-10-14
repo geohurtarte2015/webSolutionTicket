@@ -295,6 +295,22 @@
                     //recarga los datos nuevamente en el dataTable por ajax
                      alert("Ticket Guardado");
                 });
+                
+     //INICIALIZACION DEL DATA_TABLE TICKETS  "table_ticket"
+      var tableTicket= $('#table_ticket').DataTable({           
+             "bFilter": true,
+              "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                    if ( aData[0] == "10" )
+                    {
+                        $('td', nRow).css('background-color', '#d9534f');
+                    }
+                    else if ( aData[0] == "2" )
+                    {
+                        $('td', nRow).css('background-color', '#f0ad4e');
+                    }
+                }
+                
+        });    
                
    });
     
