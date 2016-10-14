@@ -87,6 +87,9 @@
     <script>
      var ticket;   
      var idAnalista;
+     
+     var transaccion;
+     
      var valAnalista = $('#idAnalista').html();
      
      
@@ -141,29 +144,33 @@
                     });
                 
                 
-                $('#table_analista tbody').on( 'click','#seleccionarAnalista', function () {
+     $('#table_analista tbody').on( 'click','#seleccionarAnalista', function () {
                     var data = tableAnalista.row( $(this).parents('tr') ).data();
                     alert( data[0] +" SELECCIONADO: "+ data[ 3 ] );
                } );  
                
-               $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {
+     $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {
                     var data = tableAnalista.row( $(this).parents('tr') ).data();
                       idAnalista=data[0];  
-                      
+                      transaccion="eliminar";
                        $.ajax({
                         type: "GET",
-                        url: "ServletEliminarAnalista",
+                        url: "ServletAnalista",
                         global: false,
                         async : false,
                         data: {
-                            idAnalista: idAnalista
+                            idAnalista: idAnalista,
+                            transaccion: transaccion
+                        },
+                        success:
+                     function(responseText){                         
+                            alert(responseText);
+                            tableAnalista.ajax.reload();
+                            
                         }
-                    });
-                    
+                    });                    
                     //recarga los datos nuevamente en el dataTable por ajax
-                     t.ajax.reload();
-                                       
-                    alert( idAnalista +" ELIMINADO "+ data[ 3 ] );
+                     //tableAnalista.ajax.reload();  
                     
                } );   
         
@@ -197,8 +204,6 @@
                 });
   */    
         });  
-
-      
       
      //PARAMETROS POR AJAX PARA GUARDAR NUEVO SEGUIMIENTO     
      $("#submit").click(function(){ 
@@ -218,6 +223,33 @@
                     //recarga los datos nuevamente en el dataTable por ajax
                      t.ajax.reload();
                      alert("Seguimiento Guardado");
+                });
+     
+     //PARAMETROS PARA GUARDAR ANALISTAS
+      $("#guardarAnalista").click(function(){ 
+           analistaNombre=$('#AnalistaNombreTxt').val();
+           analistaApellido=$('#AnalistaApellidoTxt').val();
+           analistaUsuario=$('#AnalistaUsuarioTxt').val();
+           analistaPassword=$('#AnalistaPasswordTxt').val();
+           transaccion="guardar";
+                 
+                    $.ajax({
+                    type: "GET",
+                    url: "ServletAnalista",
+                    global: false,
+                    async : false,
+                    data: {
+                        analistaNombre : analistaNombre,
+                        analistaApellido : analistaApellido,
+                        analistaUsuario : analistaUsuario,
+                        analistaPassword : analistaPassword,
+                        transaccion : transaccion
+                    }
+                    });
+                    
+                    //recarga los datos nuevamente en el dataTable por ajax
+                     tableAnalista.ajax.reload();
+                     alert("Analista Guardado");
                 });
                 
       //PARAMETROS POR AJAX PARA GUARDAR NUEVO TICKET     
@@ -990,7 +1022,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                             <label>Apellido</label>
-                                            <input class="form-control" name="ApellidoAnalistaTxt" id="ApellidoAnalistaTxt" placeholder="Apellido">
+                                            <input class="form-control" name="AnalistaApellidoTxt" id="AnalistaApellidoTxt" placeholder="Apellido">
                                     </div>
                                 </div>
                             </div><!-- /.Nombre Apellido -->  
@@ -1005,14 +1037,13 @@
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                             <label>Password</label>
-                                            <input class="form-control" name="ApellidoUsuarioTxt" id="ApellidoPasswordTxt" placeholder="Password">
+                                            <input class="form-control" name="AnalistaPasswordTxt" id="AnalistaPasswordTxt" placeholder="Password">
                                     </div>
                                 </div>
                             </div><!-- /.Usuario Contraseña -->  
                              
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                <button id="guardartAnalista" type="button" class="btn btn-primary">Guardar</button>
-                                <button type="button" class="btn btn-primary">Modificar</button>
+                                <button id="guardarAnalista" type="button" class="btn btn-primary">Guardar</button>                             
                                 <button type="button" class="btn btn-primary " id="myBtnAnalistaShow" >Crear</button>
                             </div>
                             <div class="modal-footer">

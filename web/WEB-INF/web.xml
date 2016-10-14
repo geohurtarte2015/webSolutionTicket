@@ -29,8 +29,8 @@
         <servlet-class>controlador.ServletGuardarAnalista</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletEliminarAnalista</servlet-name>
-        <servlet-class>controlador.ServletEliminarAnalista</servlet-class>
+        <servlet-name>ServletAnalista</servlet-name>
+        <servlet-class>controlador.ServletAnalista</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletVerTicket</servlet-name>
@@ -61,8 +61,8 @@
         <url-pattern>/ServletGuardarAnalista</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletEliminarAnalista</servlet-name>
-        <url-pattern>/ServletEliminarAnalista</url-pattern>
+        <servlet-name>ServletAnalista</servlet-name>
+        <url-pattern>/ServletAnalista</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

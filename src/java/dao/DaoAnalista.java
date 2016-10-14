@@ -134,25 +134,24 @@ public class DaoAnalista {
    
    }
    
-    public Analista delete(int idAnalista){
+    public String delete(int idAnalista){
      Analista analista = null;
+     String resp=null;
        try{           
            initOperation();
            analista = (Analista) sesion.get(Analista.class, idAnalista);                    
            sesion.delete(analista);
            tx.commit();
-       }catch(HibernateException he){
-       
-        trueExcepcion(he); 
-        throw he; 
-       
+           resp="ok";
+       }catch(HibernateException he){            
+            resp=he.toString(); 
        } finally {
-           
-           sesion.close();
+
+        sesion.close();
        }
        
        
-       return analista;
+       return resp;
    
    
    }

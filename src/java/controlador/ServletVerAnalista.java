@@ -36,14 +36,14 @@ public class ServletVerAnalista extends HttpServlet {
             PrintWriter out = response.getWriter();           
             DaoAnalista daoAnalista = new DaoAnalista();  
           
-            List<Analista> seguimientos = daoAnalista.listAll();
+            List<Analista> analistas = daoAnalista.listAll();
             DataTableObject dataTableObject = new DataTableObject();
             
             //Se crea nueva Lista de objetos "objectSeguimientos" para solo incluir las propiedades Id, Fecha y Descripcion, 
             //ya que Gson no reconoce la lista de seguimientos por tener la propiedad de <Tickets> en su clase
             List<Object> objectAnalistas = new ArrayList<>();
             
-            for (Iterator analistaIterator = seguimientos.iterator(); 
+            for (Iterator analistaIterator = analistas.iterator(); 
                  analistaIterator.hasNext();
                 )
             {
