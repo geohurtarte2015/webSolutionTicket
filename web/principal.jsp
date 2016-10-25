@@ -44,7 +44,9 @@
 	<script src="plantilla/js/moment.js"></script>
 	<script src="bootdate/src/js/bootstrap-datetimepicker.js"></script>  
         
-         
+        <!-- Alert Bootbox -->
+        <script src="bootbox/bootbox.min.js"></script> 
+        
         <!-- DataTables JavaScript -->
         <script src="plantilla/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
         <script src="plantilla/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
@@ -109,6 +111,7 @@
                     "dataType" : "json"
                  });
      
+     //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
      var tableAnalista= $('#table_analista').DataTable( {
                     "ajax" : {
                         "url": "ServletVerAnalista",
@@ -143,10 +146,13 @@
                         ]
                     });
                 
-                
      $('#table_analista tbody').on( 'click','#seleccionarAnalista', function () {
                     var data = tableAnalista.row( $(this).parents('tr') ).data();
-                    alert( data[0] +" SELECCIONADO: "+ data[ 3 ] );
+                    idAnalista=data[0];  
+                    AnalistaNombreTxt.value=data[1];
+                    AnalistaApellidoTxt.value=data[2];
+                    AnalistaUsuarioTxt.value=data[3];
+                    AnalistaPasswordTxt.value=data[4];
                } );  
                
      $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {
@@ -172,8 +178,7 @@
                     //recarga los datos nuevamente en el dataTable por ajax
                      //tableAnalista.ajax.reload();  
                     
-               } );   
-        
+               } );           
      
       //LLAMADA DE CARGA POR AJAX DE SEGUIMIENTOS POR TICKET ID
      $('a[href="#dialog"]').click(function(){
@@ -204,7 +209,7 @@
                 });
   */    
         });  
-      
+        
      //PARAMETROS POR AJAX PARA GUARDAR NUEVO SEGUIMIENTO     
      $("#submit").click(function(){ 
            descripcionSeguimiento=$('#txtSeguimiento').val();
@@ -249,7 +254,9 @@
                     
                     //recarga los datos nuevamente en el dataTable por ajax
                      tableAnalista.ajax.reload();
-                     alert("Analista Guardado");
+                     bootbox.alert("<div class='alert alert-success'>"+
+                     "<strong>Guardado!</strong> Elemento guardado!"+
+                     "</div>");
                 });
                 
       //PARAMETROS POR AJAX PARA GUARDAR NUEVO TICKET     
@@ -295,6 +302,16 @@
                     //recarga los datos nuevamente en el dataTable por ajax
                      alert("Ticket Guardado");
                 });
+     
+     //LIMPIAR CAMPO ANALISTAS
+     $("#myBtnAnalistaShow").click(function(){ 
+         
+      AnalistaNombreTxt.value="";
+      AnalistaApellidoTxt.value="";
+      AnalistaUsuarioTxt.value="";
+      AnalistaPasswordTxt.value="";
+          
+      });          
                 
      //INICIALIZACION DEL DATA_TABLE TICKETS  "table_ticket"
       var tableTicket= $('#table_ticket').DataTable({           
@@ -310,7 +327,11 @@
                     }
                 }
                 
-        });    
+        });   
+        
+      
+
+      
                
    });
     
