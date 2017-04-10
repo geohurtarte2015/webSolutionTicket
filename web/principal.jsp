@@ -16,7 +16,8 @@
 <%@page import="dao.DaoTicket"%>
 <!DOCTYPE html>
 <%  
-    int id = (int) session.getAttribute("id");  
+    int id = (Integer) session.getAttribute("id"); 
+    
     String usuario = (String) session.getAttribute("user");    
     String nombre = (String) session.getAttribute("nombre");
     String apellido = (String) session.getAttribute("apellido");
@@ -317,13 +318,16 @@
       var tableTicket= $('#table_ticket').DataTable({           
              "bFilter": true,
               "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                    if ( aData[0] == "10" )
+                    if ( aData[0] == "1" )
                     {
                         $('td', nRow).css('background-color', '#d9534f');
                     }
                     else if ( aData[0] == "2" )
                     {
                         $('td', nRow).css('background-color', '#f0ad4e');
+                    }else if ( aData[0] == "10" )
+                    {
+                        $('td', nRow).css('background-color', '#4cae4c');
                     }
                 }
                 
