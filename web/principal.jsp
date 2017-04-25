@@ -16,8 +16,8 @@
 <%@page import="dao.DaoTicket"%>
 <!DOCTYPE html>
 <%  
-    int id = (Integer) session.getAttribute("id"); 
-    
+    int id = (Integer) session.getAttribute("id");  
+
     String usuario = (String) session.getAttribute("user");    
     String nombre = (String) session.getAttribute("nombre");
     String apellido = (String) session.getAttribute("apellido");
@@ -302,6 +302,8 @@
                     
                     //recarga los datos nuevamente en el dataTable por ajax
                      alert("Ticket Guardado");
+                     window.location.href = "http://localhost:8081/webSolutionTicket/principal.jsp";
+              
                 });
      
      //LIMPIAR CAMPO ANALISTAS
@@ -318,16 +320,13 @@
       var tableTicket= $('#table_ticket').DataTable({           
              "bFilter": true,
               "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                    if ( aData[0] == "1" )
+                    if ( aData[0] == "10" )
                     {
                         $('td', nRow).css('background-color', '#d9534f');
                     }
                     else if ( aData[0] == "2" )
                     {
                         $('td', nRow).css('background-color', '#f0ad4e');
-                    }else if ( aData[0] == "10" )
-                    {
-                        $('td', nRow).css('background-color', '#4cae4c');
                     }
                 }
                 
@@ -743,8 +742,29 @@
             </div>
             <!-- /.row -->
             
+           
+            
             
             <div class="row">
+                
+             <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Gestión de Tickets
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                          
+                            <br>
+                            <h4>Crear nuevo Ticket</h4>
+                            <p>
+                                
+                                <br>
+                                <br>
+                                <button type="button" class="btn btn-primary btn-lg btn-block" id="myBtnNewTicket">Nuevo Ticket</button>
+                            </p>
+                        </div>
+                        <!-- /.panel-body -->
+            </div>
                 <div class="col-lg-12">
                      <div class="panel panel-default">
                         <div class="panel-heading">
@@ -1149,6 +1169,15 @@
                           
                         });
                     });
+                    
+                    $(document).ready(function(){
+                        $("#myBtnNewTicket").click(function(){
+                            
+                            $("#myModal").modal();
+                          
+                        });
+                    });
+                    
                     
                     $(document).ready(function(){
                         $("#myBtnAnalistaShow").click(function(){
