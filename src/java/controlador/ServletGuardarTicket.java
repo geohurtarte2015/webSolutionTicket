@@ -63,7 +63,7 @@ public class ServletGuardarTicket extends HttpServlet {
             
             daoTicket.save(Integer.parseInt(idServidor), Integer.parseInt(idEstado), Integer.parseInt(idImpacto),Integer.parseInt(idRaiz), Integer.parseInt(idAnalista),Integer.parseInt(idServicioModulo),Integer.parseInt(idModulo),Integer.parseInt(idServicio),newTicket);
             
-            
+            response.sendRedirect("principal.jsp");
             
             
                

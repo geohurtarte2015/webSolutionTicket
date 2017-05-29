@@ -108,7 +108,7 @@
                             }
                     },
                     "global" : false,
-                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
+                    "lengthMenu": [ 2, 5 ],
                     "dataType" : "json"
                  });
      
@@ -146,17 +146,22 @@
                         }
                         ]
                     });
-                
+     
+     //Seleccion de Analista   
      $('#table_analista tbody').on( 'click','#seleccionarAnalista', function () {
+                   
                     var data = tableAnalista.row( $(this).parents('tr') ).data();
                     idAnalista=data[0];  
                     AnalistaNombreTxt.value=data[1];
                     AnalistaApellidoTxt.value=data[2];
                     AnalistaUsuarioTxt.value=data[3];
                     AnalistaPasswordTxt.value=data[4];
+                    
                } );  
-               
+     
+     //Eliminacion de Analista
      $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {
+                    
                     var data = tableAnalista.row( $(this).parents('tr') ).data();
                       idAnalista=data[0];  
                       transaccion="eliminar";
@@ -179,11 +184,31 @@
                     //recarga los datos nuevamente en el dataTable por ajax
                      //tableAnalista.ajax.reload();  
                     
-               } );           
+               } );    
+               
+     //Editar  Ticket
+    $('#table_ticket tbody').on( 'click','#editaricon', function () {
+            $("#guardarticket").hide(); 
+            $("#editticket").show();
+            $("#myBtnSeguimientoShow").hide();
+      } );  
+    
+    //Editar  Ticket
+    $('#table_ticket tbody').on( 'click','#seguimientosicon', function () {
+            $("#txtSeguimiento").val('');
+           
+      } );    
+     
+    $('#example').on('click', 'td', function() {
+        var data = t.row( $(this).parents('tr') ).data();
+                    txtSeguimiento.value=data[2];
+        });
+      
      
       //LLAMADA DE CARGA POR AJAX DE SEGUIMIENTOS POR TICKET ID
      $('a[href="#dialog"]').click(function(){
          
+           //Guardar lo que esta en el atributo name
            ticket = $(this).attr("name");
            
            //LIMPIA EL DATA_TABLE
@@ -191,28 +216,11 @@
            
            //recarga los datos nuevamente en el dataTable por ajax
            t.ajax.reload();          
-            /*
-         $.ajax({
-                   type: "GET",
-                    url: "ServletVerSeguimientos",                    
-                    global: false,
-                    async : false,
-                    dataType : "json",
-                    data: {
-                            idTicket: idTicket
-                            },
-                    success : function(json) {
-                        //se carga la nueva informacion
-                        t.clear().draw();   //LIMPIA LA TABLA                
-                        t.rows.add(json);   //AGREGA LA INFORMACION DE RESULTADO JSON
-                        t.columns.adjust().draw(); //DIBUJA LA TABLA DE NUEVO 
-                      }
-                });
-  */    
+               
         });  
         
      //PARAMETROS POR AJAX PARA GUARDAR NUEVO SEGUIMIENTO     
-     $("#submit").click(function(){ 
+     $("#guardarSeguimiento").click(function(){ 
            descripcionSeguimiento=$('#txtSeguimiento').val();
                  
                     $.ajax({
@@ -765,7 +773,7 @@
                         </div>
                         <!-- /.panel-body -->
             </div>
-                <div class="col-lg-12">
+             <div class="col-lg-12">
                      <div class="panel panel-default">
                         <div class="panel-heading">
                             Tickets
@@ -778,7 +786,7 @@
                                     <th>Id</th>
                                     <th>Titulo</th>
                                     <th>Analista</th>
-                                    <th>Causa</th>
+                                    <!-- <th>Causa</th>-->
                                     <th>Fecha</th>
                                     <th></th>
                                     <th></th>
@@ -796,18 +804,18 @@
 
                                         <td id="analista"  align="center"><%= ticket.getAnalista().getNombre() %></td>
 
-                                        <td id="causa"  align="center"><%= ticket.getCausa() %></td>
+                                    <!--    <td id="causa"  align="center"><%= ticket.getCausa() %></td>  -->
 
                                         <td id="fecha"  align="center"><%= ticket.getFecha() %></td>
                                         
-                                        <td   id="editar" style="width: 25px; text-align: center;">
-                                        <a href="ServletVerTicket?idTicket=<%= ticket.getId()%>" data-toggle="modal" data-target="#myModal">
+                                        <td   id="editartd" style="width: 25px; text-align: center;">
+                                        <a href="#dialog" id="editaricon" name="<%= ticket.getId()%>" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">
                                         <img  src="img/pencil.png" width="16" height="16"  border="0" />       
                                         </a>                            
                                         </td>
-                                        <td   id="test" style="width: 25px; text-align: center;">
-                                        <a href="#dialog" name="<%= ticket.getId()%>"  id="linkFunction" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">
-                                          
+                                        
+                                        <td   id="seguimientostd" style="width: 25px; text-align: center;">
+                                        <a href="#dialog" id="seguimientosicon" name="<%= ticket.getId()%>"  data-toggle="modal" data-target="#myModalSeguimiento" data-backdrop="static" data-keyboard="false">                                          
                                         <img  src="img/lupa.png" width="16" height="16"  border="0" />       
                                         </a>                            
                                         </td>
@@ -825,6 +833,7 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                 <!-- Modal -->
+                <!-- Modal Tickets -->
                  <div style="display: none;" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                  <div class="modal-dialog modal-lg">
                    <div class="modal-content">
@@ -842,7 +851,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                             <label>Titulo del Ticket</label>
-                                            <input class="form-control" id="titulotxt" placeholder="Titulo">
+                                            <input class="form-control" id="titulotxt" maxlength="45" placeholder="Titulo">
                                     </div>
                                 </div>
                             </div><!-- /.Titulo -->
@@ -850,7 +859,7 @@
                             <div class="row">
                                 
                                 <div class="col-lg-4">
-                                    <div class="form-group">
+                                    <div class="form-groupModal title">
                                             <label>Servicio</label>
                                             <select id="serviciotxt" class="form-control">
                                                 <option>seleccionar</option> 
@@ -997,14 +1006,26 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                 <button id="guardarticket" type="button" class="btn btn-primary">Guardar Ticket</button>
-                                <button type="button" class="btn btn-primary">Modificar Ticket</button>
-                                <button type="button" class="btn btn-primary " id="myBtnSeguimientoShow" >Crear Seguimiento</button>
+                                <button id="editticket" type="button" class="btn btn-primary">Modificar Ticket</button>
+                                <button id="myBtnSeguimientoShow"  type="button" class="btn btn-primary " >Crear Seguimiento</button>
                             </div>
                      </div>
                                             
                     </div>      
                                
-                        <div style="display: none;" class="modal fade" id="myModalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        
+                                <!-- /.modal-dialog -->
+                            </div>
+                                <!-- /.modal-dialog -->
+                            
+                                <!-- /.modal-dialog -->
+                            
+                                    </div>
+                 <!-- /.modal-content -->
+                 </div>
+                 
+                <!-- Modal Seguimientos -->                            
+                 <div style="display: none;" class="modal fade" id="myModalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -1024,7 +1045,7 @@
                                           </div>
                                             
                                           <button type="button" class="btn btn-default" id="myBtnSeguimientoHide2">Close</button>
-                                          <button type="button" id="submit" class="btn btn-primary">Save changes</button>
+                                          <button type="button" id="guardarSeguimiento" class="btn btn-primary">Guardar Cambios</button>
                                               
                                          
                                         </div>
@@ -1035,8 +1056,7 @@
                                             <thead>
                                                 <tr>
                                                 <th>id</th>
-                                                <th>descripcion</th>
-                                                <th>fecha</th>      
+                                                <th>fecha</th>
                                                 </tr>
                                             </thead>
                                             </table>
@@ -1046,16 +1066,8 @@
                                 </div>
                                 <!-- /.modal-dialog -->
                             </div>
-                                <!-- /.modal-dialog -->
-                            </div>
-                                <!-- /.modal-dialog -->
-                            
-                                <!-- /.modal-dialog -->
-                            
-                                    </div>
-                 <!-- /.modal-content -->
-                 </div>
-                 
+               
+                <!-- Modal Analista -->
                  <div style="display: none;" class="modal fade" id="myModaAnalista" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -1144,7 +1156,7 @@
  
             
             
-            </div>
+    </div>
             <!-- /.row -->
      
 
@@ -1170,10 +1182,14 @@
                         });
                     });
                     
+                  
+                    
                     $(document).ready(function(){
                         $("#myBtnNewTicket").click(function(){
-                            
                             $("#myModal").modal();
+                            $("#myBtnSeguimientoShow").hide();
+                            $("#editticket").hide();
+                             $("#guardarticket").show();
                           
                         });
                     });
@@ -1202,6 +1218,7 @@
                         });
                     });
                     
+                   
                     
                     $(document).ready(function(){
                         $("#myBtnSeguimientoHide2").click(function(){
