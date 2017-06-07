@@ -32,6 +32,10 @@
         <servlet-name>ServletAnalista</servlet-name>
         <servlet-class>controlador.ServletAnalista</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletShowTicket</servlet-name>
+        <servlet-class>controlador.ServletShowTicket</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletVerTicket</servlet-name>
         <url-pattern>/ServletVerTicket</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>ServletAnalista</servlet-name>
         <url-pattern>/ServletAnalista</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletShowTicket</servlet-name>
+        <url-pattern>/ServletShowTicket</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

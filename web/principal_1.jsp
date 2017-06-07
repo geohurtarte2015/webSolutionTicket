@@ -113,42 +113,6 @@
                  });
      
      //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
-     var tableAnalista= $('#table_ticket').DataTable( {
-                    "ajax" : {
-                        "url": "ServletVerAnalista",
-                        "type": "GET"
-                    },
-                    "global" : false,
-                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
-                    "dataType" : "json",
-                    "columns" : [
-                     {"title": "Id"},
-                     {"title": "Apellido"},
-                     {"title": "Nombre"},
-                     {"title": "Usuario"},
-                     {"title": "Password"},
-                     {"title": ""},
-                     {"title": ""}
-                    ],
-                    "columnDefs": [ {
-                        "targets": 6,
-                        "data": null,
-                        "defaultContent": "<center><a href='#dialogAnalista' id='seleccionarAnalista'>"+                          
-                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
-                                          "</a></center>"
-                        },
-                        {
-                        "targets": 5,
-                        "data": null,
-                        "defaultContent": "<center><a href='#dialogAnalista2' id='EliminarAnalista'>"+                          
-                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
-                                          "</a></center>"
-                        }
-                        ]
-                    });
-     
-     
-     //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
      var tableAnalista= $('#table_analista').DataTable( {
                     "ajax" : {
                         "url": "ServletVerAnalista",
@@ -816,19 +780,51 @@
                         </div>
                                 <div class="panel-body">
                                   <div class="table-responsive">
-                                      
-                        <table id="table_ticket" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
-                            
-                            <thead>
+                                    <table id="table_ticket" class="table table-striped table-bordered table-hover">         
+                                    <thead>
                                     <tr>
                                     <th>Id</th>
                                     <th>Titulo</th>
                                     <th>Analista</th>
+                                    <!-- <th>Causa</th>-->
                                     <th>Fecha</th>
+                                    <th></th>
+                                    <th></th>
                                     </tr>
-                            </thead>
+                                    </thead>
+                                    <tbody>
+                                    <%
+                                        DaoTicket daoTicket= new DaoTicket();
+                                        for(Ticket ticket: daoTicket.listAll()){
+                                    %>    
+                                    <tr>
+                                        <td id="idTicket" align="center"><%= ticket.getId() %></td>
 
-                        </table>
+                                        <td id="titulo"  align="center"><%= ticket.getTitulo() %></td>
+
+                                        <td id="analista"  align="center"><%= ticket.getAnalista().getNombre() %></td>
+
+                                    <!--    <td id="causa"  align="center"><%= ticket.getCausa() %></td>  -->
+
+                                        <td id="fecha"  align="center"><%= ticket.getFecha() %></td>
+                                        
+                                        <td   id="editartd" style="width: 25px; text-align: center;">
+                                        <a href="#dialog" id="editaricon" name="<%= ticket.getId()%>" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">
+                                        <img  src="img/pencil.png" width="16" height="16"  border="0" />       
+                                        </a>                            
+                                        </td>
+                                        
+                                        <td   id="seguimientostd" style="width: 25px; text-align: center;">
+                                        <a href="#dialog" id="seguimientosicon" name="<%= ticket.getId()%>"  data-toggle="modal" data-target="#myModalSeguimiento" data-backdrop="static" data-keyboard="false">                                          
+                                        <img  src="img/lupa.png" width="16" height="16"  border="0" />       
+                                        </a>                            
+                                        </td>
+                                       
+
+                                    </tr>
+                                    <%}%>
+                                    </tbody>  
+                                    </table>
                                 </div>
                             </div> 
                         </div>
