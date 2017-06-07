@@ -113,9 +113,9 @@
                  });
      
      //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
-     var tableAnalista= $('#table_ticket').DataTable( {
+     var tableTicket= $('#Potosí').DataTable( {
                     "ajax" : {
-                        "url": "ServletVerAnalista",
+                        "url": "ServletShowTicket",
                         "type": "GET"
                     },
                     "global" : false,
@@ -123,24 +123,22 @@
                     "dataType" : "json",
                     "columns" : [
                      {"title": "Id"},
-                     {"title": "Apellido"},
-                     {"title": "Nombre"},
-                     {"title": "Usuario"},
-                     {"title": "Password"},
-                     {"title": ""},
+                     {"title": "Titulo"},
+                     {"title": "Analista"},
+                     {"title": "Fecha"},
                      {"title": ""}
                     ],
                     "columnDefs": [ {
-                        "targets": 6,
+                        "targets": 4,
                         "data": null,
-                        "defaultContent": "<center><a href='#dialogAnalista' id='seleccionarAnalista'>"+                          
+                        "defaultContent": "<center><a href='#dialogAnalista' id='seleccionarTicket'>"+                          
                                            "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
                                           "</a></center>"
                         },
                         {
                         "targets": 5,
                         "data": null,
-                        "defaultContent": "<center><a href='#dialogAnalista2' id='EliminarAnalista'>"+                          
+                        "defaultContent": "<center><a href='#dialogAnalista2' id='EliminarTicket'>"+                          
                                            "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
                                           "</a></center>"
                         }
