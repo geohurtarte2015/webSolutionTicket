@@ -184,22 +184,58 @@
                     //recarga los datos nuevamente en el dataTable por ajax
                      //tableAnalista.ajax.reload();  
                     
-               } );    
+               } );   
+     
+     //PARAMETROS PARA GUARDAR ANALISTAS
+     $("#guardarAnalista").click(function(){ 
+           analistaNombre=$('#AnalistaNombreTxt').val();
+           analistaApellido=$('#AnalistaApellidoTxt').val();
+           analistaUsuario=$('#AnalistaUsuarioTxt').val();
+           analistaPassword=$('#AnalistaPasswordTxt').val();
+           transaccion="guardar";
+                 
+                    $.ajax({
+                    type: "GET",
+                    url: "ServletAnalista",
+                    global: false,
+                    async : false,
+                    data: {
+                        analistaNombre : analistaNombre,
+                        analistaApellido : analistaApellido,
+                        analistaUsuario : analistaUsuario,
+                        analistaPassword : analistaPassword,
+                        transaccion : transaccion
+                    },
+                        success:
+                     function(responseText){                         
+                            alert(responseText);
+                            tableAnalista.ajax.reload();
+                            
+                        }
+                    });
+                    
+                    //recarga los datos nuevamente en el dataTable por ajax
+                      tableAnalista.ajax.reload();
+                     bootbox.alert("<div class='alert alert-success'>"+
+                     "<strong>Guardado!</strong> Elemento guardado!"+
+                     "</div>");
+  
+                });
                
      //Editar  Ticket
-    $('#table_ticket tbody').on( 'click','#editaricon', function () {
+     $('#table_ticket tbody').on( 'click','#editaricon', function () {
             $("#guardarticket").hide(); 
             $("#editticket").show();
             $("#myBtnSeguimientoShow").hide();
       } );  
     
-    //Editar  Ticket
-    $('#table_ticket tbody').on( 'click','#seguimientosicon', function () {
+     //Editar  Ticket
+     $('#table_ticket tbody').on( 'click','#seguimientosicon', function () {
             $("#txtSeguimiento").val('');
            
       } );    
      
-    $('#example').on('click', 'td', function() {
+     $('#example').on('click', 'td', function() {
         var data = t.row( $(this).parents('tr') ).data();
                     txtSeguimiento.value=data[2];
         });
@@ -239,34 +275,7 @@
                      alert("Seguimiento Guardado");
                 });
      
-     //PARAMETROS PARA GUARDAR ANALISTAS
-      $("#guardarAnalista").click(function(){ 
-           analistaNombre=$('#AnalistaNombreTxt').val();
-           analistaApellido=$('#AnalistaApellidoTxt').val();
-           analistaUsuario=$('#AnalistaUsuarioTxt').val();
-           analistaPassword=$('#AnalistaPasswordTxt').val();
-           transaccion="guardar";
-                 
-                    $.ajax({
-                    type: "GET",
-                    url: "ServletAnalista",
-                    global: false,
-                    async : false,
-                    data: {
-                        analistaNombre : analistaNombre,
-                        analistaApellido : analistaApellido,
-                        analistaUsuario : analistaUsuario,
-                        analistaPassword : analistaPassword,
-                        transaccion : transaccion
-                    }
-                    });
-                    
-                    //recarga los datos nuevamente en el dataTable por ajax
-                     tableAnalista.ajax.reload();
-                     bootbox.alert("<div class='alert alert-success'>"+
-                     "<strong>Guardado!</strong> Elemento guardado!"+
-                     "</div>");
-                });
+     
                 
       //PARAMETROS POR AJAX PARA GUARDAR NUEVO TICKET     
      $("#guardarticket").click(function(){ 
@@ -1129,8 +1138,8 @@
                                                 <th>Nombre</th>
                                                 <th>Usuario</th>
                                                 <th>Password</th> 
-                                                <th>test</th>
-                                                <th>test2</th>
+                                                <th></th>
+                                                <th></th>
                                                 </tr>
                                              </thead>
                                              

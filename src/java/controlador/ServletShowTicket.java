@@ -30,22 +30,6 @@ public class ServletShowTicket extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        
-        
-    }
-
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-    
-    private String listAll(HttpServletResponse response) throws IOException
-        {
-            
-        DaoAnalista daoAnalista = new DaoAnalista();      
         
         response.setContentType("application/json");
         PrintWriter out = response.getWriter(); 
@@ -67,7 +51,7 @@ public class ServletShowTicket extends HttpServlet {
          List<Object> object = new ArrayList<>();            
             object.add(ticketObject.getId());
             object.add(ticketObject.getTitulo());
-            object.add(ticketObject.getAnalista());
+            object.add(ticketObject.getAnalista().getNombre()+" ");
             object.add(ticketObject.getFecha());
        
          objectTickets.add(object);
@@ -77,10 +61,17 @@ public class ServletShowTicket extends HttpServlet {
 
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String json = gson.toJson(dataTableObject);
-            
-        return json;
-        }
+            out.print(json);
+    }
 
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+    
+   
 
 
 

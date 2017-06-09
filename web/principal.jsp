@@ -112,41 +112,8 @@
                     "dataType" : "json"
                  });
      
-     //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
-     var tableTicket= $('#Potosí').DataTable( {
-                    "ajax" : {
-                        "url": "ServletShowTicket",
-                        "type": "GET"
-                    },
-                    "global" : false,
-                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
-                    "dataType" : "json",
-                    "columns" : [
-                     {"title": "Id"},
-                     {"title": "Titulo"},
-                     {"title": "Analista"},
-                     {"title": "Fecha"},
-                     {"title": ""}
-                    ],
-                    "columnDefs": [ {
-                        "targets": 4,
-                        "data": null,
-                        "defaultContent": "<center><a href='#dialogAnalista' id='seleccionarTicket'>"+                          
-                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
-                                          "</a></center>"
-                        },
-                        {
-                        "targets": 5,
-                        "data": null,
-                        "defaultContent": "<center><a href='#dialogAnalista2' id='EliminarTicket'>"+                          
-                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
-                                          "</a></center>"
-                        }
-                        ]
-                    });
      
-     
-     //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
+       //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
      var tableAnalista= $('#table_analista').DataTable( {
                     "ajax" : {
                         "url": "ServletVerAnalista",
@@ -181,6 +148,42 @@
                         ]
                     });
      
+     
+     
+     //INICIALIZACION DEL DATA_TABLE TICKET "table_ticket_show"
+     var tableTicketShow= $('#table_ticket_show').DataTable( {
+                    "ajax" : {
+                        "url": "ServletShowTicket",
+                        "type": "GET"
+                    },
+                    "global" : false,
+                    "lengthMenu": [[ 5, -1], [ 5,"All"]],
+                    "dataType" : "json",
+                    "columns" : [
+                     {"title": "Id"},
+                     {"title": "Titulo"},
+                     {"title": "Analista"},
+                     {"title": "Fecha"}
+                    ],
+                    "columnDefs": [ {
+                        "targets": 4,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogTicket' id='seleccionarTicket'>"+                          
+                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        },
+                        {
+                        "targets": 5,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogTicket2' id='EliminarTicket'>"+                          
+                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        }
+                        ]
+                    });
+     
+     
+
      //Seleccion de Analista   
      $('#table_analista tbody').on( 'click','#seleccionarAnalista', function () {
                    
@@ -220,18 +223,7 @@
                     
                } );    
                
-     //Editar  Ticket
-    $('#table_ticket tbody').on( 'click','#editaricon', function () {
-            $("#guardarticket").hide(); 
-            $("#editticket").show();
-            $("#myBtnSeguimientoShow").hide();
-      } );  
-    
-    //Editar  Ticket
-    $('#table_ticket tbody').on( 'click','#seguimientosicon', function () {
-            $("#txtSeguimiento").val('');
-           
-      } );    
+   
      
     $('#example').on('click', 'td', function() {
         var data = t.row( $(this).parents('tr') ).data();
@@ -358,22 +350,7 @@
           
       });          
                 
-     //INICIALIZACION DEL DATA_TABLE TICKETS  "table_ticket"
-      var tableTicket= $('#table_ticket').DataTable({           
-             "bFilter": true,
-              "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                    if ( aData[0] == "10" )
-                    {
-                        $('td', nRow).css('background-color', '#d9534f');
-                    }
-                    else if ( aData[0] == "2" )
-                    {
-                        $('td', nRow).css('background-color', '#f0ad4e');
-                    }
-                }
-                
-        });   
-        
+ 
       
 
       
@@ -385,8 +362,6 @@
 </head>
 
 <body>
-
-
 
     <div id="wrapper">
 
@@ -815,17 +790,19 @@
                                 <div class="panel-body">
                                   <div class="table-responsive">
                                       
-                        <table id="table_ticket" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
-                            
-                            <thead>
-                                    <tr>
-                                    <th>Id</th>
-                                    <th>Titulo</th>
-                                    <th>Analista</th>
-                                    <th>Fecha</th>
-                                    </tr>
-                            </thead>
-
+                        <table id="table_ticket_show" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
+                                          
+                                             <thead>
+                                                <tr>
+                                                <th>Id</th>
+                                                <th>Titulo</th>
+                                                <th>Analista</th>
+                                                <th>Fecha</th>
+                                                <th></th>
+                                                <th></th>
+                                                </tr>
+                                             </thead>
+                                             
                         </table>
                                 </div>
                             </div> 
@@ -1131,8 +1108,8 @@
                                                 <th>Nombre</th>
                                                 <th>Usuario</th>
                                                 <th>Password</th> 
-                                                <th>test</th>
-                                                <th>test2</th>
+                                                <th></th>
+                                                <th></th>
                                                 </tr>
                                              </thead>
                                              
