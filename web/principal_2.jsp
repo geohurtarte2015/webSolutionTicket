@@ -893,7 +893,7 @@
                                                     DaoModulo daoModulo= new DaoModulo();
                                                     for(Modulo modulo: daoModulo.listAll()){
                                                   %>
-                                                <option value=<%= modulo.getIdModulo() %>> <%= modulo.getDescripcion() %></option>      
+                                                <option value=<%= modulo.getIdModulo() %> <%= modulo.getDescripcion() %></option>      
                                                  <%}%> 
                                             </select>
                                         </div> <!-- /.Modulo -->
@@ -909,7 +909,7 @@
                                                     DaoServicioModulo daoServicioModulo= new DaoServicioModulo();
                                                     for(ServicioModulo servicioModulo: daoServicioModulo.listAll()){
                                                 %>  
-                                                <option name="option" value=<%= servicioModulo.getIdServicioModulo() %>><%= servicioModulo.getDescripcion() %></option>
+                                                <option name="option" value=<%= servicioModulo.getIdServicioModulo() %><%= servicioModulo.getDescripcion() %></option>
                                                 <%}%> 
                                             </select>
                                         </div> <!-- /.Servicio Modulo -->                                

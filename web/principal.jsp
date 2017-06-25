@@ -331,13 +331,14 @@
                         estado: estado,
                         analista: analista
                        
-                    }
+                    },
+                    success:
+                     function(responseSave){                         
+                            alert(responseSave);
+                            tableTicketShow.ajax.reload();
+                            
+                        }
                     });
-                    
-                    //recarga los datos nuevamente en el dataTable por ajax
-                     alert("Ticket Guardado");
-                     window.location.href = "http://localhost:8081/webSolutionTicket/principal.jsp";
-              
                 });
      
      //LIMPIAR CAMPO ANALISTAS

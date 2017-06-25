@@ -7,6 +7,7 @@ package controlador;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dao.DaoAnalista;
 import dao.DaoTicket;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,9 +21,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import pojo.Analista;
 import pojo.Seguimiento;
 import pojo.Ticket;
 import structuras.DataTableObject;
+
 
 
 
@@ -37,7 +40,63 @@ public class ServletGuardarTicket extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-            //TRAE LOS PARAMETROS ENVIADOS POR AJAX DESDE EL SERVLET
+            String json=null;
+            
+            this.save(response, request);
+            
+            json = this.listAll(response);
+            out.print(json);  
+           
+    }
+
+   
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+          doGet(request, response);
+        
+    }
+    
+     private String listAll(HttpServletResponse response) throws IOException
+        {
+            
+        DaoTicket daoTicket = new DaoTicket();      
+        
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter(); 
+        //Se crea nueva Lista de objetos "objectSeguimientos" para solo incluir las propiedades Id, Fecha y Descripcion, 
+        //ya que Gson no reconoce la lista de seguimientos por tener la propiedad de <Tickets> en su clase
+        List<Ticket> tickets = daoTicket.listAll();
+        DataTableObject dataTableObject = new DataTableObject();
+        
+        List<Object> objectTickets = new ArrayList<>();
+        
+        for (Iterator ticketIterator = tickets.iterator(); 
+                 ticketIterator.hasNext();
+                )
+         {
+             
+         Ticket ticketObject = (Ticket) ticketIterator.next(); 
+         List<Object> object = new ArrayList<>();            
+            object.add(ticketObject.getId());
+            object.add(ticketObject.getTitulo());
+            object.add(ticketObject.getAnalista().getNombre()+" ");
+            object.add(ticketObject.getFecha());
+       
+         objectTickets.add(object);
+         }
+            
+            dataTableObject.setAaData(objectTickets);     
+
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(dataTableObject);
+            
+        return json;
+        }
+     
+     
+     private void save(HttpServletResponse response,HttpServletRequest request) throws IOException{
+        //TRAE LOS PARAMETROS ENVIADOS POR AJAX DESDE EL SERVLET
             String titulo = String.valueOf(request.getParameter("titulo"));
             String idModulo = String.valueOf(request.getParameter("modulo"));
             String idServicio = String.valueOf(request.getParameter("servicio"));
@@ -51,32 +110,31 @@ public class ServletGuardarTicket extends HttpServlet {
             String fechaFin = String.valueOf(request.getParameter("fechaFin"));
             String descripcion = String.valueOf(request.getParameter("descripcion"));
             String causa = String.valueOf(request.getParameter("causa"));
-            String solucion = String.valueOf(request.getParameter("solucion"));   
+            String solucion = String.valueOf(request.getParameter("solucion"));  
             
+            String resp=null;  
             
-            
-            //Instancia de DAO
-            DaoTicket daoTicket = new DaoTicket();  
-            
-            //Guarda ticket
-            Ticket newTicket= new Ticket( titulo,  fechaInicio,  fechaFin,  descripcion,  causa,  solucion);
-            
-            daoTicket.save(Integer.parseInt(idServidor), Integer.parseInt(idEstado), Integer.parseInt(idImpacto),Integer.parseInt(idRaiz), Integer.parseInt(idAnalista),Integer.parseInt(idServicioModulo),Integer.parseInt(idModulo),Integer.parseInt(idServicio),newTicket);
-            
-            response.sendRedirect("principal.jsp");
-            
-            
-               
-            
-                        
-    }
-
-   
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-          doGet(request, response);
+        //Guarda ticket
+         Ticket newTicket= new Ticket( titulo,  fechaInicio,  fechaFin,  descripcion,  causa,  solucion);    
+        //Instancia de DAO
+        DaoTicket daoTicket = new DaoTicket();  
+        resp=daoTicket.save(Integer.parseInt(idServidor), Integer.parseInt(idEstado), Integer.parseInt(idImpacto),Integer.parseInt(idRaiz), Integer.parseInt(idAnalista),Integer.parseInt(idServicioModulo),Integer.parseInt(idModulo),Integer.parseInt(idServicio),newTicket); 
         
+        PrintWriter outHtml = response.getWriter(); 
+        if(!resp.contains("ok")){
+            response.setContentType("text/html;charset=UTF-8");
+            
+            if(resp.contains("org.hibernate.exception.ConstraintViolationException: could not execute statement")){
+            outHtml.println("Error al tratar de guardar");
+            }else{
+            outHtml.println("Error al guardar");
+            }
+            
+        }else{
+            outHtml.println("Guardado");
+        }
+            outHtml.close();
+            
     }
     
 
