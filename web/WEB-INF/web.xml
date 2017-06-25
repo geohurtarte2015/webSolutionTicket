@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>ServletVerTicket</servlet-name>
-        <servlet-class>controlador.ServletVerTicket</servlet-class>
+        <servlet-name>ServletVerSeguimientos</servlet-name>
+        <servlet-class>controlador.ServletVerSeguimientos</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>test4</servlet-name>
@@ -36,9 +36,13 @@
         <servlet-name>ServletShowTicket</servlet-name>
         <servlet-class>controlador.ServletShowTicket</servlet-class>
     </servlet>
-    <servlet-mapping>
+    <servlet>
         <servlet-name>ServletVerTicket</servlet-name>
-        <url-pattern>/ServletVerTicket</url-pattern>
+        <servlet-class>controlador.ServletVerTicket</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletVerSeguimientos</servlet-name>
+        <url-pattern>/ServletVerSeguimientos</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>test4</servlet-name>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>ServletShowTicket</servlet-name>
         <url-pattern>/ServletShowTicket</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletVerTicket</servlet-name>
+        <url-pattern>/ServletVerTicket</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

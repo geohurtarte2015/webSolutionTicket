@@ -98,10 +98,10 @@
      
     $(document).ready(function() {
         
-     //INICIALIZACION DEL DATA_TABLE SEGUIMIENTOS "example"
-     var t= $('#example').DataTable( {
+     //INICIALIZACION DEL DATA_TABLE SEGUIMIENTOS "table_seguimientos"
+     var t= $('#table_seguimientos').DataTable( {
                     "ajax" : {
-                        "url": "ServletVerTicket",
+                        "url": "ServletVerSeguimientos",
                         "type": "POST",
                         "data" : function(d){
                             d.ticket = ticket;
@@ -168,21 +168,31 @@
                     "columnDefs": [ {
                         "targets": 4,
                         "data": null,
-                        "defaultContent": "<center><a href='#dialogTicket' id='seleccionarTicket'>"+                          
-                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
+                        "defaultContent": "<center><a href='#dialog' id='editaricon'  data-toggle='modal' data-target='#myModal' data-backdrop='static' data-keyboard='false'>"+                          
+                                           "<img  src='img/pencil.png' width='16' height='16'  border='0' />"+       
                                           "</a></center>"
                         },
                         {
                         "targets": 5,
                         "data": null,
-                        "defaultContent": "<center><a href='#dialogTicket2' id='EliminarTicket'>"+                          
-                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
+                        "defaultContent": "<center><a href='#dialog' id='seguimientosicon'  data-toggle='modal' data-target='#myModalSeguimiento' data-backdrop='static' data-keyboard='false'>"+                          
+                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
                                           "</a></center>"
                         }
                         ]
                     });
      
-     
+      //Seleccion de Analista   
+     $('#table_ticket_show tbody').on( 'click','#editaricon', function () {
+                   
+                    var data = tableTicketShow.row( $(this).parents('tr') ).data();
+                    idTicket=data[0];  
+                    $("#guardarticket").hide(); 
+                    $("#editticket").show();
+                    $("#myBtnSeguimientoShow").hide();
+                    
+                    alert(idTicket);
+               } );  
 
      //Seleccion de Analista   
      $('#table_analista tbody').on( 'click','#seleccionarAnalista', function () {
@@ -225,7 +235,7 @@
                
    
      
-    $('#example').on('click', 'td', function() {
+    $('#table_seguimientos').on('click', 'td', function() {
         var data = t.row( $(this).parents('tr') ).data();
                     txtSeguimiento.value=data[2];
         });
@@ -1031,7 +1041,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             
-                                            <table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
+                                            <table id="table_seguimientos" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
                                           
                                             <thead>
                                                 <tr>
