@@ -5,12 +5,20 @@
  */
 package controlador;
 
+import dao.DaoTicket;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONException;
+import org.json.JSONObject;
+import pojo.Seguimiento;
+import pojo.Ticket;
 
 
 public class ServletVerTicket extends HttpServlet {
@@ -35,7 +43,42 @@ public class ServletVerTicket extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        try 
+        {
+            String valTicket = String.valueOf(request.getParameter("ticket"));
+            
+            int idTicket = Integer.parseInt(valTicket);              
+            
+            DaoTicket daoTicket = new DaoTicket(); 
+                    
+            response.setContentType("application/json");
+            
+            Ticket ticket = daoTicket.getByIdObject(idTicket);
+            
+            JSONObject json = new JSONObject();
+            json.put("titulo", ticket.getTitulo());
+            json.put("servicio", ticket.getServicio().getIdServicioModulo());
+            json.put("modulo", ticket.getModulo().getIdModulo());
+            json.put("servicio_modulo", ticket.getServicioModulo().getIdServicioModulo());
+            json.put("usuario", ticket.getServidor().getIdServidor());
+            json.put("impacto", ticket.getImpacto().getIdImpacto());
+            json.put("inicio", ticket.getFechaInicio());
+            json.put("final", ticket.getFechaFin());
+            json.put("estado", ticket.getEstado().getIdEstado());
+            json.put("descripcion", ticket.getDescripcion());
+            json.put("causa", ticket.getCausa());
+            json.put("solucion", ticket.getSolucion());
+            
+            response.setContentType("application/json");
+            response.getWriter().write(json.toString());
+            
+            //out.println(name + " " + text);
+        } catch (JSONException ex) {
+            Logger.getLogger(ServletVerTicket.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+      
     }
 
    
