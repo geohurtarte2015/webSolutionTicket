@@ -46,7 +46,7 @@ public class ServletVerTicket extends HttpServlet {
         
         try 
         {
-            String valTicket = String.valueOf(request.getParameter("ticket"));
+            String valTicket = String.valueOf(request.getParameter("id"));
             
             int idTicket = Integer.parseInt(valTicket);              
             
@@ -61,7 +61,7 @@ public class ServletVerTicket extends HttpServlet {
             json.put("servicio", ticket.getServicio().getIdServicioModulo());
             json.put("modulo", ticket.getModulo().getIdModulo());
             json.put("servicio_modulo", ticket.getServicioModulo().getIdServicioModulo());
-            json.put("usuario", ticket.getServidor().getIdServidor());
+            json.put("servidor",ticket.getServidor().getIdServidor());      
             json.put("impacto", ticket.getImpacto().getIdImpacto());
             json.put("inicio", ticket.getFechaInicio());
             json.put("final", ticket.getFechaFin());
@@ -69,6 +69,7 @@ public class ServletVerTicket extends HttpServlet {
             json.put("descripcion", ticket.getDescripcion());
             json.put("causa", ticket.getCausa());
             json.put("solucion", ticket.getSolucion());
+            
             
             response.setContentType("application/json");
             response.getWriter().write(json.toString());

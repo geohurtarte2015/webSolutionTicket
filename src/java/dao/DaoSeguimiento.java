@@ -125,8 +125,6 @@ public class DaoSeguimiento {
    
    }
     
-
-
     private void initOperation() throws HibernateException 
 
     {

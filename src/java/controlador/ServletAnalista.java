@@ -41,7 +41,7 @@ public class ServletAnalista extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+        PrintWriter outHtml = response.getWriter(); 
         String tipoTransaccion= String.valueOf(request.getParameter("transaccion"));
         
         if(tipoTransaccion.equals("eliminar")){
@@ -62,7 +62,19 @@ public class ServletAnalista extends HttpServlet {
             this.listAll(response);
             json = this.listAll(response);
             out.print(json);
+           
         }
+        
+    }
+    
+     private void save(HttpServletResponse response, String apellido, String nombre, String usuario, String password) throws IOException{
+ 
+        DaoAnalista daoAnalista = new DaoAnalista();
+        Analista analista = new Analista(nombre,apellido,usuario,password);
+        daoAnalista.save(analista);
+        PrintWriter outHtml = response.getWriter(); 
+        outHtml.println("Guardado");
+        outHtml.close();
         
     }
     
@@ -128,12 +140,7 @@ public class ServletAnalista extends HttpServlet {
         return json;
         }
     
-    private void save(HttpServletResponse response, String apellido, String nombre, String usuario, String password){
-    DaoAnalista daoAnalista = new DaoAnalista();
-    Analista analista = new Analista(nombre,apellido,usuario,password);
-    daoAnalista.save(analista);
-    
-    }
+   
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

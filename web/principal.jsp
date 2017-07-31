@@ -169,48 +169,71 @@
                         "targets": 4,
                         "data": null,
                         "defaultContent": "<center><a href='#dialog' id='editaricon'  data-toggle='modal' data-target='#myModal' data-backdrop='static' data-keyboard='false'>"+                          
-                                           "<img  src='img/pencil.png' width='16' height='16'  border='0' />"+       
+                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
                                           "</a></center>"
                         },
                         {
                         "targets": 5,
                         "data": null,
                         "defaultContent": "<center><a href='#dialog' id='seguimientosicon'  data-toggle='modal' data-target='#myModalSeguimiento' data-backdrop='static' data-keyboard='false'>"+                          
-                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
+                                           "<img  src='img/pencil.png' width='16' height='16'  border='0' />"+       
                                           "</a></center>"
                         }
                         ]
                     });
      
-      //Seleccion de Analista   
+     
+ 
+     
+     
+      //Seleccion de Ticket   
      $('#table_ticket_show tbody').on( 'click','#editaricon', function () {
                    
                     var data = tableTicketShow.row( $(this).parents('tr') ).data();
                     idTicket=data[0];  
-                    $("#guardarticket").hide(); 
-                    $("#editticket").show();
-                    $("#myBtnSeguimientoShow").hide();
                     
-                    alert(idTicket);
+                    $.post("ServletVerTicket",
+                            {
+                               id: idTicket
+                           },
+                           function(json){                                    
+                                    $("#titulotxt").val(json.titulo);
+                                    $("#serviciotxt").val(json.servicio);
+                                    $('#modulotxt option').eq(json.modulo).prop('selected', true);
+                                    $('#serviciomodulotxt option').eq(json.servicio_modulo).prop('selected', true);                                   
+                                    $('#nombreservidortxt option').eq(json.servidor).prop('selected', true);
+                                    $('#impactotxt option').eq(json.impacto).prop('selected', true);                                  
+                                    $("#fechainiciotxt").val(json.inicio);
+                                    $("#fechafinaltxt").val(json.final);
+                                    $('#estadotxt option').eq(json.estado).prop('selected', true);                                    
+                                    $("#descripciontxt").val(json.descripcion);
+                                    $("#causatxt").val(json.causa);
+                                    $("#soluciontxt").val(json.solucion);
+                                    $('#impactotxt option').eq(json.impacto).prop('selected', true);
+                                    $("#myModal").modal();
+                                });
+                                    $("#guardarticket").hide(); 
+                                    $("#editticket").show();
+                                    $("#myBtnSeguimientoShow").hide();                    
                } );  
 
      //Seleccion de Analista   
      $('#table_analista tbody').on( 'click','#seleccionarAnalista', function () {
                    
-                    var data = tableAnalista.row( $(this).parents('tr') ).data();
-                    idAnalista=data[0];  
-                    AnalistaNombreTxt.value=data[1];
-                    AnalistaApellidoTxt.value=data[2];
-                    AnalistaUsuarioTxt.value=data[3];
-                    AnalistaPasswordTxt.value=data[4];
+                    var dataAnalista = tableAnalista.row( $(this).parents('tr') ).data();
+                    idAnalista=dataAnalista[0];  
+                    AnalistaNombreTxt.value=dataAnalista[1];
+                    AnalistaApellidoTxt.value=dataAnalista[2];
+                    AnalistaUsuarioTxt.value=dataAnalista[3];
+                    AnalistaPasswordTxt.value=dataAnalista[4];
                     
                } );  
      
      //Eliminacion de Analista
      $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {
-                    
-                    var data = tableAnalista.row( $(this).parents('tr') ).data();
-                      idAnalista=data[0];  
+                  
+                    var dataEliminarAnalista = tableAnalista.row( $(this).parents('tr') ).data();
+                      idAnalista=dataEliminarAnalista[0];  
                       transaccion="eliminar";
                        $.ajax({
                         type: "GET",
@@ -224,6 +247,7 @@
                         success:
                      function(responseText){                         
                             alert(responseText);
+                            tableAnalista.clear().draw();
                             tableAnalista.ajax.reload();
                             
                         }
@@ -234,7 +258,7 @@
                } );    
                
    
-     
+     //Ver seguimiento
     $('#table_seguimientos').on('click', 'td', function() {
         var data = t.row( $(this).parents('tr') ).data();
                     txtSeguimiento.value=data[2];
@@ -275,6 +299,7 @@
                      alert("Seguimiento Guardado");
                 });
      
+     
      //PARAMETROS PARA GUARDAR ANALISTAS
       $("#guardarAnalista").click(function(){ 
            analistaNombre=$('#AnalistaNombreTxt').val();
@@ -294,14 +319,20 @@
                         analistaUsuario : analistaUsuario,
                         analistaPassword : analistaPassword,
                         transaccion : transaccion
-                    }
+                    },
+                        success:
+                     function(responseAnalista){
+                            alert(responseAnalista);
+                            tableAnalista.clear().draw();
+                            
+                           //recarga los datos nuevamente en el dataTable por ajax
+                            tableAnalista.ajax.reload();
+                        }
                     });
                     
-                    //recarga los datos nuevamente en el dataTable por ajax
-                     tableAnalista.ajax.reload();
-                     bootbox.alert("<div class='alert alert-success'>"+
-                     "<strong>Guardado!</strong> Elemento guardado!"+
-                     "</div>");
+                     //bootbox.alert("<div class='alert alert-success'>"+
+                     //"<strong>Guardado!</strong> Elemento guardado!"+
+                     //"</div>");
                 });
                 
       //PARAMETROS POR AJAX PARA GUARDAR NUEVO TICKET     
@@ -1178,9 +1209,21 @@
                         $("#myBtnNewTicket").click(function(){
                             $("#myModal").modal();
                             $("#myBtnSeguimientoShow").hide();
-                            $("#editticket").hide();
-                             $("#guardarticket").show();
-                          
+                            $("#editticket").hide();                            
+                            $("#titulotxt").val("");
+                            $("#serviciotxt").val("");
+                            $('#modulotxt option').eq("0").prop('selected', true);
+                            $('#serviciomodulotxt option').eq("0").prop('selected', true);                                   
+                            $('#nombreservidortxt option').eq("0").prop('selected', true);
+                            $('#impactotxt option').eq("0").prop('selected', true);                                  
+                            $("#fechainiciotxt").val("");
+                            $("#fechafinaltxt").val("");
+                            $('#estadotxt option').eq("0").prop('selected', true);                                    
+                            $("#descripciontxt").val("");
+                            $("#causatxt").val("");
+                            $("#soluciontxt").val("");
+                            $('#impactotxt option').eq("0").prop('selected', true);
+                            $("#guardarticket").show();                          
                         });
                     });
                     
