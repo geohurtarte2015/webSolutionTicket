@@ -147,6 +147,38 @@
                         }
                         ]
                     });
+                    
+       //INICIALIZACION DEL DATA_TABLE ESTADO "table_estado
+     var tableEstado= $('#table_estado').DataTable( {
+                    "ajax" : {
+                        "url": "ServletVerEstado",
+                        "type": "GET"
+                    },
+                    "global" : false,
+                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
+                    "dataType" : "json",
+                    "columns" : [
+                     {"title": "Id"},
+                     {"title": "Estado"},                     
+                     {"title": ""},
+                     {"title": ""}
+                    ],
+                    "columnDefs": [ {
+                        "targets": 2,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogEstado' id='seleccionarEstado'>"+                          
+                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        },
+                        {
+                        "targets": 3,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogEstado2' id='EliminarEstado'>"+                          
+                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        }
+                        ]
+                    });
      
      
      
@@ -180,11 +212,7 @@
                                           "</a></center>"
                         }
                         ]
-                    });
-     
-     
- 
-     
+                    });     
      
       //Seleccion de Ticket   
      $('#table_ticket_show tbody').on( 'click','#editaricon', function () {
@@ -215,6 +243,24 @@
                                     $("#guardarticket").hide(); 
                                     $("#editticket").show();
                                     $("#myBtnSeguimientoShow").hide();                    
+               } ); 
+      
+        
+     //Seleccion de Seguimiento relacionado al ticket   
+     $('#table_ticket_show tbody').on( 'click','#seguimientosicon', function () {
+           txtSeguimiento.value="";
+           var data = tableTicketShow.row( $(this).parents('tr') ).data();
+           ticket=data[0];  
+                     
+           //LIMPIA EL DATA_TABLE
+            t.clear().draw();
+           
+           //recarga los datos nuevamente en el dataTable por ajax
+           t.ajax.reload();      
+           
+                   // var data = tableTicketShow.row( $(this).parents('tr') ).data();
+                    //idTicket=data[0];  
+                                  
                } );  
 
      //Seleccion de Analista   
@@ -256,10 +302,17 @@
                      //tableAnalista.ajax.reload();  
                     
                } );    
-               
+      
+      //Seleccion de Estado   
+     $('#table_estado tbody').on( 'click','#seleccionarEstado', function () {
+                   
+                    var dataEstado = tableEstado.row( $(this).parents('tr') ).data();
+                    idEstado=dataEstado[0];  
+                    estadoNombreTxt.value=dataEstado[1];
+               } );  
    
-     //Ver seguimiento
-    $('#table_seguimientos').on('click', 'td', function() {
+     //En la carga hecha en la tabla seguimientos
+    $('#table_seguimientos').on('click','td', function() {
         var data = t.row( $(this).parents('tr') ).data();
                     txtSeguimiento.value=data[2];
         });
@@ -673,7 +726,7 @@
                                     <a href="flot.html">Raiz</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Estados</a>
+                                    <a href="#" data-toggle="modal" data-target="#myModalEstado" data-backdrop="static" data-keyboard="false">Estados</a>
                                 </li>
                                 <li>
                                     <a href="morris.html">Impacto</a>
@@ -1165,7 +1218,63 @@
                                 </div>
                                 <!-- /.modal-dialog -->
                  </div>   
-                 <!-- /.modal -->
+                 <!-- /.modal Analista-->
+                 
+                 <!-- Modal Estado -->
+                 <div style="display: none;" class="modal fade" id="myModalEstado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Agregar Estado</h4>
+                                        </div>
+                                        
+                                   
+                                        
+                        <div class="modal-body">
+                                          
+                        <div class="panel panel-default">
+                                     
+                          <!-- /.panel-body -->
+                          <div class="panel-body">
+                            
+                            <div class="row">                            
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                            <label>Descripcion</label>
+                                            <input class="form-control" name="estadoNombreTxt" id="estadoNombreTxt" placeholder="Nombre">
+                                    </div>
+                                </div>
+                            
+                            </div><!-- /.Descripcion -->  
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                <button id="guardarEstado" type="button" class="btn btn-primary">Guardar</button>                             
+                                <button type="button" class="btn btn-primary " id="myBtnEstadoShow" >Crear</button>
+                            </div>
+                            <div class="modal-footer">
+                                <table id="table_estado" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
+                                          
+                                             <thead>
+                                                <tr>
+                                                <th>Id</th>
+                                                <th>Estado</th>
+                                                <th></th>
+                                                <th></th>
+                                                </tr>
+                                             </thead>
+                                             
+                                </table>
+                            </div>
+                     </div>
+                                            
+                    </div>    
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                 </div>   
+                 <!-- /.modal Estado-->
+             
              
                 </div>
                         <!-- /.panel-body -->
