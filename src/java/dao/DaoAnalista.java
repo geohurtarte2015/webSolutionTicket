@@ -134,7 +134,7 @@ public class DaoAnalista {
    
    }
    
-    public String delete(int idAnalista){
+    public String delete(int idAnalista){ 
      Analista analista = null;
      String resp=null;
        try{           

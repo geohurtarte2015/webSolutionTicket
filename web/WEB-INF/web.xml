@@ -21,10 +21,6 @@
         <servlet-class>controlador.CerrarSesion</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletVerAnalista</servlet-name>
-        <servlet-class>controlador.ServletVerAnalista</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ServletGuardarAnalista</servlet-name>
         <servlet-class>controlador.ServletGuardarAnalista</servlet-class>
     </servlet>
@@ -43,6 +39,10 @@
     <servlet>
         <servlet-name>ServletVerEstado</servlet-name>
         <servlet-class>controlador.ServletVerEstado</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletEstado</servlet-name>
+        <servlet-class>controlador.ServletEstado</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletVerSeguimientos</servlet-name>
@@ -65,10 +65,6 @@
         <url-pattern>/CerrarSesion</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletVerAnalista</servlet-name>
-        <url-pattern>/ServletVerAnalista</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ServletGuardarAnalista</servlet-name>
         <url-pattern>/ServletGuardarAnalista</url-pattern>
     </servlet-mapping>
@@ -87,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>ServletVerEstado</servlet-name>
         <url-pattern>/ServletVerEstado</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletEstado</servlet-name>
+        <url-pattern>/ServletEstado</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

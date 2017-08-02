@@ -100,16 +100,18 @@ public class DaoEstado {
    
    }
    
-    public Estado delete(int idEstado){
+    public String delete(int idEstado){
      Estado estado = null;
+     String resp=null;
        try{           
            initOperation();
            estado = (Estado) sesion.get(Estado.class, idEstado);                    
            sesion.delete(estado);
            tx.commit();
-       }catch(HibernateException he){
-       
+           resp="ok";
+       }catch(HibernateException he){        
         trueExcepcion(he); 
+        resp=he.toString(); 
         throw he; 
        
        } finally {
@@ -118,7 +120,7 @@ public class DaoEstado {
        }
        
        
-       return estado;
+       return resp;
    
    
    }

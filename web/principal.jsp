@@ -116,8 +116,11 @@
        //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
      var tableAnalista= $('#table_analista').DataTable( {
                     "ajax" : {
-                        "url": "ServletVerAnalista",
-                        "type": "GET"
+                        "url": "ServletAnalista",
+                        "type": "GET",
+                        "data" : function(d){
+                            d.transaccion = "inicializar";
+                            }
                     },
                     "global" : false,
                     "lengthMenu": [[ 2, -1], [ 2,"All"]],
@@ -148,12 +151,15 @@
                         ]
                     });
                     
-       //INICIALIZACION DEL DATA_TABLE ESTADO "table_estado
+     //INICIALIZACION DEL DATA_TABLE ESTADO "table_estado
      var tableEstado= $('#table_estado').DataTable( {
                     "ajax" : {
-                        "url": "ServletVerEstado",
-                        "type": "GET"
-                    },
+                        "url": "ServletEstado",
+                        "type": "GET",
+                        "data" : function(d){
+                            d.transaccion = "inicializar";
+                            }
+                    },                   
                     "global" : false,
                     "lengthMenu": [[ 2, -1], [ 2,"All"]],
                     "dataType" : "json",
@@ -173,13 +179,12 @@
                         {
                         "targets": 3,
                         "data": null,
-                        "defaultContent": "<center><a href='#dialogEstado2' id='EliminarEstado'>"+                          
+                        "defaultContent": "<center><a href='#dialogEstado2' id='eliminarEstado'>"+                          
                                            "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
                                           "</a></center>"
                         }
                         ]
                     });
-     
      
      
      //INICIALIZACION DEL DATA_TABLE TICKET "table_ticket_show"
@@ -303,13 +308,106 @@
                     
                } );    
       
+      //PARAMETROS PARA GUARDAR ANALISTAS
+      $("#guardarAnalista").click(function(){ 
+           analistaNombre=$('#AnalistaNombreTxt').val();
+           analistaApellido=$('#AnalistaApellidoTxt').val();
+           analistaUsuario=$('#AnalistaUsuarioTxt').val();
+           analistaPassword=$('#AnalistaPasswordTxt').val();
+           transaccion="guardar";
+                 
+                    $.ajax({
+                    type: "GET",
+                    url: "ServletAnalista",
+                    global: false,
+                    async : false,
+                    data: {
+                        analistaNombre : analistaNombre,
+                        analistaApellido : analistaApellido,
+                        analistaUsuario : analistaUsuario,
+                        analistaPassword : analistaPassword,
+                        transaccion : transaccion
+                    },
+                        success:
+                     function(responseAnalista){
+                            alert(responseAnalista);
+                            tableAnalista.clear().draw();
+                            
+                           //recarga los datos nuevamente en el dataTable por ajax
+                            tableAnalista.ajax.reload();
+                        }
+                    });
+                    
+                     //bootbox.alert("<div class='alert alert-success'>"+
+                     //"<strong>Guardado!</strong> Elemento guardado!"+
+                     //"</div>");
+                });
+                
+      
       //Seleccion de Estado   
      $('#table_estado tbody').on( 'click','#seleccionarEstado', function () {
                    
                     var dataEstado = tableEstado.row( $(this).parents('tr') ).data();
                     idEstado=dataEstado[0];  
                     estadoNombreTxt.value=dataEstado[1];
+               } );
+               
+       //Eliminacion de Estado
+     $('#table_estado tbody').on( 'click','#eliminarEstado', function () {
+                  
+                    var dataEliminarEstado = tableEstado.row( $(this).parents('tr') ).data();
+                      idEstado=dataEliminarEstado[0];  
+                      transaccion="eliminar";
+                       $.ajax({
+                        type: "GET",
+                        url: "ServletEstado",
+                        global: false,
+                        async : false,
+                        data: {
+                            idEstado: idEstado,
+                            transaccion: transaccion
+                        },
+                        success:
+                     function(responseText){                         
+                            alert(responseText);
+                            tableEstado.clear().draw();
+                            tableEstado.ajax.reload();
+                            
+                        }
+                    });                    
+                    //recarga los datos nuevamente en el dataTable por ajax
+                     //tableAnalista.ajax.reload();  
+                    
                } );  
+               
+      //PARAMETROS PARA GUARDAR ESTADO
+      $("#guardarEstado").click(function(){ 
+           estadoNombre=$('#estadoNombreTxt').val();        
+           transaccion="guardar";
+                    $.ajax({
+                    type: "GET",
+                    url: "ServletEstado",
+                    global: false,
+                    async : false,
+                    data: {
+                        estadoNombre : estadoNombre,                       
+                        transaccion : transaccion
+                    },
+                        success:
+                     function(responseEstado){
+                            alert(responseEstado);
+                            tableEstado.clear().draw();
+                            
+                           //recarga los datos nuevamente en el dataTable por ajax
+                            tableEstado.ajax.reload();
+                        }
+                    });
+                    
+                     //bootbox.alert("<div class='alert alert-success'>"+
+                     //"<strong>Guardado!</strong> Elemento guardado!"+
+                     //"</div>");
+                });
+      
    
      //En la carga hecha en la tabla seguimientos
     $('#table_seguimientos').on('click','td', function() {
@@ -353,41 +451,7 @@
                 });
      
      
-     //PARAMETROS PARA GUARDAR ANALISTAS
-      $("#guardarAnalista").click(function(){ 
-           analistaNombre=$('#AnalistaNombreTxt').val();
-           analistaApellido=$('#AnalistaApellidoTxt').val();
-           analistaUsuario=$('#AnalistaUsuarioTxt').val();
-           analistaPassword=$('#AnalistaPasswordTxt').val();
-           transaccion="guardar";
-                 
-                    $.ajax({
-                    type: "GET",
-                    url: "ServletAnalista",
-                    global: false,
-                    async : false,
-                    data: {
-                        analistaNombre : analistaNombre,
-                        analistaApellido : analistaApellido,
-                        analistaUsuario : analistaUsuario,
-                        analistaPassword : analistaPassword,
-                        transaccion : transaccion
-                    },
-                        success:
-                     function(responseAnalista){
-                            alert(responseAnalista);
-                            tableAnalista.clear().draw();
-                            
-                           //recarga los datos nuevamente en el dataTable por ajax
-                            tableAnalista.ajax.reload();
-                        }
-                    });
-                    
-                     //bootbox.alert("<div class='alert alert-success'>"+
-                     //"<strong>Guardado!</strong> Elemento guardado!"+
-                     //"</div>");
-                });
-                
+     
       //PARAMETROS POR AJAX PARA GUARDAR NUEVO TICKET     
      $("#guardarticket").click(function(){ 
          
@@ -721,10 +785,7 @@
                               <ul class="nav nav-second-level">
                                 <li>
                                     <a href="#" data-toggle="modal" data-target="#myModaAnalista" data-backdrop="static" data-keyboard="false">Analista</a>
-                                </li>  
-                                <li>
-                                    <a href="flot.html">Raiz</a>
-                                </li>
+                                </li>                               
                                 <li>
                                     <a href="#" data-toggle="modal" data-target="#myModalEstado" data-backdrop="static" data-keyboard="false">Estados</a>
                                 </li>
