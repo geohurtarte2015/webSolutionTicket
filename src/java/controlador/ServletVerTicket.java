@@ -15,8 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
+
 import pojo.Seguimiento;
 import pojo.Ticket;
 
@@ -44,8 +44,6 @@ public class ServletVerTicket extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        try 
-        {
             String valTicket = String.valueOf(request.getParameter("id"));
             
             int idTicket = Integer.parseInt(valTicket);              
@@ -75,10 +73,7 @@ public class ServletVerTicket extends HttpServlet {
             response.getWriter().write(json.toString());
             
             //out.println(name + " " + text);
-        } catch (JSONException ex) {
-            Logger.getLogger(ServletVerTicket.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+     
       
     }
 
