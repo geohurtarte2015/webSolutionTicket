@@ -145,6 +145,7 @@ public class DaoTicket {
    String fechaInicio, String solucion,String titulo){
      
        Ticket ticket = null;
+
        DaoTicket daoTicket = new DaoTicket();
        
        try{        
@@ -160,11 +161,10 @@ public class DaoTicket {
             
            initOperation();   
            ticket.setAnalista(daoAnalista.getByIdObject(idAnalista));
-           ticket.setEstado(daoEstado.getByIdObject(idEstado));
+           ticket.setEstado((Estado) daoEstado.getByIdObject(idEstado,Estado.class));
            ticket.setImpacto(daoImpacto.getByIdObject(idImpacto));
            ticket.setModulo(daoModulo.getByIdObject(idModulo));
-           ticket.setRaiz(daoRaiz.getByIdObject(idRaiz));
-           ticket.setEstado(daoEstado.getByIdObject(idEstado));
+           ticket.setRaiz(daoRaiz.getByIdObject(idRaiz));      
            ticket.setServicio(daoServicio.getByIdObject(idServicio));
            ticket.setServicioModulo(daoServicioModulo.getByIdObject(idServicioModulo));
            ticket.setServidor(daoServidor.getByIdObject(idServidor));

@@ -16,8 +16,7 @@
 <%@page import="dao.DaoTicket"%>
 <!DOCTYPE html>
 <%  
-    int id = (Integer) session.getAttribute("id");  
-
+    int id = (Integer) session.getAttribute("id");
     String usuario = (String) session.getAttribute("user");    
     String nombre = (String) session.getAttribute("nombre");
     String apellido = (String) session.getAttribute("apellido");
@@ -282,7 +281,6 @@
      
      //Eliminacion de Analista
      $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {
-                  
                     var dataEliminarAnalista = tableAnalista.row( $(this).parents('tr') ).data();
                       idAnalista=dataEliminarAnalista[0];  
                       transaccion="eliminar";
@@ -294,17 +292,11 @@
                         data: {
                             idAnalista: idAnalista,
                             transaccion: transaccion
-                        },
-                        success:
-                     function(responseText){                         
-                            alert(responseText);
-                            tableAnalista.clear().draw();
-                            tableAnalista.ajax.reload();
-                            
                         }
-                    });                    
-                    //recarga los datos nuevamente en el dataTable por ajax
-                     //tableAnalista.ajax.reload();  
+                        
+                    });  
+                     tableAnalista.ajax.reload();
+                     alert("Eliminado");
                     
                } );    
       
@@ -331,16 +323,10 @@
                         success:
                      function(responseAnalista){
                             alert(responseAnalista);
-                            tableAnalista.clear().draw();
-                            
-                           //recarga los datos nuevamente en el dataTable por ajax
-                            tableAnalista.ajax.reload();
                         }
                     });
-                    
-                     //bootbox.alert("<div class='alert alert-success'>"+
-                     //"<strong>Guardado!</strong> Elemento guardado!"+
-                     //"</div>");
+                      tableAnalista.ajax.reload();
+             
                 });
                 
       
@@ -370,11 +356,9 @@
                         success:
                      function(responseText){                         
                             alert(responseText);
-                            tableEstado.clear().draw();
-                            tableEstado.ajax.reload();
-                            
                         }
-                    });                    
+                    });    
+                   tableEstado.ajax.reload();
                     //recarga los datos nuevamente en el dataTable por ajax
                      //tableAnalista.ajax.reload();  
                     
@@ -396,13 +380,11 @@
                         success:
                      function(responseEstado){
                             alert(responseEstado);
-                            tableEstado.clear().draw();
-                            
+                            //tableEstado.clear().draw();                            
                            //recarga los datos nuevamente en el dataTable por ajax
-                            tableEstado.ajax.reload();
                         }
                     });
-                    
+                    tableEstado.ajax.reload();
                      //bootbox.alert("<div class='alert alert-success'>"+
                      //"<strong>Guardado!</strong> Elemento guardado!"+
                      //"</div>");

@@ -1,6 +1,7 @@
 package structuras;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import pojo.Ticket;
 
@@ -11,7 +12,7 @@ public class DataTableObject {
  
  String sColumns;
  
- List<Object> aaData;
+ ArrayList<Object> aaData;
  
 
  public String getsEcho() {
@@ -35,7 +36,7 @@ public class DataTableObject {
  }
 
  public void setAaData(List<Object> aaData) {
-  this.aaData = aaData;
+  this.aaData = (ArrayList<Object>) aaData;
  }
  
  

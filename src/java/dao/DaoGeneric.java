@@ -3,24 +3,24 @@ package dao;
 
 import java.util.List;
 import modelo.HibernateUtil;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import pojo.Analista;
 import pojo.Estado;
-import pojo.Impacto;
 
-
-public class DaoImpacto  {
+public class DaoGeneric {
     
     private Session sesion;
     private Transaction tx;
     
-    public void save(Impacto impacto ) throws HibernateException {
+   public void save(Object object ) throws HibernateException {
   
     try{     
   
         initOperation();
-        sesion.persist(impacto);        
+        sesion.persist(object);        
         tx.commit();
         
     
@@ -41,28 +41,27 @@ public class DaoImpacto  {
     
 
 }
-    
-    public List<Impacto> listAll(){
+   
+   public List<?> listAll(String cls){
        
-       List<Impacto> impactos = null;
+       List<?> object = null;
        
        try{
-           initOperation();
-           impactos= sesion.createQuery("from Impacto").list();           
+           initOperation();      
+           object= sesion.createQuery("from "+cls).list();           
        } finally
        {
         sesion.close();
        }
        
-       return impactos;
+       return object;
    }   
     
-    public Impacto getByIdObject(int idImpacto){
-       Impacto impacto = null;
+   public Object getByIdObject(int id,Class<?> object){
+       Object objectGeneric = null;
        try{
-           
            initOperation();
-           impacto = (Impacto) sesion.get(Impacto.class, idImpacto);           
+           objectGeneric = (Object) sesion.get(object, id);           
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -72,21 +71,15 @@ public class DaoImpacto  {
            
            sesion.close();
        }
-       
-       
-       return impacto;
+       return object;
    }
    
-    public Impacto update(int idImpacto, String descripcion){
-     Impacto impacto = null;
+   public Object update(Object object){     
        try{           
            initOperation();
-           impacto = (Impacto) sesion.get(Estado.class, idImpacto);  
-           impacto.setDescripcion(descripcion);
-           sesion.update(impacto);
+           sesion.update(object);
            tx.commit();
        }catch(HibernateException he){
-       
         trueExcepcion(he); 
         throw he; 
        
@@ -96,38 +89,33 @@ public class DaoImpacto  {
        }
        
        
-       return impacto;
+       return object;
    
    
    }
    
-    public String delete(int idImpacto){
-     Impacto impacto = null;
-      String resp=null;
+    public String delete(int id,Class<?> object){
+     Object objectGeneric = object;
+     String resp=null;
        try{           
            initOperation();
-           impacto = (Impacto) sesion.get(Impacto.class, idImpacto);                    
-           sesion.delete(impacto);
+           objectGeneric = (Object) sesion.get(object, id); 
+           sesion.delete(objectGeneric);
            tx.commit();
-            resp="ok";
-       }catch(HibernateException he){
-   
+           resp="ok";
+       }catch(HibernateException he){        
+        trueExcepcion(he); 
         resp=he.toString(); 
-        trueExcepcion(he); 
         throw he; 
        
        } finally {
            
            sesion.close();
-       }
-       
-       
+       }       
        return resp;
-   
-   
    }
-
-    private void initOperation() throws HibernateException
+        
+    private void initOperation() throws HibernateException 
 
     {
     
@@ -141,5 +129,6 @@ public class DaoImpacto  {
         tx.rollback(); 
         throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he); 
     }
+    
     
 }

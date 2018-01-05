@@ -44,6 +44,22 @@
         <servlet-name>ServletEstado</servlet-name>
         <servlet-class>controlador.ServletEstado</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletImpacto</servlet-name>
+        <servlet-class>controlador.ServletImpacto</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletModulos</servlet-name>
+        <servlet-class>controlador.ServletModulos</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletServicios</servlet-name>
+        <servlet-class>controlador.ServletServicios</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletServidores</servlet-name>
+        <servlet-class>controlador.ServletServidores</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletVerSeguimientos</servlet-name>
         <url-pattern>/ServletVerSeguimientos</url-pattern>
@@ -87,6 +103,22 @@
     <servlet-mapping>
         <servlet-name>ServletEstado</servlet-name>
         <url-pattern>/ServletEstado</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletImpacto</servlet-name>
+        <url-pattern>/ServletImpacto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletModulos</servlet-name>
+        <url-pattern>/ServletModulos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletServicios</servlet-name>
+        <url-pattern>/ServletServicios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletServidores</servlet-name>
+        <url-pattern>/ServletServidores</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

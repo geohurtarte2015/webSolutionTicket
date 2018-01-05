@@ -3,6 +3,7 @@ package dao;
 
 import java.util.List;
 import modelo.HibernateUtil;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -14,12 +15,12 @@ public class DaoEstado {
     private Session sesion;
     private Transaction tx;
     
-   public void save(Estado estado ) throws HibernateException {
+   public void save(Object object) throws HibernateException {
   
     try{     
   
         initOperation();
-        sesion.persist(estado);        
+        sesion.persist(object);        
         tx.commit();
         
     
@@ -56,12 +57,11 @@ public class DaoEstado {
        return estados;
    }   
     
-   public Estado getByIdObject(int idEstado){
-       Estado estado = null;
+   public Object getByIdObject(int id,Class<?> object){
+       Object objectGeneric = object;
        try{
-           
            initOperation();
-           estado = (Estado) sesion.get(Estado.class, idEstado);           
+           objectGeneric = (Object) sesion.get(object, id);           
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -71,9 +71,7 @@ public class DaoEstado {
            
            sesion.close();
        }
-       
-       
-       return estado;
+       return object;
    }
    
    public Estado update(int idEstado, String descripcion){
@@ -99,14 +97,14 @@ public class DaoEstado {
    
    
    }
-   
-    public String delete(int idEstado){
-     Estado estado = null;
+        
+   public String delete(int id,Class<?> object){
+     Object objectGeneric = object;
      String resp=null;
        try{           
            initOperation();
-           estado = (Estado) sesion.get(Estado.class, idEstado);                    
-           sesion.delete(estado);
+           objectGeneric = (Object) sesion.get(object, id); 
+           sesion.delete(objectGeneric);
            tx.commit();
            resp="ok";
        }catch(HibernateException he){        
@@ -117,15 +115,11 @@ public class DaoEstado {
        } finally {
            
            sesion.close();
-       }
-       
-       
+       }       
        return resp;
-   
-   
    }
         
-    private void initOperation() throws HibernateException 
+   private void initOperation() throws HibernateException 
 
     {
     
@@ -134,7 +128,7 @@ public class DaoEstado {
     
 }
 
-    private void trueExcepcion(HibernateException he) throws HibernateException 
+   private void trueExcepcion(HibernateException he) throws HibernateException 
     { 
         tx.rollback(); 
         throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he); 
