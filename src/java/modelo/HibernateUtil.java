@@ -1,38 +1,28 @@
 package modelo;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.c3p0.internal.C3P0ConnectionProvider;
-import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
-import org.hibernate.internal.SessionFactoryImpl;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+
  
 public class HibernateUtil {
      
-    private static final SessionFactory sessionFactory;
-     
-    static{
-        try{
-            sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();         
-            
-        }catch (Throwable ex) {
-            System.err.println("Session Factory could not be created." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }   
-    }
+    private static SessionFactory sessionFactory;
      
     public static SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            // loads configuration and mappings
+            Configuration configuration = new Configuration().configure();
+            ServiceRegistry serviceRegistry
+                = new StandardServiceRegistryBuilder()
+                    .applySettings(configuration.getProperties()).build();
+             
+            // builds a session factory from the service registry
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);           
+        }
+         
         return sessionFactory;
     }
-    
-    private void closeSessionFactory(SessionFactory factory) { 
-   if(factory instanceof SessionFactoryImpl) {
-      SessionFactoryImpl sf = (SessionFactoryImpl)factory;
-      ConnectionProvider conn = sf.getConnectionProvider();
-      if(conn instanceof C3P0ConnectionProvider) { 
-        ((C3P0ConnectionProvider)conn).close(); 
-      }
-   }
-   factory.close();
-}
      
 }

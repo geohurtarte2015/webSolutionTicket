@@ -41,13 +41,16 @@ public class ServletAnalista extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        response.setContentType("application/json");
         String tipoTransaccion= String.valueOf(request.getParameter("transaccion"));
+        PrintWriter outInitial = response.getWriter();
         
         if(tipoTransaccion.equals("inicializar")){
-            PrintWriter outInitial = response.getWriter();  
-      
-            String json = this.listAll(response);
-            outInitial.println(json);
+        ListJson listJson = new ListJson();                
+        String json = listJson.listAll();
+        System.out.println("Resultado despues de inicializar "+json);
+        outInitial.print(json);
+        ServletAnalista.super.destroy();
         }
         
         
@@ -55,8 +58,11 @@ public class ServletAnalista extends HttpServlet {
             
             String idAnalista = String.valueOf(request.getParameter("idAnalista"));
             this.delete(response, idAnalista);
-            String json = this.listAll(response);
-            out.print(json);  
+            ListJson listJson = new ListJson();                
+            String json = listJson.listAll();
+            System.out.println("Resultado despues de eliminar "+json);
+            outInitial.print(json);  
+            ServletAnalista.super.destroy();
         }
         
         if (tipoTransaccion.equals("guardar")){
@@ -65,9 +71,11 @@ public class ServletAnalista extends HttpServlet {
             String usuario = String.valueOf(request.getParameter("analistaUsuario"));
             String password = String.valueOf(request.getParameter("analistaPassword"));
             this.save(response, apellido, nombre, usuario, password);
-            this.listAll(response);
-            String json = this.listAll(response);
-            out.print(json);
+            ServletAnalista.super.destroy();
+            //this.listAll(response);
+            //String json = this.listAll(response);
+            //System.out.println("Resultado despues de guardar "+json);
+            //outInitial.print(json);
            
         }
         
@@ -75,12 +83,12 @@ public class ServletAnalista extends HttpServlet {
     
      private void save(HttpServletResponse response, String apellido, String nombre, String usuario, String password) throws IOException{
  
+         
         DaoAnalista daoAnalista = new DaoAnalista();
         Analista analista = new Analista(nombre,apellido,usuario,password);
         daoAnalista.save(analista);
-        PrintWriter outHtml = response.getWriter(); 
-        outHtml.println("Guardado");
-        outHtml.close();
+        ListJson listJson = new ListJson();
+        listJson.listAll();
         
     }
     
@@ -103,46 +111,14 @@ public class ServletAnalista extends HttpServlet {
             }
             
         }else{
-            outHtml.println("Eliminado");
+            System.out.println("Eliminado");
+            //outHtml.println("Eliminado");
         }
             outHtml.close();
             
     }
     
-    private String listAll(HttpServletResponse response) throws IOException
-        {
-            
-       response.setContentType("application/json");
-                      
-            DaoAnalista daoAnalista = new DaoAnalista();  
-          
-            List<Analista> analistas = daoAnalista.listAll();
-            DataTableObject dataTableObject = new DataTableObject();
-            
-            //Se crea nueva Lista de objetos "objectSeguimientos" para solo incluir las propiedades Id, Fecha y Descripcion, 
-            //ya que Gson no reconoce la lista de seguimientos por tener la propiedad de <Tickets> en su clase
-            List<Object> objectAnalistas = new ArrayList<>();
-            
-            for (Iterator analistaIterator = analistas.iterator(); 
-                 analistaIterator.hasNext();
-                )
-            {
-            Analista analista = (Analista) analistaIterator.next(); 
-            List<Object> object = new ArrayList<>();            
-            object.add(analista.getIdAnalista());
-            object.add(analista.getApellido());
-            object.add(analista.getNombre());
-            object.add(analista.getUsuario());
-            object.add(analista.getPassword());
-            objectAnalistas.add(object);
-            }
-            
-            dataTableObject.setAaData(objectAnalistas);     
 
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(dataTableObject);
-            return json;
-        }
     
    
     

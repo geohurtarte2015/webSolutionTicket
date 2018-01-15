@@ -115,14 +115,14 @@
        //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
      var tableAnalista= $('#table_analista').DataTable( {
                     "ajax" : {
-                        "url": "ShowAnalista",
+                        "url": "ServletAnalista",
                         "type": "GET",
                         "data" : function(d){
                             d.transaccion = "inicializar";
                             }
                     },
                     "global" : false,
-                    "lengthMenu": [ 3, 3],
+                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
                     "dataType" : "json",
                     "columns" : [
                      {"title": "Id"},
@@ -296,9 +296,11 @@
                         
                     });  
                      tableAnalista.ajax.reload();
+                     alert("Eliminado");
+                    
                } );    
       
-      //Guardar Analista
+      //PARAMETROS PARA GUARDAR ANALISTAS
       $("#guardarAnalista").click(function(){ 
            analistaNombre=$('#AnalistaNombreTxt').val();
            analistaApellido=$('#AnalistaApellidoTxt').val();
@@ -308,7 +310,7 @@
                  
                     $.ajax({
                     type: "GET",
-                    url: "SaveAnalist",
+                    url: "ServletAnalista",
                     global: false,
                     async : false,
                     data: {
@@ -317,7 +319,11 @@
                         analistaUsuario : analistaUsuario,
                         analistaPassword : analistaPassword,
                         transaccion : transaccion
-                    }
+                    },
+                        success:
+                     function(responseAnalista){
+                            alert(responseAnalista);
+                        }
                     });
                       tableAnalista.ajax.reload();
              
@@ -351,8 +357,7 @@
                      function(responseText){                         
                             alert(responseText);
                         }
-                    });
-                    
+                    });    
                    tableEstado.ajax.reload();
                     //recarga los datos nuevamente en el dataTable por ajax
                      //tableAnalista.ajax.reload();  

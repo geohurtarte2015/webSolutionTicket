@@ -60,6 +60,14 @@
         <servlet-name>ServletServidores</servlet-name>
         <servlet-class>controlador.ServletServidores</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ShowAnalista</servlet-name>
+        <servlet-class>controlador.ShowAnalista</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SaveAnalist</servlet-name>
+        <servlet-class>controlador.SaveAnalist</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletVerSeguimientos</servlet-name>
         <url-pattern>/ServletVerSeguimientos</url-pattern>
@@ -119,6 +127,14 @@
     <servlet-mapping>
         <servlet-name>ServletServidores</servlet-name>
         <url-pattern>/ServletServidores</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowAnalista</servlet-name>
+        <url-pattern>/ShowAnalista</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaveAnalist</servlet-name>
+        <url-pattern>/SaveAnalist</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

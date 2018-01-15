@@ -22,7 +22,9 @@ public class DaoAnalista {
   
         initOperation();
         sesion.persist(analista);        
-        tx.commit();
+        sesion.getTransaction().commit();
+        sesion.clear();
+        sesion.close();
         
     
     }catch(HibernateException he)
@@ -35,7 +37,7 @@ public class DaoAnalista {
     } finally
     {
                 
-        sesion.close();
+        
     
     }
     
@@ -49,10 +51,25 @@ public class DaoAnalista {
        
        try{
            initOperation();
-           analistas= sesion.createQuery("from Analista").list();           
+           analistas= sesion.createQuery("from Analista").list(); 
+           sesion.getTransaction().commit();
+           sesion.clear();
+           sesion.close();
+           int size = analistas.size();
+           for(int i=0;i<size;i++){             
+               System.out.println(analistas.get(i).getIdAnalista());
+               System.out.println(analistas.get(i).getApellido());
+               System.out.println(analistas.get(i).getNombre());               
+               System.out.println(analistas.get(i).getPassword());
+               System.out.println(analistas.get(i).getUsuario());
+                System.out.println("\n");
+           }
+           
        } finally
        {
-        sesion.close();
+        //sesion.getTransaction().commit();
+        //sesion.clear();
+        //sesion.close();
         
        }
        
@@ -64,15 +81,20 @@ public class DaoAnalista {
        try{
            
            initOperation();
-           analista = (Analista) sesion.get(Analista.class, idAnalista);           
+           analista = (Analista) sesion.get(Analista.class, idAnalista); 
+           sesion.getTransaction().commit();
+           sesion.clear();
+           sesion.close();
        }catch(HibernateException he){
        
         trueExcepcion(he); 
         throw he; 
        
        } finally {
-           
-           sesion.close();
+          
+        //sesion.getTransaction().commit();
+        //sesion.clear();
+        //sesion.close();
        }
        
        
@@ -98,7 +120,9 @@ public class DaoAnalista {
        
        } finally {
            
-           sesion.close();
+        sesion.getTransaction().commit();
+        sesion.clear();
+        sesion.close();
      
        }
      
@@ -141,13 +165,14 @@ public class DaoAnalista {
            initOperation();
            analista = (Analista) sesion.get(Analista.class, idAnalista);                    
            sesion.delete(analista);
-           tx.commit();
+           sesion.getTransaction().commit();
+           sesion.clear();
+           sesion.close();
            resp="ok";
        }catch(HibernateException he){            
             resp=he.toString(); 
        } finally {
 
-        sesion.close();
        }
        
        
