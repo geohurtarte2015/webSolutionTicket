@@ -1,21 +1,23 @@
-
 package dao;
+
+
+
 
 import java.util.List;
 import modelo.HibernateUtil;
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import pojo.Analista;
-import pojo.Estado;
+
 
 public class DaoGeneric {
     
     private Session sesion;
     private Transaction tx;
     
-   public void save(Object object ) throws HibernateException {
+   public void save(Object object) throws HibernateException {
   
     try{     
   
@@ -94,7 +96,7 @@ public class DaoGeneric {
    
    }
    
-    public String delete(int id,Class<?> object){
+   public String delete(int id,Class<?> object){
      Object objectGeneric = object;
      String resp=null;
        try{           
@@ -115,7 +117,7 @@ public class DaoGeneric {
        return resp;
    }
         
-    private void initOperation() throws HibernateException 
+   private void initOperation() throws HibernateException 
 
     {
     
@@ -124,7 +126,7 @@ public class DaoGeneric {
     
 }
 
-    private void trueExcepcion(HibernateException he) throws HibernateException 
+   private void trueExcepcion(HibernateException he) throws HibernateException 
     { 
         tx.rollback(); 
         throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he); 

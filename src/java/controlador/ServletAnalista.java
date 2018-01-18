@@ -56,7 +56,7 @@ public class ServletAnalista extends HttpServlet {
         
         if(tipoTransaccion.equals("eliminar")){            
             
-            String idAnalista = String.valueOf(request.getParameter("idAnalista"));
+            String idAnalista = String.valueOf(request.getParameter("id"));
             this.delete(response, idAnalista);
             ListJson listJson = new ListJson();                
             String json = listJson.listAll();
@@ -66,10 +66,10 @@ public class ServletAnalista extends HttpServlet {
         }
         
         if (tipoTransaccion.equals("guardar")){
-            String apellido = String.valueOf(request.getParameter("analistaApellido"));
-            String nombre = String.valueOf(request.getParameter("analistaNombre"));
-            String usuario = String.valueOf(request.getParameter("analistaUsuario"));
-            String password = String.valueOf(request.getParameter("analistaPassword"));
+            String apellido = String.valueOf(request.getParameter("apellido"));
+            String nombre = String.valueOf(request.getParameter("nombre"));
+            String usuario = String.valueOf(request.getParameter("user"));
+            String password = String.valueOf(request.getParameter("password"));
             this.save(response, apellido, nombre, usuario, password);
             ServletAnalista.super.destroy();
             //this.listAll(response);

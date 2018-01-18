@@ -17,19 +17,19 @@ public class Analista implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_ANALISTA")
-    private int idAnalista;
+    public int idAnalista;
     
     @Column(name="NOMBRE")
-    private String nombre;
+    public String nombre;
     
     @Column(name="APELLIDO")
-    private String apellido;
+    public String apellido;
     
     @Column(name="USUARIO")
-    private String usuario;
+    public String usuario;
     
     @Column(name="PASSWORD")
-    private String password;
+    public String password;
     
     public Analista() {
  

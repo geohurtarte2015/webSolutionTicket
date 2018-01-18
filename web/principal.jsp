@@ -113,33 +113,26 @@
      
      
        //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
-     var tableAnalista= $('#table_analista').DataTable( {
+     var table= $('#table_analista').DataTable( {
                     "ajax" : {
-                        "url": "ShowAnalista",
+                        "url": "Show",
                         "type": "GET",
                         "data" : function(d){
                             d.transaccion = "inicializar";
                             }
                     },
                     "global" : false,
-                    "lengthMenu": [ 3, 3],
+                    "lengthMenu": [ 5, 5 ],
                     "dataType" : "json",
-                    "columns" : [
+                     "columns" : [
                      {"title": "Id"},
+                     {"title": "Nombre"},                     
                      {"title": "Apellido"},
-                     {"title": "Nombre"},
                      {"title": "Usuario"},
                      {"title": "Password"},
-                     {"title": ""},
-                     {"title": ""}
+                     {"title": ""}                 
                     ],
-                    "columnDefs": [ {
-                        "targets": 6,
-                        "data": null,
-                        "defaultContent": "<center><a href='#dialogAnalista' id='seleccionarAnalista'>"+                          
-                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
-                                          "</a></center>"
-                        },
+                  "columnDefs": [ 
                         {
                         "targets": 5,
                         "data": null,
@@ -248,7 +241,6 @@
                                     $("#editticket").show();
                                     $("#myBtnSeguimientoShow").hide();                    
                } ); 
-      
         
      //Seleccion de Seguimiento relacionado al ticket   
      $('#table_ticket_show tbody').on( 'click','#seguimientosicon', function () {
@@ -280,47 +272,51 @@
                } );  
      
      //Eliminacion de Analista
-     $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {
-                    var dataEliminarAnalista = tableAnalista.row( $(this).parents('tr') ).data();
-                      idAnalista=dataEliminarAnalista[0];  
-                      transaccion="eliminar";
-                       $.ajax({
-                        type: "GET",
-                        url: "ServletAnalista",
-                        global: false,
-                        async : false,
-                        data: {
-                            idAnalista: idAnalista,
-                            transaccion: transaccion
-                        }
-                        
-                    });  
-                     tableAnalista.ajax.reload();
-               } );    
-      
-      //Guardar Analista
-      $("#guardarAnalista").click(function(){ 
-           analistaNombre=$('#AnalistaNombreTxt').val();
-           analistaApellido=$('#AnalistaApellidoTxt').val();
-           analistaUsuario=$('#AnalistaUsuarioTxt').val();
-           analistaPassword=$('#AnalistaPasswordTxt').val();
-           transaccion="guardar";
-                 
+     $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {                  
+                    var dataExample = table.row( $(this).parents('tr') ).data();
+                    idAnalista=dataExample[0];
+                    transaccion="eliminar";
                     $.ajax({
                     type: "GET",
-                    url: "SaveAnalist",
+                    url: "Delete",
                     global: false,
                     async : false,
                     data: {
-                        analistaNombre : analistaNombre,
-                        analistaApellido : analistaApellido,
-                        analistaUsuario : analistaUsuario,
-                        analistaPassword : analistaPassword,
+                        id: idAnalista,
+                        transaccion: transaccion
+                    }
+                    });
+                    //recarga los datos nuevamente en el dataTable por ajax
+                     table.ajax.reload();
+                     alert("Persona Eliminada");
+                    
+               } );    
+      
+     //Guardar Analista                 
+     $("#save").click(function(){ 
+                nombre=$('#AnalistaNombreTxt').val();
+                apellido=$('#AnalistaApellidoTxt').val();
+                user=$('#AnalistaUsuarioTxt').val();
+                password=$('#AnalistaPasswordTxt').val();
+                transaccion="guardar";
+                 
+                    $.ajax({
+                    type: "GET",
+                    url: "Save",
+                    global: false,
+                    async : false,
+                    data: {
+                        nombre: nombre,
+                        apellido: apellido,
+                        user: user,
+                        password: password,
                         transaccion : transaccion
                     }
                     });
-                      tableAnalista.ajax.reload();
-             
+                    
+                    //recarga los datos nuevamente en el dataTable por ajax
+                     table.ajax.reload();
+                     alert("Persona Guardada");
                 });
                 
       
@@ -386,7 +382,7 @@
                 });
       
    
-     //En la carga hecha en la tabla seguimientos
+     //En la carga hecha en la ta seguimientos
     $('#table_seguimientos').on('click','td', function() {
         var data = t.row( $(this).parents('tr') ).data();
                     txtSeguimiento.value=data[2];
@@ -1228,7 +1224,7 @@
                             </div><!-- /.Usuario Contraseña -->  
                              
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                <button id="guardarAnalista" type="button" class="btn btn-primary">Guardar</button>                             
+                                <button id="save" type="button" class="btn btn-primary">Guardar</button>                             
                                 <button type="button" class="btn btn-primary " id="myBtnAnalistaShow" >Crear</button>
                             </div>
                             <div class="modal-footer">
@@ -1237,14 +1233,12 @@
                                              <thead>
                                                 <tr>
                                                 <th>Id</th>
-                                                <th>Apellido</th>
                                                 <th>Nombre</th>
+                                                <th>Apellido</th>
                                                 <th>Usuario</th>
-                                                <th>Password</th> 
-                                                <th></th>
+                                                <th>Password</th>             
                                                 <th></th>
                                                 </tr>
-                                             </thead>
                                              
                                 </table>
                             </div>

@@ -319,13 +319,10 @@
                         analistaUsuario : analistaUsuario,
                         analistaPassword : analistaPassword,
                         transaccion : transaccion
-                    },
-                        success:
-                     function(responseAnalista){
-                            alert(responseAnalista);
-                        }
+                    }                
                     });
                       tableAnalista.ajax.reload();
+                      alert("Persona Guardada");
              
                 });
                 
