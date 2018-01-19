@@ -6,7 +6,6 @@
 package controlador;
 
 
-
 import dao.DaoGeneric;
 import java.io.IOException;
 import java.io.PrintWriter;

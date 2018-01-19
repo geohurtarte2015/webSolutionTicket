@@ -113,7 +113,7 @@
      
      
        //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
-     var table= $('#table_analista').DataTable( {
+      var table= $('#table_analista').DataTable( {
                     "ajax" : {
                         "url": "Show",
                         "type": "GET",
@@ -272,33 +272,31 @@
                } );  
      
      //Eliminacion de Analista
-     $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {                  
+      $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {                  
                     var dataExample = table.row( $(this).parents('tr') ).data();
-                    idAnalista=dataExample[0];
-                    transaccion="eliminar";
+                    id=dataExample[0];
+                    
                     $.ajax({
                     type: "GET",
                     url: "Delete",
                     global: false,
                     async : false,
                     data: {
-                        id: idAnalista,
-                        transaccion: transaccion
+                        id: id
                     }
                     });
                     //recarga los datos nuevamente en el dataTable por ajax
                      table.ajax.reload();
                      alert("Persona Eliminada");
                     
-               } );    
+               } );     
       
      //Guardar Analista                 
-     $("#save").click(function(){ 
-                nombre=$('#AnalistaNombreTxt').val();
-                apellido=$('#AnalistaApellidoTxt').val();
-                user=$('#AnalistaUsuarioTxt').val();
-                password=$('#AnalistaPasswordTxt').val();
-                transaccion="guardar";
+      $("#save").click(function(){ 
+                nombre=$('#txtnombre').val();
+                apellido=$('#txtapellido').val();
+                user=$('#txtuser').val();
+                password=$('#txtpassword').val();
                  
                     $.ajax({
                     type: "GET",
@@ -309,8 +307,7 @@
                         nombre: nombre,
                         apellido: apellido,
                         user: user,
-                        password: password,
-                        transaccion : transaccion
+                        password: password
                     }
                     });
                     
@@ -1197,13 +1194,13 @@
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                             <label>Nombre</label>
-                                            <input class="form-control" name="AnalistaNombreTxt" id="AnalistaNombreTxt" placeholder="Nombre">
+                                            <input class="form-control" name="txtnombre" id="txtnombre" placeholder="Nombre">
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                             <label>Apellido</label>
-                                            <input class="form-control" name="AnalistaApellidoTxt" id="AnalistaApellidoTxt" placeholder="Apellido">
+                                            <input class="form-control" name="txtapellido" id="txtapellido" placeholder="Apellido">
                                     </div>
                                 </div>
                             </div><!-- /.Nombre Apellido -->  
@@ -1212,13 +1209,13 @@
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                             <label>Usuario</label>
-                                            <input class="form-control" name="AnalistaUsuarioTxt" id="AnalistaUsuarioTxt" placeholder="Usuario">
+                                            <input class="form-control" name="txtuser" id="txtuser" placeholder="Usuario">
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                             <label>Password</label>
-                                            <input class="form-control" name="AnalistaPasswordTxt" id="AnalistaPasswordTxt" placeholder="Password">
+                                            <input class="form-control" name="txtpassword" id="txtpassword" placeholder="Password">
                                     </div>
                                 </div>
                             </div><!-- /.Usuario Contraseña -->  
