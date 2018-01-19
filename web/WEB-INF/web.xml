@@ -76,6 +76,10 @@
         <servlet-name>Show</servlet-name>
         <servlet-class>controlador.Show</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Delete</servlet-name>
+        <servlet-class>controlador.Delete</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Save</servlet-name>
         <url-pattern>/Save</url-pattern>
@@ -83,6 +87,10 @@
     <servlet-mapping>
         <servlet-name>Show</servlet-name>
         <url-pattern>/Show</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Delete</servlet-name>
+        <url-pattern>/Delete</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletVerSeguimientos</servlet-name>

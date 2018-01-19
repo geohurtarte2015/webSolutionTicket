@@ -23,7 +23,7 @@ public class DaoGeneric {
   
         initOperation();
         sesion.persist(object);        
-        tx.commit();
+        
         
     
     }catch(HibernateException he)
@@ -35,7 +35,8 @@ public class DaoGeneric {
     
     } finally
     {
-                
+        tx.commit();
+        sesion.clear();
         sesion.close();
     
     }
@@ -53,14 +54,16 @@ public class DaoGeneric {
            object= sesion.createQuery("from "+cls).list();           
        } finally
        {
+        tx.commit();
+        sesion.clear();
         sesion.close();
        }
        
        return object;
-   }   
+   }    
     
    public Object getByIdObject(int id,Class<?> object){
-       Object objectGeneric = null;
+       Object objectGeneric = object;
        try{
            initOperation();
            objectGeneric = (Object) sesion.get(object, id);           
@@ -70,10 +73,10 @@ public class DaoGeneric {
         throw he; 
        
        } finally {
-           
+           tx.commit();
            sesion.close();
        }
-       return object;
+       return objectGeneric;
    }
    
    public Object update(Object object){     
@@ -97,21 +100,19 @@ public class DaoGeneric {
    }
    
    public String delete(int id,Class<?> object){
-     Object objectGeneric = object;
      String resp=null;
        try{           
            initOperation();
-           objectGeneric = (Object) sesion.get(object, id); 
-           sesion.delete(objectGeneric);
-           tx.commit();
-           resp="ok";
+           Object ob = sesion.load(object, id);
+           sesion.delete(ob);
        }catch(HibernateException he){        
         trueExcepcion(he); 
         resp=he.toString(); 
         throw he; 
        
        } finally {
-           
+           tx.commit();
+           resp="ok";
            sesion.close();
        }       
        return resp;
