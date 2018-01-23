@@ -8,6 +8,7 @@ package controlador;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dao.DaoAnalista;
+import dao.DaoGeneric;
 import dao.DaoTicket;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,6 +24,7 @@ import pojo.Analista;
 import pojo.Seguimiento;
 import pojo.Ticket;
 import structuras.DataTableObject;
+import structuras.ListObjectJson;
 
 /**
  *
@@ -46,20 +48,23 @@ public class ServletAnalista extends HttpServlet {
         PrintWriter outInitial = response.getWriter();
         
         if(tipoTransaccion.equals("inicializar")){
-        ListJson listJson = new ListJson();                
-        String json = listJson.listAll();
+      
+        ListObjectJson listObject = new ListObjectJson();
+        Analista analista = new Analista();
+        String json = listObject.objectStringJson(analista,"Analista");        
         System.out.println("Resultado despues de inicializar "+json);
         outInitial.print(json);
         ServletAnalista.super.destroy();
         }
         
         
-        if(tipoTransaccion.equals("eliminar")){            
-            
-            String idAnalista = String.valueOf(request.getParameter("id"));
-            this.delete(response, idAnalista);
-            ListJson listJson = new ListJson();                
-            String json = listJson.listAll();
+        if(tipoTransaccion.equals("eliminar")){  
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));   
+            DaoGeneric daoGeneric = new DaoGeneric();
+            daoGeneric.delete(id, Analista.class);
+            Analista analista = new Analista();            
+            ListObjectJson listObject = new ListObjectJson();             
+            String json = listObject.objectStringJson(analista,"Analista"); 
             System.out.println("Resultado despues de eliminar "+json);
             outInitial.print(json);  
             ServletAnalista.super.destroy();

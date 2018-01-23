@@ -8,6 +8,10 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,12 +36,31 @@ public class Show extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        response.setContentType("application/json");
-        PrintWriter out = response.getWriter();   
-        ListObjectJson listObject = new ListObjectJson();
-        Analista analista = new Analista();
-        out.print(listObject.objectStringJson(analista,"Analista"));
+        try {
+            processRequest(request, response);
+            response.setContentType("application/json");
+            String className = String.valueOf(request.getParameter("className"));
+            PrintWriter out = response.getWriter();
+            ListObjectJson listObject = new ListObjectJson();
+            Class<?> classObject = Class.forName("pojo." + className);
+            Constructor<?> constructor = classObject.getConstructor();
+            Object newObject = constructor.newInstance();
+            out.print(listObject.objectStringJson(newObject,className));
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
@@ -48,12 +71,7 @@ public class Show extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
+      @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>

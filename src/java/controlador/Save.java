@@ -10,6 +10,11 @@ import dao.DaoGeneric;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,26 +42,44 @@ public class Save extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        response.setContentType("application/json");
-        PrintWriter out = response.getWriter();   
-        
-        String apellido = String.valueOf(request.getParameter("apellido"));
-        String nombre = String.valueOf(request.getParameter("nombre"));
-        String usuario = String.valueOf(request.getParameter("user"));
-        String password = String.valueOf(request.getParameter("password"));
-      
-        
-        Analista analista = new Analista();
-        analista.setNombre(nombre);
-        analista.setApellido(apellido);
-        analista.setPassword(password);
-        analista.setUsuario(usuario);
-        DaoGeneric daoGeneric = new DaoGeneric();
-        daoGeneric.save(analista);
-        ListObjectJson listObject = new ListObjectJson();
-        out.print(listObject.objectStringJson(analista,"Analista"));
-    }
+        try {
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
 
+            String className = String.valueOf(request.getParameter("className"));
+            String[] parametersRequest = request.getParameterValues("array[]");
+            int sizeParametersRequest = parametersRequest.length;
+
+            Class<?> classObject = Class.forName("pojo." + className);
+            Constructor<?> constructor = classObject.getConstructor();
+            Object newObject = constructor.newInstance();
+            Field[] arrayObject = classObject.getFields();
+
+            for (int index = 1; index <= sizeParametersRequest; index++) {
+                arrayObject[index].set(newObject, parametersRequest[index-1]);         
+            }
+
+            DaoGeneric daoGeneric = new DaoGeneric();
+            daoGeneric.save(newObject);
+            ListObjectJson listObject = new ListObjectJson();
+            out.print(listObject.objectStringJson(newObject, className));
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Save.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(Save.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Save.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(Save.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(Save.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Save.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(Save.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

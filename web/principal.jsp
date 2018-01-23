@@ -118,7 +118,8 @@
                         "url": "Show",
                         "type": "GET",
                         "data" : function(d){
-                            d.transaccion = "inicializar";
+                            d.transaccion = "inicializar",
+                            d.className = "Analista";
                             }
                     },
                     "global" : false,
@@ -282,7 +283,8 @@
                     global: false,
                     async : false,
                     data: {
-                        id: id
+                        id: id,
+                        className:"Analista"
                     }
                     });
                     //recarga los datos nuevamente en el dataTable por ajax
@@ -296,7 +298,8 @@
                 nombre=$('#txtnombre').val();
                 apellido=$('#txtapellido').val();
                 user=$('#txtuser').val();
-                password=$('#txtpassword').val();
+                password=$('#txtpassword').val();                
+                var array = [nombre,apellido,user,password];
                  
                     $.ajax({
                     type: "GET",
@@ -304,10 +307,12 @@
                     global: false,
                     async : false,
                     data: {
+                        array: array,
                         nombre: nombre,
                         apellido: apellido,
                         user: user,
-                        password: password
+                        password: password,
+                        className:"Analista"
                     }
                     });
                     
@@ -315,7 +320,6 @@
                      table.ajax.reload();
                      alert("Persona Guardada");
                 });
-                
       
       //Seleccion de Estado   
      $('#table_estado tbody').on( 'click','#seleccionarEstado', function () {

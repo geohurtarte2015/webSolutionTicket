@@ -9,6 +9,8 @@ package controlador;
 import dao.DaoGeneric;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,16 +33,21 @@ public class Delete extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-                processRequest(request, response);
-        response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
-        int id = Integer.parseInt(String.valueOf(request.getParameter("id")));        
-
-        DaoGeneric daoGeneric = new DaoGeneric();
-        daoGeneric.delete(id, Analista.class);
-        ListObjectJson listObject = new ListObjectJson();        
-        out.print(listObject.objectStringJson(new Analista(),"Analista"));
+        try {
+            processRequest(request, response);
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            String className = String.valueOf(request.getParameter("className"));   
+            
+            DaoGeneric daoGeneric = new DaoGeneric();
+            Class classObject = Class.forName("pojo."+className);    
+            daoGeneric.delete(id, classObject);
+            ListObjectJson listObject = new ListObjectJson();
+            out.print(listObject.objectStringJson(classObject,className));
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Delete.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
