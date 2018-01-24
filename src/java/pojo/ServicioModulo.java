@@ -22,10 +22,10 @@ public class ServicioModulo implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_SERVICIO_MODULO") 
-    private int idServicioModulo;
+    public int idServicioModulo;
     
     @Column(name="DESCRIPCION")
-    private String descripcion;
+    public String descripcion;
     
     
     public ServicioModulo() {

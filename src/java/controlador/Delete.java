@@ -37,7 +37,8 @@ public class Delete extends HttpServlet {
             processRequest(request, response);
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
-            int id = Integer.parseInt(String.valueOf(request.getParameter("id")));
+            String[] parametersRequest = request.getParameterValues("array[]");
+            int id = Integer.parseInt(parametersRequest[0]);
             String className = String.valueOf(request.getParameter("className"));   
             
             DaoGeneric daoGeneric = new DaoGeneric();

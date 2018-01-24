@@ -16,10 +16,10 @@ public class Raiz implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_RAIZ")
-    private int idRaiz;
+    public int idRaiz;
     
     @Column(name="DESCRIPCION")
-    private String descripcion;
+    public String descripcion;
     
     public Raiz(){
     

@@ -62,7 +62,8 @@ public class Save extends HttpServlet {
             DaoGeneric daoGeneric = new DaoGeneric();
             daoGeneric.save(newObject);
             ListObjectJson listObject = new ListObjectJson();
-            out.print(listObject.objectStringJson(newObject, className));
+            //out.print(listObject.objectStringJson(newObject, className));
+           response.getWriter().write(listObject.objectStringJson(newObject, className));
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Save.class.getName()).log(Level.SEVERE, null, ex);

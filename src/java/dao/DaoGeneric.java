@@ -3,7 +3,10 @@ package dao;
 
 
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.HibernateUtil;
 
 import org.hibernate.Criteria;
@@ -51,8 +54,27 @@ public class DaoGeneric {
        
        try{
            initOperation();      
-           object= sesion.createQuery("from "+cls).list();           
-       } finally
+           object= sesion.createQuery("from "+cls).list();
+           int size = object.size();
+           for(int x=0;x<size;x++){
+               
+               Object baseObject = object.get(x);
+               Class classObject = baseObject.getClass();
+               Field[] arrayClass = classObject.getFields();
+               System.out.println(classObject.getField(arrayClass[0].getName()).get(baseObject));
+               
+           }
+           System.out.println("\n");
+           
+       } catch (NoSuchFieldException ex) {
+            Logger.getLogger(DaoGeneric.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(DaoGeneric.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(DaoGeneric.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(DaoGeneric.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
        {
         tx.commit();
         sesion.clear();

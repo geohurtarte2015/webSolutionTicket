@@ -20,10 +20,10 @@ public class Impacto implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_IMPACTO")
-    private int idImpacto;
+    public int idImpacto;
     
     @Column(name="DESCRIPCION")
-    private String descripcion;
+    public String descripcion;
 
     public Impacto(){
     

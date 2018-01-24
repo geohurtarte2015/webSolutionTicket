@@ -18,10 +18,10 @@ public class Estado implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_ESTADO")
-    private int idEstado;
+    public int idEstado;
     
     @Column(name="DESCRIPCION")
-    private String descripcion;
+    public String descripcion;
 
     public Estado(){
     

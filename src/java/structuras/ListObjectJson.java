@@ -66,6 +66,9 @@ public class ListObjectJson {
             
             json = gson.toJson(dataTableObject);
             
+            System.out.println(json);
+            System.out.println("\n");
+            
    
     
     } catch (SecurityException e) {

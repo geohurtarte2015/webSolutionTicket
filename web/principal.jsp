@@ -94,8 +94,17 @@
      
      var valAnalista = $('#idAnalista').html();
      
+      function appendText() {
+        var txt1 = $('<div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar Impacto</h4> </div>');// Create text with HTML
+        $("#divImpacto").append(txt1);
+      }     
+    
+     
      
     $(document).ready(function() {
+      
+      var divImpacto = $('<div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar Impacto</h4> </div>');// Create text with HTML
+      $("#divImpacto").append(divImpacto);
         
      //INICIALIZACION DEL DATA_TABLE SEGUIMIENTOS "table_seguimientos"
      var t= $('#table_seguimientos').DataTable( {
@@ -112,8 +121,8 @@
                  });
      
      
-       //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
-      var table= $('#table_analista').DataTable( {
+     //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
+     var tableAnalista= $('#table_analista').DataTable( {
                     "ajax" : {
                         "url": "Show",
                         "type": "GET",
@@ -147,10 +156,11 @@
      //INICIALIZACION DEL DATA_TABLE ESTADO "table_estado
      var tableEstado= $('#table_estado').DataTable( {
                     "ajax" : {
-                        "url": "ServletEstado",
+                        "url": "Show",
                         "type": "GET",
                         "data" : function(d){
                             d.transaccion = "inicializar";
+                            d.className = "Estado";
                             }
                     },                   
                     "global" : false,
@@ -178,7 +188,42 @@
                         }
                         ]
                     });
-     
+                    
+     //INICIALIZACION DEL DATA_TABLE IMPACTO "table_impacto
+     var tableImpacto= $('#table_impacto').DataTable( {
+                    "ajax" : {
+                        "url": "Show",
+                        "type": "GET",
+                        "data" : function(d){
+                            d.transaccion = "inicializar";
+                            d.className = "Impacto";
+                            }
+                    },                   
+                    "global" : false,
+                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
+                    "dataType" : "json",
+                    "columns" : [
+                     {"title": "Id"},
+                     {"title": "Impacto"},                     
+                     {"title": ""},
+                     {"title": ""}
+                    ],
+                    "columnDefs": [ {
+                        "targets": 2,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogImpacto' id='seleccionarImpacto'>"+                          
+                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        },
+                        {
+                        "targets": 3,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogImpacto2' id='eliminarImpacto'>"+                          
+                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        }
+                        ]
+                    });
      
      //INICIALIZACION DEL DATA_TABLE TICKET "table_ticket_show"
      var tableTicketShow= $('#table_ticket_show').DataTable( {
@@ -211,6 +256,8 @@
                         }
                         ]
                     });     
+                    
+
      
       //Seleccion de Ticket   
      $('#table_ticket_show tbody').on( 'click','#editaricon', function () {
@@ -273,52 +320,30 @@
                } );  
      
      //Eliminacion de Analista
-      $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {                  
-                    var dataExample = table.row( $(this).parents('tr') ).data();
-                    id=dataExample[0];
-                    
-                    $.ajax({
-                    type: "GET",
-                    url: "Delete",
-                    global: false,
-                    async : false,
-                    data: {
-                        id: id,
-                        className:"Analista"
-                    }
-                    });
-                    //recarga los datos nuevamente en el dataTable por ajax
-                     table.ajax.reload();
-                     alert("Persona Eliminada");
-                    
-               } );     
+     $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {  
+          
+            var dataExample = tableAnalista.row( $(this).parents('tr') ).data();
+            var tableName = tableAnalista;
+            id=dataExample[0];
+            var array = [id];  
+            var className = "Analista";
+            var request = "Delete";
+            var message = "Analista eliminado";
+            requestAjax(array,className,request,message,tableName);
+        } );     
       
      //Guardar Analista                 
-      $("#save").click(function(){ 
+     $("#guardarAnalista").click(function(){ 
                 nombre=$('#txtnombre').val();
                 apellido=$('#txtapellido').val();
                 user=$('#txtuser').val();
-                password=$('#txtpassword').val();                
-                var array = [nombre,apellido,user,password];
-                 
-                    $.ajax({
-                    type: "GET",
-                    url: "Save",
-                    global: false,
-                    async : false,
-                    data: {
-                        array: array,
-                        nombre: nombre,
-                        apellido: apellido,
-                        user: user,
-                        password: password,
-                        className:"Analista"
-                    }
-                    });
-                    
-                    //recarga los datos nuevamente en el dataTable por ajax
-                     table.ajax.reload();
-                     alert("Persona Guardada");
+                password=$('#txtpassword').val();
+                var tableName = tableAnalista;
+                var array = [nombre,apellido,user,password];   
+                var className = "Analista";
+                var request = "Save";
+                var message = "Analista guardado";
+                requestAjax(array,className,request,message,tableName);
                 });
       
       //Seleccion de Estado   
@@ -329,59 +354,59 @@
                     estadoNombreTxt.value=dataEstado[1];
                } );
                
-       //Eliminacion de Estado
-     $('#table_estado tbody').on( 'click','#eliminarEstado', function () {
-                  
-                    var dataEliminarEstado = tableEstado.row( $(this).parents('tr') ).data();
-                      idEstado=dataEliminarEstado[0];  
-                      transaccion="eliminar";
-                       $.ajax({
-                        type: "GET",
-                        url: "ServletEstado",
-                        global: false,
-                        async : false,
-                        data: {
-                            idEstado: idEstado,
-                            transaccion: transaccion
-                        },
-                        success:
-                     function(responseText){                         
-                            alert(responseText);
-                        }
-                    });
-                    
-                   tableEstado.ajax.reload();
-                    //recarga los datos nuevamente en el dataTable por ajax
-                     //tableAnalista.ajax.reload();  
-                    
-               } );  
+      //Eliminacion de Estado
+     $('#table_estado tbody').on( 'click','#eliminarEstado', function () {                  
+            var dataEliminarEstado = tableEstado.row( $(this).parents('tr') ).data();
+            id=dataEliminarEstado[0];   
+            var tableName = tableEstado;
+            var array = [id];
+            var className = "Estado";
+            var request = "Delete";
+            var message = "Estado eliminado";
+            requestAjax(array,className,request,message,tableName);
+        } );  
                
-      //PARAMETROS PARA GUARDAR ESTADO
+      //Guardar Estado
       $("#guardarEstado").click(function(){ 
-           estadoNombre=$('#estadoNombreTxt').val();        
-           transaccion="guardar";
-                    $.ajax({
-                    type: "GET",
-                    url: "ServletEstado",
-                    global: false,
-                    async : false,
-                    data: {
-                        estadoNombre : estadoNombre,                       
-                        transaccion : transaccion
-                    },
-                        success:
-                     function(responseEstado){
-                            alert(responseEstado);
-                            //tableEstado.clear().draw();                            
-                           //recarga los datos nuevamente en el dataTable por ajax
-                        }
-                    });
-                    tableEstado.ajax.reload();
-                     //bootbox.alert("<div class='alert alert-success'>"+
-                     //"<strong>Guardado!</strong> Elemento guardado!"+
-                     //"</div>");
-                });
-      
+          estadoNombre=$('#estadoNombreTxt').val();  
+          var tableName = tableEstado;
+          var array = [estadoNombre];
+          var className = "Estado";
+          var request = "Save";
+          var message = "Estado guardado";
+          requestAjax(array,className,request,message,tableName);
+        });
+        
+      //Seleccion de Impacto   
+     $('#table_impacto tbody').on( 'click','#seleccionarImpacto', function () {
+                   
+                    var dataImpacto = tableEstado.row( $(this).parents('tr') ).data();
+                    idImpacto=dataImpacto[0];  
+                    impactoNombreTxt.value=dataImpacto[1];
+               } );
+               
+      //Eliminacion de Impacto
+     $('#table_impacto tbody').on( 'click','#eliminarImpacto', function () {                  
+            var dataEliminarImpacto = tableImpacto.row( $(this).parents('tr') ).data();
+            id=dataEliminarImpacto[0];  
+            var tableName = tableImpacto;
+            var array = [id];
+            var className = "Impacto";
+            var request = "Delete";
+            var message = "Impacto eliminado";
+            requestAjax(array,className,request,message,tableName);
+        } );  
+               
+      //Guardar Impacto
+      $("#guardarImpacto").click(function(){ 
+          impactoNombre=$('#impactoNombreTxt').val();  
+          var tableName = tableImpacto;
+          var array = [impactoNombre];
+          var className = "Impacto";
+          var request = "Save";
+          var message = "Impacto guardado";
+          requestAjax(array,className,request,message,tableName);
+        });      
    
      //En la carga hecha en la ta seguimientos
     $('#table_seguimientos').on('click','td', function() {
@@ -423,8 +448,6 @@
                      t.ajax.reload();
                      alert("Seguimiento Guardado");
                 });
-     
-     
      
       //PARAMETROS POR AJAX PARA GUARDAR NUEVO TICKET     
      $("#guardarticket").click(function(){ 
@@ -481,12 +504,26 @@
       AnalistaUsuarioTxt.value="";
       AnalistaPasswordTxt.value="";
           
-      });          
-                
- 
+      });      
       
-
-      
+      function requestAjax(array,className,request,message,tableName){
+                    $.ajax({
+                    type: "GET",
+                    url: String(request),
+                    global: false,
+                    async : false,
+                    data: {
+                        array: array,
+                        className:String(className)
+                    }
+                    });
+                    
+                    tableName.ajax.reload();
+                    bootbox.alert({
+                    message: String(message),
+                    size: 'small'
+                    });
+      }
                
    });
     
@@ -764,7 +801,7 @@
                                     <a href="#" data-toggle="modal" data-target="#myModalEstado" data-backdrop="static" data-keyboard="false">Estados</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Impacto</a>
+                                    <a href="#" data-toggle="modal" data-target="#myModalImpacto" data-backdrop="static" data-keyboard="false">Impacto</a>
                                 </li>
                                 <li>
                                     <a href="morris.html">Modulos</a>
@@ -1225,7 +1262,7 @@
                             </div><!-- /.Usuario Contraseña -->  
                              
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                <button id="save" type="button" class="btn btn-primary">Guardar</button>                             
+                                <button id="guardarAnalista" type="button" class="btn btn-primary">Guardar</button>                             
                                 <button type="button" class="btn btn-primary " id="myBtnAnalistaShow" >Crear</button>
                             </div>
                             <div class="modal-footer">
@@ -1291,6 +1328,58 @@
                                                 <tr>
                                                 <th>Id</th>
                                                 <th>Estado</th>
+                                                <th></th>
+                                                <th></th>
+                                                </tr>
+                                             </thead>
+                                             
+                                </table>
+                            </div>
+                     </div>
+                                            
+                    </div>    
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                 </div>   
+                 <!-- /.modal Estado-->
+                 
+                   <!-- Modal Impacto -->
+                 <div style="display: none;" class="modal fade" id="myModalImpacto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div id="divImpacto"></div>
+                                        
+                                   
+                                        
+                        <div class="modal-body">
+                                          
+                        <div class="panel panel-default">
+                                     
+                          <!-- /.panel-body -->
+                          <div class="panel-body">
+                            
+                            <div class="row">                            
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                            <label>Descripcion</label>
+                                            <input class="form-control" name="impactoNombreTxt" id="impactoNombreTxt" placeholder="Nombre">
+                                    </div>
+                                </div>
+                            
+                            </div><!-- /.Descripcion -->  
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                <button id="guardarImpacto" type="button" class="btn btn-primary">Guardar</button>                             
+                                <button type="button" class="btn btn-primary " id="myBtnImpactoShow" >Crear</button>
+                            </div>
+                            <div class="modal-footer">
+                                <table id="table_impacto" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
+                                          
+                                             <thead>
+                                                <tr>
+                                                <th>Id</th>
+                                                <th>Impacto</th>
                                                 <th></th>
                                                 <th></th>
                                                 </tr>

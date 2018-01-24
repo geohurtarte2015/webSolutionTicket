@@ -16,13 +16,13 @@ public class Servidor implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_SERVIDOR")
-    private int idServidor;
+    public int idServidor;
     
     @Column(name="DESCRIPCION")
-    private String descripcion;
+    public String descripcion;
     
     @Column(name="IP")    
-    private String ip;
+    public String ip;
     
     public Servidor(){
     

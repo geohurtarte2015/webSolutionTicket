@@ -28,9 +28,7 @@ public class Show extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
-   
+        response.setContentType("text/html;charset=UTF-8");   
     }
 
     @Override
@@ -45,7 +43,8 @@ public class Show extends HttpServlet {
             Class<?> classObject = Class.forName("pojo." + className);
             Constructor<?> constructor = classObject.getConstructor();
             Object newObject = constructor.newInstance();
-            out.print(listObject.objectStringJson(newObject,className));
+            //out.print(listObject.objectStringJson(newObject,className));
+            response.getWriter().write(listObject.objectStringJson(newObject, className));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchMethodException ex) {

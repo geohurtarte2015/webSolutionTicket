@@ -30,70 +30,70 @@ public class Ticket {
     @Id
     @GeneratedValue
     @Column(name = "ID_TICKET")
-    private int idTicket;
+    public int idTicket;
     
     @Column(name="TITULO")
-    private String titulo;
+    public String titulo;
     
     @Column(name="FECHA")
-    private String fecha;
+    public String fecha;
     
     @Column(name="FECHA_INICIO")    
-    private String fechaInicio;
+    public String fechaInicio;
     
     @Column(name="FECHA_FIN")    
-    private String fechaFin;       
+    public String fechaFin;       
     
     @Column(name="DESCRIPCION")    
-    private String descripcion;
+    public String descripcion;
     
     @Column(name="CAUSA")
-    private String causa;
+    public String causa;
     
     @Column(name="SOLUCION")
-    private String solucion;
+    public String solucion;
     
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_ANALISTA")
-    private Analista analista;  
+    public Analista analista;  
     
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_SERVICIO")
-    private Servicio servicio;
+    public Servicio servicio;
     
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_MODULO")
-    private Modulo modulo;
+    public Modulo modulo;
     
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_SERVICIO_MODULO")
-    private ServicioModulo servicioModulo;
+    public ServicioModulo servicioModulo;
     
     
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_SERVIDOR")
-    private Servidor servidor;   
+    public Servidor servidor;   
 
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_IMPACTO")
-    private Impacto impacto;  
+    public Impacto impacto;  
     
     
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_ESTADO")
-    private Estado estado;
+    public Estado estado;
   
     
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_RAIZ")
-    private Raiz raiz;
+    public Raiz raiz;
     
     
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "TICKET_SEGUIMIENTO", 
         joinColumns = { @JoinColumn(name = "ID_TICKET") }, 
         inverseJoinColumns = { @JoinColumn(name = "ID_SEGUIMIENTO") })
-    private List<Seguimiento> seguimientos = new ArrayList<Seguimiento>();
+    public List<Seguimiento> seguimientos = new ArrayList<Seguimiento>();
     
     
     public Ticket(){

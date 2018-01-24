@@ -94,6 +94,12 @@
      
      var valAnalista = $('#idAnalista').html();
      
+      function appendText() {
+        var txt1 = $('<div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar Impacto</h4> </div>');// Create text with HTML
+        $("#divImpacto").append(txt1);
+      }     
+    
+     
      
     $(document).ready(function() {
         
@@ -112,34 +118,28 @@
                  });
      
      
-       //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
-     var tableAnalista= $('#table_analista').DataTable( {
+     //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
+     var table= $('#table_analista').DataTable( {
                     "ajax" : {
-                        "url": "ServletAnalista",
+                        "url": "Show",
                         "type": "GET",
                         "data" : function(d){
-                            d.transaccion = "inicializar";
+                            d.transaccion = "inicializar",
+                            d.className = "Analista";
                             }
                     },
                     "global" : false,
                     "lengthMenu": [[ 2, -1], [ 2,"All"]],
                     "dataType" : "json",
-                    "columns" : [
+                     "columns" : [
                      {"title": "Id"},
+                     {"title": "Nombre"},                     
                      {"title": "Apellido"},
-                     {"title": "Nombre"},
                      {"title": "Usuario"},
                      {"title": "Password"},
-                     {"title": ""},
-                     {"title": ""}
+                     {"title": ""}                 
                     ],
-                    "columnDefs": [ {
-                        "targets": 6,
-                        "data": null,
-                        "defaultContent": "<center><a href='#dialogAnalista' id='seleccionarAnalista'>"+                          
-                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
-                                          "</a></center>"
-                        },
+                  "columnDefs": [ 
                         {
                         "targets": 5,
                         "data": null,
@@ -153,10 +153,11 @@
      //INICIALIZACION DEL DATA_TABLE ESTADO "table_estado
      var tableEstado= $('#table_estado').DataTable( {
                     "ajax" : {
-                        "url": "ServletEstado",
+                        "url": "Show",
                         "type": "GET",
                         "data" : function(d){
                             d.transaccion = "inicializar";
+                            d.className = "Estado";
                             }
                     },                   
                     "global" : false,
@@ -217,6 +218,8 @@
                         }
                         ]
                     });     
+                    
+
      
       //Seleccion de Ticket   
      $('#table_ticket_show tbody').on( 'click','#editaricon', function () {
@@ -248,7 +251,6 @@
                                     $("#editticket").show();
                                     $("#myBtnSeguimientoShow").hide();                    
                } ); 
-      
         
      //Seleccion de Seguimiento relacionado al ticket   
      $('#table_ticket_show tbody').on( 'click','#seguimientosicon', function () {
@@ -280,52 +282,31 @@
                } );  
      
      //Eliminacion de Analista
-     $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {
-                    var dataEliminarAnalista = tableAnalista.row( $(this).parents('tr') ).data();
-                      idAnalista=dataEliminarAnalista[0];  
-                      transaccion="eliminar";
-                       $.ajax({
-                        type: "GET",
-                        url: "ServletAnalista",
-                        global: false,
-                        async : false,
-                        data: {
-                            idAnalista: idAnalista,
-                            transaccion: transaccion
-                        }
-                        
-                    });  
-                     tableAnalista.ajax.reload();
-                     alert("Eliminado");
-                    
-               } );    
+     $('#table_analista tbody').on( 'click','#EliminarAnalista', function () {  
+          
+            var dataExample = table.row( $(this).parents('tr') ).data();
+            id=dataExample[0];
+            var array = [id];  
+            var tableName = table;
+            var className = "Analista";
+            var request = "Delete";
+            var message = "Analista guardado";
+            requestAjax(array,className,request,message,tableName);
+        } );     
       
-      //PARAMETROS PARA GUARDAR ANALISTAS
+     //Guardar Analista                 
       $("#guardarAnalista").click(function(){ 
-           analistaNombre=$('#AnalistaNombreTxt').val();
-           analistaApellido=$('#AnalistaApellidoTxt').val();
-           analistaUsuario=$('#AnalistaUsuarioTxt').val();
-           analistaPassword=$('#AnalistaPasswordTxt').val();
-           transaccion="guardar";
-                 
-                    $.ajax({
-                    type: "GET",
-                    url: "ServletAnalista",
-                    global: false,
-                    async : false,
-                    data: {
-                        analistaNombre : analistaNombre,
-                        analistaApellido : analistaApellido,
-                        analistaUsuario : analistaUsuario,
-                        analistaPassword : analistaPassword,
-                        transaccion : transaccion
-                    }                
-                    });
-                      tableAnalista.ajax.reload();
-                      alert("Persona Guardada");
-             
+                nombre=$('#txtnombre').val();
+                apellido=$('#txtapellido').val();
+                user=$('#txtuser').val();
+                password=$('#txtpassword').val();
+                var array = [nombre,apellido,user,password];       
+                var tableName = table;
+                var className = "Analista";
+                var request = "Save";
+                var message = "Analista guardado";
+                requestAjax(array,className,request,message,tableName);
                 });
-                
       
       //Seleccion de Estado   
      $('#table_estado tbody').on( 'click','#seleccionarEstado', function () {
@@ -335,60 +316,31 @@
                     estadoNombreTxt.value=dataEstado[1];
                } );
                
-       //Eliminacion de Estado
-     $('#table_estado tbody').on( 'click','#eliminarEstado', function () {
-                  
-                    var dataEliminarEstado = tableEstado.row( $(this).parents('tr') ).data();
-                      idEstado=dataEliminarEstado[0];  
-                      transaccion="eliminar";
-                       $.ajax({
-                        type: "GET",
-                        url: "ServletEstado",
-                        global: false,
-                        async : false,
-                        data: {
-                            idEstado: idEstado,
-                            transaccion: transaccion
-                        },
-                        success:
-                     function(responseText){                         
-                            alert(responseText);
-                        }
-                    });    
-                   tableEstado.ajax.reload();
-                    //recarga los datos nuevamente en el dataTable por ajax
-                     //tableAnalista.ajax.reload();  
-                    
-               } );  
+      //Eliminacion de Estado
+     $('#table_estado tbody').on( 'click','#eliminarEstado', function () {                  
+            var dataEliminarEstado = tableEstado.row( $(this).parents('tr') ).data();
+            id=dataEliminarEstado[0];    
+            var array = [id];
+            var tableName = tableEstado;
+            var className = "Estado";
+            var request = "Delete";
+            var message = "Estado eliminado";
+            requestAjax(array,className,request,message);
+        } );  
                
-      //PARAMETROS PARA GUARDAR ESTADO
+      //Guardar Estado
       $("#guardarEstado").click(function(){ 
-           estadoNombre=$('#estadoNombreTxt').val();        
-           transaccion="guardar";
-                    $.ajax({
-                    type: "GET",
-                    url: "ServletEstado",
-                    global: false,
-                    async : false,
-                    data: {
-                        estadoNombre : estadoNombre,                       
-                        transaccion : transaccion
-                    },
-                        success:
-                     function(responseEstado){
-                            alert(responseEstado);
-                            //tableEstado.clear().draw();                            
-                           //recarga los datos nuevamente en el dataTable por ajax
-                        }
-                    });
-                    tableEstado.ajax.reload();
-                     //bootbox.alert("<div class='alert alert-success'>"+
-                     //"<strong>Guardado!</strong> Elemento guardado!"+
-                     //"</div>");
-                });
+          estadoNombre=$('#estadoNombreTxt').val();  
+          var tableName = tableEstado;
+          var array = [estadoNombre];
+          var className = "Estado";
+          var request = "Save";
+          var message = "Estado guardado";
+          requestAjax(array,className,request,message,tableName);
+        });
       
    
-     //En la carga hecha en la tabla seguimientos
+     //En la carga hecha en la ta seguimientos
     $('#table_seguimientos').on('click','td', function() {
         var data = t.row( $(this).parents('tr') ).data();
                     txtSeguimiento.value=data[2];
@@ -428,8 +380,6 @@
                      t.ajax.reload();
                      alert("Seguimiento Guardado");
                 });
-     
-     
      
       //PARAMETROS POR AJAX PARA GUARDAR NUEVO TICKET     
      $("#guardarticket").click(function(){ 
@@ -486,12 +436,26 @@
       AnalistaUsuarioTxt.value="";
       AnalistaPasswordTxt.value="";
           
-      });          
-                
- 
+      });      
       
-
-      
+      function requestAjax(array,className,request,message,tableName){
+                    $.ajax({
+                    type: "GET",
+                    url: String(request),
+                    global: false,
+                    async : false,
+                    data: {
+                        array: array,
+                        className:String(className)
+                    }
+                    });                  
+                    tableName.ajax.reload();
+                    bootbox.alert({
+                    message: String(message),
+                    size: 'small'
+                    });
+                 
+      }
                
    });
     
@@ -1203,13 +1167,13 @@
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                             <label>Nombre</label>
-                                            <input class="form-control" name="AnalistaNombreTxt" id="AnalistaNombreTxt" placeholder="Nombre">
+                                            <input class="form-control" name="txtnombre" id="txtnombre" placeholder="Nombre">
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                             <label>Apellido</label>
-                                            <input class="form-control" name="AnalistaApellidoTxt" id="AnalistaApellidoTxt" placeholder="Apellido">
+                                            <input class="form-control" name="txtapellido" id="txtapellido" placeholder="Apellido">
                                     </div>
                                 </div>
                             </div><!-- /.Nombre Apellido -->  
@@ -1218,13 +1182,13 @@
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                             <label>Usuario</label>
-                                            <input class="form-control" name="AnalistaUsuarioTxt" id="AnalistaUsuarioTxt" placeholder="Usuario">
+                                            <input class="form-control" name="txtuser" id="txtuser" placeholder="Usuario">
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
                                             <label>Password</label>
-                                            <input class="form-control" name="AnalistaPasswordTxt" id="AnalistaPasswordTxt" placeholder="Password">
+                                            <input class="form-control" name="txtpassword" id="txtpassword" placeholder="Password">
                                     </div>
                                 </div>
                             </div><!-- /.Usuario Contraseña -->  
@@ -1239,14 +1203,12 @@
                                              <thead>
                                                 <tr>
                                                 <th>Id</th>
-                                                <th>Apellido</th>
                                                 <th>Nombre</th>
+                                                <th>Apellido</th>
                                                 <th>Usuario</th>
-                                                <th>Password</th> 
-                                                <th></th>
+                                                <th>Password</th>             
                                                 <th></th>
                                                 </tr>
-                                             </thead>
                                              
                                 </table>
                             </div>
@@ -1298,6 +1260,61 @@
                                                 <tr>
                                                 <th>Id</th>
                                                 <th>Estado</th>
+                                                <th></th>
+                                                <th></th>
+                                                </tr>
+                                             </thead>
+                                             
+                                </table>
+                            </div>
+                     </div>
+                                            
+                    </div>    
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                 </div>   
+                 <!-- /.modal Estado-->
+                 
+                   <!-- Modal Impacto -->
+                 <div style="display: none;" class="modal fade" id="myModalImpacto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                       <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Agregar Impacto</h4>
+                                        </div>
+                                        
+                                   
+                                        
+                        <div class="modal-body">
+                                          
+                        <div class="panel panel-default">
+                                     
+                          <!-- /.panel-body -->
+                          <div class="panel-body">
+                            
+                            <div class="row">                            
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                            <label>Descripcion</label>
+                                            <input class="form-control" name="impactoNombreTxt" id="impactoNombreTxt" placeholder="Nombre">
+                                    </div>
+                                </div>
+                            
+                            </div><!-- /.Descripcion -->  
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                <button id="guardarImpacto" type="button" class="btn btn-primary">Guardar</button>                             
+                                <button type="button" class="btn btn-primary " id="myBtnImpactoShow" >Crear</button>
+                            </div>
+                            <div class="modal-footer">
+                                <table id="table_impacto" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
+                                          
+                                             <thead>
+                                                <tr>
+                                                <th>Id</th>
+                                                <th>Impacto</th>
                                                 <th></th>
                                                 <th></th>
                                                 </tr>

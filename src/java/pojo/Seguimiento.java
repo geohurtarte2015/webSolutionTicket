@@ -21,17 +21,17 @@ public class Seguimiento implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_SEGUIMIENTO")
-     private int id;
+     public int id;
  
     @Column(name = "DESCRIPCION")
       String descripcion;   
     
     @Column(name = "FECHA")
-     private String fecha;
+     public String fecha;
      
      
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="seguimientos")
-    private List<Ticket> tickets = new ArrayList<Ticket>();
+    public List<Ticket> tickets = new ArrayList<Ticket>();
      
     public Seguimiento(){
          

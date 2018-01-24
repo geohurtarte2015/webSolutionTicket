@@ -19,10 +19,10 @@ public class Modulo implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_MODULO")
-    private int idModulo;
+    public int idModulo;
     
     @Column(name="DESCRIPCION")
-    private String descripcion;
+    public String descripcion;
     
 
    

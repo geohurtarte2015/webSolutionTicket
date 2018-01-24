@@ -19,10 +19,10 @@ public class Servicio implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_SERVICIO")  
-    private int idServicio;
+    public int idServicio;
     
     @Column(name="DESCRIPCION")
-    private String descripcion;    
+    public String descripcion;    
 
 
     public Servicio(){
