@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import pojo.Analista;
-import structuras.ListObjectJson;
+import structuras.ListObject;
 
 
 /**
@@ -61,9 +61,9 @@ public class Save extends HttpServlet {
 
             DaoGeneric daoGeneric = new DaoGeneric();
             daoGeneric.save(newObject);
-            ListObjectJson listObject = new ListObjectJson();
+            ListObject listObject = new ListObject();
             //out.print(listObject.objectStringJson(newObject, className));
-           response.getWriter().write(listObject.objectStringJson(newObject, className));
+           response.getWriter().write(listObject.getObjectStringJson(newObject, className));
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Save.class.getName()).log(Level.SEVERE, null, ex);

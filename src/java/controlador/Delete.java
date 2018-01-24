@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import pojo.Analista;
-import structuras.ListObjectJson;
+import structuras.ListObject;
 
 /**
  *
@@ -44,8 +44,8 @@ public class Delete extends HttpServlet {
             DaoGeneric daoGeneric = new DaoGeneric();
             Class classObject = Class.forName("pojo."+className);    
             daoGeneric.delete(id, classObject);
-            ListObjectJson listObject = new ListObjectJson();
-            out.print(listObject.objectStringJson(classObject,className));
+            ListObject listObject = new ListObject();
+            out.print(listObject.getObjectStringJson(classObject,className));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Delete.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -38,7 +38,7 @@ public class ServletVerSeguimientos extends HttpServlet {
             throws ServletException, IOException {
           
           
-          String valTicket = String.valueOf(request.getParameter("ticket"));
+     String valTicket = String.valueOf(request.getParameter("ticket"));
           
         
       if(valTicket.equals("null")|| valTicket.equals(null)|| valTicket==null){

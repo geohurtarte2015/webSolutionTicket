@@ -43,7 +43,7 @@ public class Analista implements Serializable {
         this.password=password;
  
     }
-    
+
 
    
     public int getIdAnalista() {

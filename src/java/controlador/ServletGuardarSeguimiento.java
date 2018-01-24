@@ -52,8 +52,7 @@ public class ServletGuardarSeguimiento extends HttpServlet {
             
             //Instancia para fecha actual
             Fecha newFecha = new Fecha();
-            
-            
+                        
             //Guarda ticket
             Seguimiento seguimientoTicket= new Seguimiento(request.getParameter("descripcionSeguimiento"),newFecha.fechaHoy());    
             

@@ -5,7 +5,7 @@
  */
 package controlador;
 
-import dao.DaoAnalista;
+import dao.DaoGeneric;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -33,9 +33,10 @@ public class Sesion extends HttpServlet {
             String usuario = request.getParameter("name");
             String password = request.getParameter("pass");    
             
-            DaoAnalista daoAnalista = new DaoAnalista();
-            List<Analista> nombreAnalista = daoAnalista.getByCondition("usuario", usuario);
-            List<Analista> passwordAnalista = daoAnalista.getByCondition("password", password);
+            DaoGeneric daoGeneric = new DaoGeneric();
+            
+            List<Analista> nombreAnalista = (List<Analista>) daoGeneric.getByCondition(Analista.class,"usuario", usuario);
+            List<Analista> passwordAnalista = (List<Analista>) daoGeneric.getByCondition(Analista.class,"password", password);
             
             valUsuario = (nombreAnalista.size()!=0);
             valPassword = (passwordAnalista.size()!=0);

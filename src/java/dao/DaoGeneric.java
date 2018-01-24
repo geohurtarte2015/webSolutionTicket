@@ -13,6 +13,7 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 
 public class DaoGeneric {
@@ -83,6 +84,28 @@ public class DaoGeneric {
        
        return object;
    }    
+   
+   public List<?> getByCondition(Class<?> classObject,String field,String value){
+       
+       List<?> results = null;
+       
+       try{
+           initOperation();      
+           Criteria criteria =  sesion.createCriteria(classObject); 
+           criteria.add(Restrictions.eq(field, value));
+           results = criteria.list();
+           
+       } catch (HibernateException  ex) {
+            Logger.getLogger(DaoGeneric.class.getName()).log(Level.SEVERE, null, ex);    
+        } finally
+       {
+        sesion.getTransaction().commit();
+        sesion.clear();
+        sesion.close();
+       }
+       
+       return results;
+   }   
     
    public Object getByIdObject(int id,Class<?> object){
        Object objectGeneric = object;

@@ -53,9 +53,6 @@ public class DaoTicket {
         Servicio servicio = 
         (Servicio)sesion.get(Servicio.class, idServicio); 
         
-        
-
-        
         //Arma el objeto
         ticket.setAnalista(analista);
         ticket.setEstado(estado);
@@ -150,24 +147,17 @@ public class DaoTicket {
        
        try{        
            ticket = daoTicket.getByIdObject(idTicket); 
-           DaoAnalista daoAnalista = new DaoAnalista();
-           DaoEstado daoEstado = new DaoEstado();
-           DaoRaiz daoRaiz = new DaoRaiz();     
-           DaoServicio daoServicio = new DaoServicio();
-           DaoServicioModulo daoServicioModulo = new DaoServicioModulo();
-           DaoServidor daoServidor = new DaoServidor();
-           DaoImpacto daoImpacto = new DaoImpacto();
-           DaoModulo daoModulo = new DaoModulo();
+           DaoGeneric daoGeneric = new DaoGeneric();
             
            initOperation();   
-           ticket.setAnalista(daoAnalista.getByIdObject(idAnalista));
-           ticket.setEstado((Estado) daoEstado.getByIdObject(idEstado,Estado.class));
-           ticket.setImpacto(daoImpacto.getByIdObject(idImpacto));
-           ticket.setModulo(daoModulo.getByIdObject(idModulo));
-           ticket.setRaiz(daoRaiz.getByIdObject(idRaiz));      
-           ticket.setServicio(daoServicio.getByIdObject(idServicio));
-           ticket.setServicioModulo(daoServicioModulo.getByIdObject(idServicioModulo));
-           ticket.setServidor(daoServidor.getByIdObject(idServidor));
+           ticket.setAnalista((Analista) daoGeneric.getByIdObject(idAnalista, Analista.class));
+           ticket.setEstado((Estado) daoGeneric.getByIdObject(idEstado, Estado.class));
+           ticket.setImpacto((Impacto) daoGeneric.getByIdObject(idImpacto, Impacto.class));
+           ticket.setModulo((Modulo) daoGeneric.getByIdObject(idModulo, Modulo.class));
+           ticket.setRaiz((Raiz) daoGeneric.getByIdObject(idRaiz, Raiz.class));      
+           ticket.setServicio((Servicio) daoGeneric.getByIdObject(idServicio, Servicio.class));
+           ticket.setServicioModulo((ServicioModulo) daoGeneric.getByIdObject(idServicioModulo, ServicioModulo.class));
+           ticket.setServidor((Servidor) daoGeneric.getByIdObject(idServidor, Servidor.class));
            
            ticket.setDescripcion(descripcion);
            ticket.setCausa(causa);

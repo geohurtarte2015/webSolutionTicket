@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import pojo.Analista;
-import structuras.ListObjectJson;
+import structuras.ListObject;
 
 /**
  *
@@ -39,12 +39,11 @@ public class Show extends HttpServlet {
             response.setContentType("application/json");
             String className = String.valueOf(request.getParameter("className"));
             PrintWriter out = response.getWriter();
-            ListObjectJson listObject = new ListObjectJson();
+            ListObject listObject = new ListObject();
             Class<?> classObject = Class.forName("pojo." + className);
             Constructor<?> constructor = classObject.getConstructor();
             Object newObject = constructor.newInstance();
-            //out.print(listObject.objectStringJson(newObject,className));
-            response.getWriter().write(listObject.objectStringJson(newObject, className));
+            response.getWriter().write(listObject.getObjectStringJson(newObject, className));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchMethodException ex) {

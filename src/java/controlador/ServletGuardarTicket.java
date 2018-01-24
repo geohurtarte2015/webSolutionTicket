@@ -7,7 +7,6 @@ package controlador;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dao.DaoAnalista;
 import dao.DaoTicket;
 import java.io.IOException;
 import java.io.PrintWriter;
