@@ -144,11 +144,12 @@ public class DaoTicket {
        return ticket;
    }
    
-   public Ticket update(int idTicket, int idServidor, int idEstado, int idImpacto, int idRaiz, int idAnalista,
+   public String update(int idTicket, int idServidor, int idEstado, int idImpacto, int idRaiz, int idAnalista,
    int idServicioModulo, int idModulo,int idServicio, String causa, String descripcion, String fechaFin, 
    String fechaInicio, String solucion,String titulo){
      
        Ticket ticket = null;
+       String resp="";
 
        DaoTicket daoTicket = new DaoTicket();
        
@@ -176,7 +177,7 @@ public class DaoTicket {
            //ticket.getSeguimientos().set(idRaiz);
 
            sesion.update(ticket);
-           
+           resp="ok";
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -190,7 +191,7 @@ public class DaoTicket {
        }
        
        
-       return ticket;
+       return resp;
    
    
    }

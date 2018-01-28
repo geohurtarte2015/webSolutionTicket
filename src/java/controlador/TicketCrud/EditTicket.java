@@ -87,7 +87,7 @@ public class EditTicket extends HttpServlet {
      
      private void edit(HttpServletResponse response,HttpServletRequest request) throws IOException{
         //TRAE LOS PARAMETROS ENVIADOS POR AJAX DESDE EL SERVLET
-            String idTicket = String.valueOf(request.getParameter("idTicket"));
+            String idTicket = String.valueOf(request.getParameter("id"));
             String titulo = String.valueOf(request.getParameter("titulo"));
             String idModulo = String.valueOf(request.getParameter("modulo"));
             String idServicio = String.valueOf(request.getParameter("servicio"));
@@ -108,9 +108,8 @@ public class EditTicket extends HttpServlet {
         //Guarda ticket
          Ticket newTicket= new Ticket( titulo,  fechaInicio,  fechaFin,  descripcion,  causa,  solucion);    
         //Instancia de DAO
-        DaoTicket daoTicket = new DaoTicket();  
-        Ticket ticket = new Ticket();
-        ticket=daoTicket.update(Integer.parseInt(idTicket),Integer.parseInt(idServidor), Integer.parseInt(idEstado), Integer.parseInt(idImpacto),Integer.parseInt(idRaiz), Integer.parseInt(idAnalista),Integer.parseInt(idServicioModulo),Integer.parseInt(idModulo),Integer.parseInt(idServicio),causa,descripcion,fechaFin,fechaInicio,solucion,titulo); 
+        DaoTicket daoTicket = new DaoTicket();         
+        resp=daoTicket.update(Integer.parseInt(idTicket),Integer.parseInt(idServidor), Integer.parseInt(idEstado), Integer.parseInt(idImpacto),Integer.parseInt(idRaiz), Integer.parseInt(idAnalista),Integer.parseInt(idServicioModulo),Integer.parseInt(idModulo),Integer.parseInt(idServicio),causa,descripcion,fechaFin,fechaInicio,solucion,titulo); 
         
         PrintWriter outHtml = response.getWriter(); 
         if(!resp.contains("ok")){

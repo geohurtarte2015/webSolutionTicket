@@ -42,8 +42,7 @@ public class ShowTicket extends HttpServlet {
         for (Iterator ticketIterator = tickets.iterator(); 
                  ticketIterator.hasNext();
                 )
-         {
-             
+         {   
          Ticket ticketObject = (Ticket) ticketIterator.next(); 
          List<Object> object = new ArrayList<>();            
             object.add(ticketObject.getId());

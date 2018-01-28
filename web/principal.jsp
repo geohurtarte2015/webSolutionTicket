@@ -87,6 +87,7 @@
     <script>
      var ticket;   
      var idAnalista;
+     var idTicketUpdate;
      
      var transaccion;
      
@@ -417,6 +418,7 @@
                    
                     var data = tableTicketShow.row( $(this).parents('tr') ).data();
                     idTicket=data[0];  
+                    idTicketUpdate=idTicket;
                     
                     $.post("FindTicket",
                             {
@@ -425,17 +427,16 @@
                            function(json){                                    
                                     $("#titulotxt").val(json.titulo);
                                     $("#serviciotxt").val(json.servicio);
-                                    $('#modulotxt option').eq(json.modulo).prop('selected', true);
-                                    $('#serviciomodulotxt option').eq(json.servicio_modulo).prop('selected', true);                                   
-                                    $('#nombreservidortxt option').eq(json.servidor).prop('selected', true);
-                                    $('#impactotxt option').eq(json.impacto).prop('selected', true);                                  
+                                    $("#modulotxt").val(json.modulo);
+                                    $("#serviciomodulotxt").val(json.modulo);                                   
+                                    $("#nombreservidortxt").val(json.servidor);                     
+                                    $("#impactotxt").val(json.impacto);                                                           
                                     $("#fechainiciotxt").val(json.inicio);
                                     $("#fechafinaltxt").val(json.final);
-                                    $('#estadotxt option').eq(json.estado).prop('selected', true);                                    
+                                    $("#estadotxt").val(json.estado);
                                     $("#descripciontxt").val(json.descripcion);
                                     $("#causatxt").val(json.causa);
-                                    $("#soluciontxt").val(json.solucion);
-                                    $('#impactotxt option').eq(json.impacto).prop('selected', true);
+                                    $("#soluciontxt").val(json.solucion);                     
                                     $("#myModal").modal();
                                 });
                                     $("#guardarticket").hide(); 
@@ -734,7 +735,7 @@
            servicioModulo=$('select[id=serviciomodulotxt]').val();           
            nombreServidor=$('select[id=nombreservidortxt]').val();           
            impacto=$('select[id=impactotxt]').val();
-           estado=$('select[id=estadotxt]').val();       
+           estado=$('select[id=vestadotxt]').val();       
            analista =<%=String.valueOf(id)%>;   
            fechaInicio=$('#fechainiciotxt').val();
            fechaFin=$('#fechafinaltxt').val();
@@ -770,12 +771,9 @@
                         }
                     });
                 });
-                
-     //PARAMETROS POR AJAX PARA GUARDAR NUEVO TICKET     
      $("#editticket").click(function(){ 
          
            titulo=$('#titulotxt').val();
-
            servicio=$('select[id=serviciotxt]').val();
            modulo=$('select[id=modulotxt]').val();
            servicioModulo=$('select[id=serviciomodulotxt]').val();           
@@ -791,10 +789,12 @@
                  
                     $.ajax({
                     type: "GET",
-                    url: "SaveTicket",
+                    url: "EditTicket",
                     global: false,
                     async : false,
-                    data: { titulo: titulo,
+                    data: { 
+                        id: idTicketUpdate,
+                        titulo: titulo,
                         servicio: servicio,
                         modulo: modulo,
                         servicioModulo: servicioModulo,
@@ -1445,15 +1445,14 @@
                                             <label>Estado</label>
                                             <select id="estadotxt" class="form-control">
                                                 <option>Seleccionar</option>
-                                                    <%                                                
+                                                 <%                                                
                                                     for(Object objectName: listObject.getListArrayObject(new Estado(), "Estado")){
                                                     List<Object> objectArray = (List<Object>)objectName;                                                   
-                                                   %>  
-                                        
+                                                 %>  
+                                       
                                                 <option name="option" value=<%= objectArray.get(0) %>><%= objectArray.get(1) %>  </option>      
                                                 <%}%>   
-                                                
-                                               
+                                     
                                             </select>
                                         </div> <!-- /.Impacto -->  
                                 </div>
