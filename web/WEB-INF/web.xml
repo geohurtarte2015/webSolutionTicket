@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>ServletVerSeguimientos</servlet-name>
-        <servlet-class>controlador.ServletVerSeguimientos</servlet-class>
+        <servlet-name>FindSeguimientos</servlet-name>
+        <servlet-class>controlador.SeguimientoCrud.FindSeguimientos</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>test4</servlet-name>
-        <servlet-class>controlador.test4</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletGuardarTicket</servlet-name>
-        <servlet-class>controlador.ServletGuardarTicket</servlet-class>
+        <servlet-name>SaveTicket</servlet-name>
+        <servlet-class>controlador.TicketCrud.SaveTicket</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Sesion</servlet-name>
@@ -21,57 +17,37 @@
         <servlet-class>controlador.CerrarSesion</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletGuardarAnalista</servlet-name>
-        <servlet-class>controlador.ServletGuardarAnalista</servlet-class>
+        <servlet-name>ShowTicket</servlet-name>
+        <servlet-class>controlador.TicketCrud.ShowTicket</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletAnalista</servlet-name>
-        <servlet-class>controlador.ServletAnalista</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletShowTicket</servlet-name>
-        <servlet-class>controlador.ServletShowTicket</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletVerTicket</servlet-name>
-        <servlet-class>controlador.ServletVerTicket</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletVerEstado</servlet-name>
-        <servlet-class>controlador.ServletVerEstado</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletEstado</servlet-name>
-        <servlet-class>controlador.ServletEstado</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletImpacto</servlet-name>
-        <servlet-class>controlador.ServletImpacto</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletServicios</servlet-name>
-        <servlet-class>controlador.ServletServicios</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletServidores</servlet-name>
-        <servlet-class>controlador.ServletServidores</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SaveAnalist</servlet-name>
-        <servlet-class>controlador.SaveAnalist</servlet-class>
+        <servlet-name>FindTicket</servlet-name>
+        <servlet-class>controlador.TicketCrud.FindTicket</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Save</servlet-name>
-        <servlet-class>controlador.Save</servlet-class>
+        <servlet-class>controlador.Crud.Save</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Show</servlet-name>
-        <servlet-class>controlador.Show</servlet-class>
+        <servlet-class>controlador.Crud.Show</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Delete</servlet-name>
-        <servlet-class>controlador.Delete</servlet-class>
+        <servlet-class>controlador.Crud.Delete</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SaveSeguimiento</servlet-name>
+        <servlet-class>controlador.SeguimientoCrud.SaveSeguimiento</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditTicket</servlet-name>
+        <servlet-class>controlador.TicketCrud.EditTicket</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FindSeguimientos</servlet-name>
+        <url-pattern>/FindSeguimientos</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Save</servlet-name>
         <url-pattern>/Save</url-pattern>
@@ -85,16 +61,12 @@
         <url-pattern>/Delete</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletVerSeguimientos</servlet-name>
-        <url-pattern>/ServletVerSeguimientos</url-pattern>
+        <servlet-name>SaveSeguimiento</servlet-name>
+        <url-pattern>/SaveSeguimiento</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>test4</servlet-name>
-        <url-pattern>/test4</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletGuardarTicket</servlet-name>
-        <url-pattern>/ServletGuardarTicket</url-pattern>
+        <servlet-name>SaveTicket</servlet-name>
+        <url-pattern>/SaveTicket</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Sesion</servlet-name>
@@ -105,44 +77,16 @@
         <url-pattern>/CerrarSesion</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletGuardarAnalista</servlet-name>
-        <url-pattern>/ServletGuardarAnalista</url-pattern>
+        <servlet-name>ShowTicket</servlet-name>
+        <url-pattern>/ShowTicket</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletAnalista</servlet-name>
-        <url-pattern>/ServletAnalista</url-pattern>
+        <servlet-name>FindTicket</servlet-name>
+        <url-pattern>/FindTicket</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletShowTicket</servlet-name>
-        <url-pattern>/ServletShowTicket</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletVerTicket</servlet-name>
-        <url-pattern>/ServletVerTicket</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletVerEstado</servlet-name>
-        <url-pattern>/ServletVerEstado</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletEstado</servlet-name>
-        <url-pattern>/ServletEstado</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletImpacto</servlet-name>
-        <url-pattern>/ServletImpacto</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletServicios</servlet-name>
-        <url-pattern>/ServletServicios</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletServidores</servlet-name>
-        <url-pattern>/ServletServidores</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SaveAnalist</servlet-name>
-        <url-pattern>/SaveAnalist</url-pattern>
+        <servlet-name>EditTicket</servlet-name>
+        <url-pattern>/EditTicket</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

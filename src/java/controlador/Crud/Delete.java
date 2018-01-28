@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador;
+package controlador.Crud;
 
 
+import dao.DaoGeneric;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,12 +22,12 @@ import structuras.ListObject;
  *
  * @author Giovanni
  */
-public class Show extends HttpServlet {
+public class Delete extends HttpServlet {
 
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");   
+  
     }
 
     @Override
@@ -37,39 +36,32 @@ public class Show extends HttpServlet {
         try {
             processRequest(request, response);
             response.setContentType("application/json");
-            String className = String.valueOf(request.getParameter("className"));
             PrintWriter out = response.getWriter();
-            ListObject listObject = new ListObject();
-            Class<?> classObject = Class.forName("pojo." + className);
-            Constructor<?> constructor = classObject.getConstructor();
-            Object newObject = constructor.newInstance();
-            response.getWriter().write(listObject.getObjectStringJson(newObject, className));
+            String[] parametersRequest = request.getParameterValues("array[]");
+
+            int id = Integer.parseInt(parametersRequest[0]);
+            String className = String.valueOf(request.getParameter("className"));   
+            
+            DaoGeneric daoGeneric = new DaoGeneric();
+            Class classObject = Class.forName("pojo."+className);    
+            daoGeneric.delete(id, classObject);         
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchMethodException ex) {
-            Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Delete.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalArgumentException ex) {
-            Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvocationTargetException ex) {
-            Logger.getLogger(Show.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Delete.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
 
-
+  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-      @Override
+   
+    @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>

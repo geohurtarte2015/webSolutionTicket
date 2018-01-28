@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador;
+package controlador.TicketCrud;
 
 import dao.DaoTicket;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import pojo.Seguimiento;
 import pojo.Ticket;
 
 
-public class ServletVerTicket extends HttpServlet {
+public class FindTicket extends HttpServlet {
 
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -77,7 +77,7 @@ public class ServletVerTicket extends HttpServlet {
             
             //out.println(name + " " + text);
         } catch (JSONException ex) {
-            Logger.getLogger(ServletVerTicket.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FindTicket.class.getName()).log(Level.SEVERE, null, ex);
         }
      
       

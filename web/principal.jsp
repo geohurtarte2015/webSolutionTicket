@@ -1,21 +1,19 @@
+<%@page import="java.lang.Object"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="structuras.ListObject"%>
 <%@page import="pojo.Analista"%>
-<%@page import="dao.DaoAnalista"%>
 <%@page import="pojo.Estado"%>
-<%@page import="dao.DaoEstado"%>
 <%@page import="pojo.Impacto"%>
-<%@page import="dao.DaoImpacto"%>
 <%@page import="pojo.Servidor"%>
-<%@page import="dao.DaoServidor"%>
 <%@page import="pojo.ServicioModulo"%>
-<%@page import="dao.DaoServicioModulo"%>
 <%@page import="pojo.Modulo"%>
-<%@page import="dao.DaoModulo"%>
 <%@page import="pojo.Servicio"%>
-<%@page import="dao.DaoServicio"%>
 <%@page import="pojo.Ticket"%>
 <%@page import="dao.DaoTicket"%>
 <!DOCTYPE html>
 <%  
+    ListObject listObject = new ListObject();
     int id = (Integer) session.getAttribute("id");
     String usuario = (String) session.getAttribute("user");    
     String nombre = (String) session.getAttribute("nombre");
@@ -94,22 +92,29 @@
      
      var valAnalista = $('#idAnalista').html();
      
-      function appendText() {
-        var txt1 = $('<div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar Impacto</h4> </div>');// Create text with HTML
-        $("#divImpacto").append(txt1);
-      }     
+      function appendText(title) {        
+        div="#div"+title;  
+        nameModal="myModal"+title;
+        lowerCaseTitle=title.toLowerCase();
+        var varDiv = $('<div style="display: none;" class="modal fade" id="'+nameModal+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar '+title+'</h4> </div><div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body --> <div class="panel-body"> <div class="row"> <div class="col-xs-6"> <div class="form-group"> <label>Descripcion</label> <input class="form-control" name="'+lowerCaseTitle+'NombreTxt" id="'+lowerCaseTitle+'NombreTxt" placeholder="Nombre"> </div> </div>  </div><!-- /.Descripcion -->  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button id="guardar'+title+'" type="button" class="btn btn-primary">Guardar</button>  <button type="button" class="btn btn-primary " id="myBtn'+title+'Show" >Crear</button> </div> <!-- /.dataTable -->  <div class="modal-footer">  <table id="table_'+lowerCaseTitle+'" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  </div>  </div> </div>  </div>  <!-- /.modal-content -->  </div>  <!-- /.modal-dialog -->  </div> ');
+        $(div).append(varDiv);
+      }        
     
      
      
     $(document).ready(function() {
       
-      var divImpacto = $('<div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar Impacto</h4> </div>');// Create text with HTML
-      $("#divImpacto").append(divImpacto);
+      appendText("Impacto");
+      appendText("Estado");
+      appendText("Modulo");
+      appendText("Servicio");
+      appendText("ServicioModulo");
+      appendText("Servidor");
         
      //INICIALIZACION DEL DATA_TABLE SEGUIMIENTOS "table_seguimientos"
      var t= $('#table_seguimientos').DataTable( {
                     "ajax" : {
-                        "url": "ServletVerSeguimientos",
+                        "url": "FindSeguimientos",
                         "type": "POST",
                         "data" : function(d){
                             d.ticket = ticket;
@@ -119,6 +124,42 @@
                     "lengthMenu": [ 2, 5 ],
                     "dataType" : "json"
                  });
+                 
+       //INICIALIZACION DEL DATA_TABLE TICKET "table_ticket_show"
+     var tableTicketShow= $('#table_ticket_show').DataTable( {
+                    "ajax" : {
+                        "url": "ShowTicket",
+                        "type": "GET",
+                        "data" : function(d){                            
+                            d.className = "Ticket";
+                            d.limitFields = "0";
+                            }
+                    },
+                    "global" : false,
+                    "lengthMenu": [[ 5, -1], [ 5,"All"]],
+                    "dataType" : "json",
+                    "columns" : [
+                     {"title": "Id"},
+                     {"title": "Titulo"},
+                     {"title": "Analista"},
+                     {"title": "Fecha"}
+                    ],
+                    "columnDefs": [ {
+                        "targets": 4,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialog' id='editaricon'  data-toggle='modal' data-target='#myModal' data-backdrop='static' data-keyboard='false'>"+                          
+                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        },
+                        {
+                        "targets": 5,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialog' id='seguimientosicon'  data-toggle='modal' data-target='#myModalSeguimiento' data-backdrop='static' data-keyboard='false'>"+                          
+                                           "<img  src='img/pencil.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        }
+                        ]
+                    });     
      
      
      //INICIALIZACION DEL DATA_TABLE ANALISTA "table_analista
@@ -129,6 +170,7 @@
                         "data" : function(d){
                             d.transaccion = "inicializar",
                             d.className = "Analista";
+                            d.limitFields = "0";
                             }
                     },
                     "global" : false,
@@ -158,9 +200,9 @@
                     "ajax" : {
                         "url": "Show",
                         "type": "GET",
-                        "data" : function(d){
-                            d.transaccion = "inicializar";
+                        "data" : function(d){                            
                             d.className = "Estado";
+                            d.limitFields = "0";
                             }
                     },                   
                     "global" : false,
@@ -194,9 +236,9 @@
                     "ajax" : {
                         "url": "Show",
                         "type": "GET",
-                        "data" : function(d){
-                            d.transaccion = "inicializar";
+                        "data" : function(d){                            
                             d.className = "Impacto";
+                            d.limitFields = "0";
                             }
                     },                   
                     "global" : false,
@@ -225,47 +267,158 @@
                         ]
                     });
      
-     //INICIALIZACION DEL DATA_TABLE TICKET "table_ticket_show"
-     var tableTicketShow= $('#table_ticket_show').DataTable( {
+      //INICIALIZACION DEL DATA_TABLE MODULO "table_modulo
+     var tableModulo= $('#table_modulo').DataTable( {
                     "ajax" : {
-                        "url": "ServletShowTicket",
-                        "type": "GET"
-                    },
+                        "url": "Show",
+                        "type": "GET",
+                        "data" : function(d){                            
+                            d.className = "Modulo";
+                            d.limitFields = "0";
+                            }
+                    },                   
                     "global" : false,
-                    "lengthMenu": [[ 5, -1], [ 5,"All"]],
+                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
                     "dataType" : "json",
                     "columns" : [
                      {"title": "Id"},
-                     {"title": "Titulo"},
-                     {"title": "Analista"},
-                     {"title": "Fecha"}
+                     {"title": "Modulo"},                     
+                     {"title": ""},
+                     {"title": ""}
                     ],
                     "columnDefs": [ {
-                        "targets": 4,
+                        "targets": 2,
                         "data": null,
-                        "defaultContent": "<center><a href='#dialog' id='editaricon'  data-toggle='modal' data-target='#myModal' data-backdrop='static' data-keyboard='false'>"+                          
+                        "defaultContent": "<center><a href='#dialogModulo' id='seleccionarModulo'>"+                          
                                            "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
                                           "</a></center>"
                         },
                         {
-                        "targets": 5,
+                        "targets": 3,
                         "data": null,
-                        "defaultContent": "<center><a href='#dialog' id='seguimientosicon'  data-toggle='modal' data-target='#myModalSeguimiento' data-backdrop='static' data-keyboard='false'>"+                          
-                                           "<img  src='img/pencil.png' width='16' height='16'  border='0' />"+       
+                        "defaultContent": "<center><a href='#dialogModulo2' id='eliminarModulo'>"+                          
+                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
                                           "</a></center>"
                         }
                         ]
-                    });     
-                    
-
+                    });
      
+      //INICIALIZACION DEL DATA_TABLE SERVICIO "table_servicio
+     var tableServicio= $('#table_servicio').DataTable( {
+                    "ajax" : {
+                        "url": "Show",
+                        "type": "GET",
+                        "data" : function(d){                            
+                            d.className = "Servicio";
+                            d.limitFields = "0";
+                            }
+                    },                   
+                    "global" : false,
+                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
+                    "dataType" : "json",
+                    "columns" : [
+                     {"title": "Id"},
+                     {"title": "Servicio"},                     
+                     {"title": ""},
+                     {"title": ""}
+                    ],
+                    "columnDefs": [ {
+                        "targets": 2,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogServicio' id='seleccionarServicio'>"+                          
+                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        },
+                        {
+                        "targets": 3,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogServicio2' id='eliminarServicio'>"+                          
+                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        }
+                        ]
+                    });
+                    
+      //INICIALIZACION DEL DATA_TABLE SERVIDOR "table_servidor
+     var tableServidor= $('#table_servidor').DataTable( {
+                    "ajax" : {
+                        "url": "Show",
+                        "type": "GET",
+                        "data" : function(d){                            
+                            d.className = "Servidor";
+                            d.limitFields = "0";
+                            }
+                    },                   
+                    "global" : false,
+                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
+                    "dataType" : "json",
+                    "columns" : [
+                     {"title": "Id"},
+                     {"title": "Servidor"},                     
+                     {"title": ""},
+                     {"title": ""}
+                    ],
+                    "columnDefs": [ {
+                        "targets": 2,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogServidor' id='seleccionarServidor'>"+                          
+                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        },
+                        {
+                        "targets": 3,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogServidor2' id='eliminarServidor'>"+                          
+                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        }
+                        ]
+                    });
+                    
+      //INICIALIZACION DEL DATA_TABLE SERVICIO MODULO "table_serviciomodulo
+     var tableServicioModulo= $('#table_serviciomodulo').DataTable( {
+                    "ajax" : {
+                        "url": "Show",
+                        "type": "GET",
+                        "data" : function(d){                            
+                            d.className = "ServicioModulo";
+                            d.limitFields = "0";
+                            }
+                    },                   
+                    "global" : false,
+                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
+                    "dataType" : "json",
+                    "columns" : [
+                     {"title": "Id"},
+                     {"title": "ServicioModulo"},                     
+                     {"title": ""},
+                     {"title": ""}
+                    ],
+                    "columnDefs": [ {
+                        "targets": 2,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogServicioModulo' id='seleccionarServicioModulo'>"+                          
+                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        },
+                        {
+                        "targets": 3,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogServicioModulo2' id='eliminarServicioModulo'>"+                          
+                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        }
+                        ]
+                    });
+                    
+                    
       //Seleccion de Ticket   
      $('#table_ticket_show tbody').on( 'click','#editaricon', function () {
                    
                     var data = tableTicketShow.row( $(this).parents('tr') ).data();
                     idTicket=data[0];  
                     
-                    $.post("ServletVerTicket",
+                    $.post("FindTicket",
                             {
                                id: idTicket
                            },
@@ -380,7 +533,7 @@
       //Seleccion de Impacto   
      $('#table_impacto tbody').on( 'click','#seleccionarImpacto', function () {
                    
-                    var dataImpacto = tableEstado.row( $(this).parents('tr') ).data();
+                    var dataImpacto = tableImpacto.row( $(this).parents('tr') ).data();
                     idImpacto=dataImpacto[0];  
                     impactoNombreTxt.value=dataImpacto[1];
                } );
@@ -406,10 +559,135 @@
           var request = "Save";
           var message = "Impacto guardado";
           requestAjax(array,className,request,message,tableName);
-        });      
+        });  
+        
+       //Seleccion de Modulo   
+     $('#table_modulo tbody').on( 'click','#seleccionarModulo', function () {
+                   
+                    var dataModulo = tableModulo.row( $(this).parents('tr') ).data();
+                    idModulo=dataModulo[0];  
+                    moduloNombreTxt.value=dataModulo[1];
+               } );
+               
+      //Eliminacion de Modulo
+     $('#table_modulo tbody').on( 'click','#eliminarModulo', function () {                  
+            var dataEliminarModulo = tableModulo.row( $(this).parents('tr') ).data();
+            id=dataEliminarModulo[0];  
+            var tableName = tableModulo;
+            var array = [id];
+            var className = "Modulo";
+            var request = "Delete";
+            var message = "Modulo eliminado";
+            requestAjax(array,className,request,message,tableName);
+        } );  
+               
+      //Guardar Modulo
+      $("#guardarModulo").click(function(){ 
+          moduloNombre=$('#moduloNombreTxt').val();  
+          var tableName = tableModulo;
+          var array = [moduloNombre];
+          var className = "Modulo";
+          var request = "Save";
+          var message = "Modulo guardado";
+          requestAjax(array,className,request,message,tableName);
+        });  
+        
+      //Seleccion de Servicio   
+     $('#table_servicio tbody').on( 'click','#seleccionarServicio', function () {
+                   
+                    var dataServicio = tableServicio.row( $(this).parents('tr') ).data();
+                    idServicio=dataServicio[0];  
+                    servicioNombreTxt.value=dataServicio[1];
+               } );
+               
+      //Eliminacion de Servicio
+     $('#table_servicio tbody').on( 'click','#eliminarServicio', function () {                  
+            var dataEliminarServicio = tableServicio.row( $(this).parents('tr') ).data();
+            id=dataEliminarServicio[0];  
+            var tableName = tableServicio;
+            var array = [id];
+            var className = "Servicio";
+            var request = "Delete";
+            var message = "Servicio eliminado";
+            requestAjax(array,className,request,message,tableName);
+        } );  
+               
+      //Guardar Servidor
+      $("#guardarServicio").click(function(){ 
+          servicioNombre=$('#servicioNombreTxt').val();  
+          var tableName = tableServicio;
+          var array = [servicioNombre];
+          var className = "Servicio";
+          var request = "Save";
+          var message = "Servicio guardado";
+          requestAjax(array,className,request,message,tableName);
+        }); 
+        
+     //Seleccion de Servidor   
+     $('#table_servidor tbody').on( 'click','#seleccionarServidor', function () {
+                   
+                    var dataServidor = tableServidor.row( $(this).parents('tr') ).data();
+                    idServidor=dataServidor[0];  
+                    servidorNombreTxt.value=dataServidor[1];
+               } );
+               
+      //Eliminacion de Servidor
+     $('#table_servidor tbody').on( 'click','#eliminarServidor', function () {                  
+            var dataEliminarServidor = tableServidor.row( $(this).parents('tr') ).data();
+            id=dataEliminarServidor[0];  
+            var tableName = tableServidor;
+            var array = [id];
+            var className = "Servidor";
+            var request = "Delete";
+            var message = "Servidor eliminado";
+            requestAjax(array,className,request,message,tableName);
+        } );  
+               
+      //Guardar Servidor
+      $("#guardarServidor").click(function(){ 
+          servidorNombre=$('#servidorNombreTxt').val();  
+          var tableName = tableServidor;
+          var array = [servidorNombre];
+          var className = "Servidor";
+          var request = "Save";
+          var message = "Servidor guardado";
+          requestAjax(array,className,request,message,tableName);
+        });  
+        
+       //Seleccion de ServicioModulo   
+     $('#table_servidor tbody').on( 'click','#seleccionarServidor', function () {
+                   
+                    var dataServidor = tableServidor.row( $(this).parents('tr') ).data();
+                    idServidor=dataServidor[0];  
+                    servidorNombreTxt.value=dataServidor[1];
+               } );
+               
+      //Eliminacion de ServicioModulo
+     $('#table_serviciomodulo tbody').on( 'click','#eliminarServicioModulo', function () {                  
+            var dataEliminarServicioModulo = tableServicioModulo.row( $(this).parents('tr') ).data();
+            id=dataEliminarServicioModulo[0];  
+            var tableName = tableServicioModulo;
+            var array = [id];
+            var className = "ServicioModulo";
+            var request = "Delete";
+            var message = "Servicio Modulo eliminado";
+            requestAjax(array,className,request,message,tableName);
+        } );  
+               
+      //Guardar ServicioModulo
+      $("#guardarServicioModulo").click(function(){ 
+          servicioModuloNombre=$('#serviciomoduloNombreTxt').val();  
+          var tableName = tableServicioModulo;
+          var array = [servicioModuloNombre];
+          var className = "ServicioModulo";
+          var request = "Save";
+          var message = "Servicio Modulo guardado";
+          requestAjax(array,className,request,message,tableName);
+        });  
+      
    
      //En la carga hecha en la ta seguimientos
-    $('#table_seguimientos').on('click','td', function() {
+      $('#table_seguimientos').on('click','td', function() {
         var data = t.row( $(this).parents('tr') ).data();
                     txtSeguimiento.value=data[2];
         });
@@ -420,9 +698,6 @@
          
            //Guardar lo que esta en el atributo name
            ticket = $(this).attr("name");
-           
-           //LIMPIA EL DATA_TABLE
-            t.clear().draw();
            
            //recarga los datos nuevamente en el dataTable por ajax
            t.ajax.reload();          
@@ -435,7 +710,7 @@
                  
                     $.ajax({
                     type: "GET",
-                    url: "ServletGuardarSeguimiento",
+                    url: "SaveSeguimiento",
                     global: false,
                     async : false,
                     data: {
@@ -469,7 +744,54 @@
                  
                     $.ajax({
                     type: "GET",
-                    url: "ServletGuardarTicket",
+                    url: "SaveTicket",
+                    global: false,
+                    async : false,
+                    data: { titulo: titulo,
+                        servicio: servicio,
+                        modulo: modulo,
+                        servicioModulo: servicioModulo,
+                        nombreServidor: nombreServidor,
+                        impacto: impacto,
+                        fechaInicio: fechaInicio,
+                        fechaFin: fechaFin,
+                        descripcion: descripcion,
+                        causa: causa,
+                        solucion: solucion,
+                        estado: estado,
+                        analista: analista
+                       
+                    },
+                    success:
+                     function(responseSave){                         
+                            alert(responseSave);
+                            tableTicketShow.ajax.reload();
+                            
+                        }
+                    });
+                });
+                
+     //PARAMETROS POR AJAX PARA GUARDAR NUEVO TICKET     
+     $("#editticket").click(function(){ 
+         
+           titulo=$('#titulotxt').val();
+
+           servicio=$('select[id=serviciotxt]').val();
+           modulo=$('select[id=modulotxt]').val();
+           servicioModulo=$('select[id=serviciomodulotxt]').val();           
+           nombreServidor=$('select[id=nombreservidortxt]').val();           
+           impacto=$('select[id=impactotxt]').val();
+           estado=$('select[id=estadotxt]').val();       
+           analista =<%=String.valueOf(id)%>;   
+           fechaInicio=$('#fechainiciotxt').val();
+           fechaFin=$('#fechafinaltxt').val();
+           descripcion=$('#descripciontxt').val();
+           causa=$('#causatxt').val();
+           solucion=$('#soluciontxt').val();
+                 
+                    $.ajax({
+                    type: "GET",
+                    url: "SaveTicket",
                     global: false,
                     async : false,
                     data: { titulo: titulo,
@@ -804,16 +1126,16 @@
                                     <a href="#" data-toggle="modal" data-target="#myModalImpacto" data-backdrop="static" data-keyboard="false">Impacto</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Modulos</a>
+                                    <a href="#" data-toggle="modal" data-target="#myModalModulo" data-backdrop="static" data-keyboard="false">Modulos</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Servicios</a>
+                                    <a href="#" data-toggle="modal" data-target="#myModalServicio" data-backdrop="static" data-keyboard="false">Servicios</a>
                                 </li>
                                  <li>
-                                    <a href="morris.html">SubServicio</a>
+                                    <a href="#" data-toggle="modal" data-target="#myModalServicioModulo" data-backdrop="static" data-keyboard="false">SubServicio</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Servidores</a>
+                                    <a href="#" data-toggle="modal" data-target="#myModalServidor" data-backdrop="static" data-keyboard="false">Servidores</a>
                                 </li>
                               </ul>
                         </li>
@@ -1009,12 +1331,13 @@
                                             <label>Servicio</label>
                                             <select id="serviciotxt" class="form-control">
                                                 <option>seleccionar</option> 
-                                                <%
-                                                    DaoServicio daoServicio= new DaoServicio();
-                                                    for(Servicio servicio: daoServicio.listAll()){
-                                                %>  
-                                                <option name="option" value=<%= servicio.getIdServicioModulo() %>> <%= servicio.getDescripcion() %></option>  
-                                                <%}%> 
+                                                  <%                                                 
+                                                    for(Object objectName: listObject.getListArrayObject(new Servicio(), "Servicio")){
+                                                    List<Object> objectArray = (List<Object>)objectName;                                                   
+                                                  %> 
+                                         
+                                                <option name="option" value=<%= objectArray.get(0) %>><%= objectArray.get(1) %>  </option>  
+                                                <%}%>
                                             </select>
                                         </div> 
                                   
@@ -1026,12 +1349,13 @@
                                             <label>Modulo</label>
                                             <select id="modulotxt" class="form-control">
                                                 <option>seleccionar</option> 
-                                                 <%
-                                                    DaoModulo daoModulo= new DaoModulo();
-                                                    for(Modulo modulo: daoModulo.listAll()){
-                                                  %>
-                                                <option value=<%= modulo.getIdModulo() %>> <%= modulo.getDescripcion() %></option>      
-                                                 <%}%> 
+                                                  <%                                                
+                                                    for(Object objectName: listObject.getListArrayObject(new Modulo(), "Modulo")){
+                                                    List<Object> objectArray = (List<Object>)objectName;                                                   
+                                                  %> 
+                                          
+                                                <option name="option" value=<%= objectArray.get(0) %>><%= objectArray.get(1) %>  </option>      
+                                                <%}%>
                                             </select>
                                         </div> <!-- /.Modulo -->
                                 </div>
@@ -1041,13 +1365,15 @@
                                     <div class="form-group">
                                             <label>Servicio Modulo</label>
                                             <select id="serviciomodulotxt" class="form-control">
-                                                <option>seleccionar</option> 
-                                                <%
-                                                    DaoServicioModulo daoServicioModulo= new DaoServicioModulo();
-                                                    for(ServicioModulo servicioModulo: daoServicioModulo.listAll()){
-                                                %>  
-                                                <option name="option" value=<%= servicioModulo.getIdServicioModulo() %>><%= servicioModulo.getDescripcion() %></option>
-                                                <%}%> 
+                                                <option>seleccionar</option>
+                                                  <%                                                
+                                                    for(Object objectName: listObject.getListArrayObject(new ServicioModulo(), "ServicioModulo")){
+                                                    List<Object> objectArray = (List<Object>)objectName;                                                   
+                                                  %> 
+                                            
+                                                <option name="option" value=<%= objectArray.get(0) %>><%= objectArray.get(1) %>  </option>      
+                                                <%}%>
+                                            
                                             </select>
                                         </div> <!-- /.Servicio Modulo -->                                
                                 </div>
@@ -1060,12 +1386,14 @@
                                             <label>Nombre Servidor</label>
                                             <select id="nombreservidortxt" class="form-control">
                                                 <option>seleccionar</option>
-                                                <%
-                                                    DaoServidor daoServidor= new DaoServidor();
-                                                    for(Servidor servidor: daoServidor.listAll()){
-                                                %>
-                                                <option value=<%= servidor.getIdServidor() %>><%= servidor.getDescripcion() %></option>                                               
-                                                 <%}%> 
+                                                 <%                                                
+                                                    for(Object objectName: listObject.getListArrayObject(new Servidor(), "Servidor")){
+                                                    List<Object> objectArray = (List<Object>)objectName;                                                   
+                                                  %> 
+                                          
+                                                <option name="option" value=<%= objectArray.get(0) %>><%= objectArray.get(1) %>  </option>      
+                                                <%}%>                                              
+                                           
                                             </select>
                                         </div> <!-- /.Servidor -->  
                                 </div>
@@ -1076,12 +1404,14 @@
                                             <label>Impacto</label>
                                             <select id="impactotxt" class="form-control">
                                                 <option>Seleccionar</option>
-                                                <%
-                                                    DaoImpacto daoImpacto= new DaoImpacto();
-                                                    for(Impacto impacto: daoImpacto.listAll()){
-                                                %> 
-                                                <option value=<%= impacto.getIdImpacto() %>> <%= impacto.getDescripcion() %></option>  
-                                                <%}%>
+                                                 <%                                                
+                                                    for(Object objectName: listObject.getListArrayObject(new Impacto(), "Impacto")){
+                                                    List<Object> objectArray = (List<Object>)objectName;                                                   
+                                                 %>  
+                                       
+                                                <option name="option" value=<%= objectArray.get(0) %>><%= objectArray.get(1) %>  </option>      
+                                                <%}%>   
+                                     
                                             </select>
                                         </div> <!-- /.Impacto -->  
                                 </div>
@@ -1115,12 +1445,15 @@
                                             <label>Estado</label>
                                             <select id="estadotxt" class="form-control">
                                                 <option>Seleccionar</option>
-                                                <%
-                                                    DaoEstado daoEstado= new DaoEstado();
-                                                    for(Estado estado: daoEstado.listAll()){
-                                                %> 
-                                                <option value=<%= estado.getIdEstado() %>> <%= estado.getDescripcion() %></option>  
-                                                <%}%>
+                                                    <%                                                
+                                                    for(Object objectName: listObject.getListArrayObject(new Estado(), "Estado")){
+                                                    List<Object> objectArray = (List<Object>)objectName;                                                   
+                                                   %>  
+                                        
+                                                <option name="option" value=<%= objectArray.get(0) %>><%= objectArray.get(1) %>  </option>      
+                                                <%}%>   
+                                                
+                                               
                                             </select>
                                         </div> <!-- /.Impacto -->  
                                 </div>
@@ -1291,111 +1624,30 @@
                  <!-- /.modal Analista-->
                  
                  <!-- Modal Estado -->
-                 <div style="display: none;" class="modal fade" id="myModalEstado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            <h4 class="modal-title" id="myModalLabel">Agregar Estado</h4>
-                                        </div>
-                                        
-                                   
-                                        
-                        <div class="modal-body">
-                                          
-                        <div class="panel panel-default">
-                                     
-                          <!-- /.panel-body -->
-                          <div class="panel-body">
-                            
-                            <div class="row">                            
-                                <div class="col-xs-6">
-                                    <div class="form-group">
-                                            <label>Descripcion</label>
-                                            <input class="form-control" name="estadoNombreTxt" id="estadoNombreTxt" placeholder="Nombre">
-                                    </div>
-                                </div>
-                            
-                            </div><!-- /.Descripcion -->  
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                <button id="guardarEstado" type="button" class="btn btn-primary">Guardar</button>                             
-                                <button type="button" class="btn btn-primary " id="myBtnEstadoShow" >Crear</button>
-                            </div>
-                            <div class="modal-footer">
-                                <table id="table_estado" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
-                                          
-                                             <thead>
-                                                <tr>
-                                                <th>Id</th>
-                                                <th>Estado</th>
-                                                <th></th>
-                                                <th></th>
-                                                </tr>
-                                             </thead>
-                                             
-                                </table>
-                            </div>
-                     </div>
-                                            
-                    </div>    
-                                    </div>
-                                    <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                 </div>   
+                 <div id="divEstado"></div> 
                  <!-- /.modal Estado-->
                  
-                   <!-- Modal Impacto -->
-                 <div style="display: none;" class="modal fade" id="myModalImpacto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div id="divImpacto"></div>
-                                        
-                                   
-                                        
-                        <div class="modal-body">
-                                          
-                        <div class="panel panel-default">
-                                     
-                          <!-- /.panel-body -->
-                          <div class="panel-body">
-                            
-                            <div class="row">                            
-                                <div class="col-xs-6">
-                                    <div class="form-group">
-                                            <label>Descripcion</label>
-                                            <input class="form-control" name="impactoNombreTxt" id="impactoNombreTxt" placeholder="Nombre">
-                                    </div>
-                                </div>
-                            
-                            </div><!-- /.Descripcion -->  
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                <button id="guardarImpacto" type="button" class="btn btn-primary">Guardar</button>                             
-                                <button type="button" class="btn btn-primary " id="myBtnImpactoShow" >Crear</button>
-                            </div>
-                            <div class="modal-footer">
-                                <table id="table_impacto" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
-                                          
-                                             <thead>
-                                                <tr>
-                                                <th>Id</th>
-                                                <th>Impacto</th>
-                                                <th></th>
-                                                <th></th>
-                                                </tr>
-                                             </thead>
-                                             
-                                </table>
-                            </div>
-                     </div>
-                                            
-                    </div>    
-                                    </div>
-                                    <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                 </div>   
-                 <!-- /.modal Estado-->
+                 <!-- Modal Impacto -->
+                 <div id="divImpacto"></div> 
+                 <!-- /.modal Impacto-->
+                 
+                 
+                   <!-- Modal Modulos -->
+                 <div id="divModulo"></div> 
+                 <!-- /.modal Modulos-->
+                 
+                    <!-- Modal Servicio -->
+                 <div id="divServicio"></div> 
+                 <!-- /.modal Servicio-->
+                 
+                 
+                    <!-- Modal Servidor -->
+                 <div id="divServidor"></div> 
+                 <!-- /.modal Servidor-->
+                 
+                    <!-- Modal ServicioModulo -->
+                 <div id="divServicioModulo"></div> 
+                 <!-- /.modal ServicioModulo-->
              
              
                 </div>

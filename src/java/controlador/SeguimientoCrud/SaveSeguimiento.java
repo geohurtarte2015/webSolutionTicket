@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador;
+package controlador.SeguimientoCrud;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import controlador.Fecha;
 import dao.DaoTicket;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,7 +33,7 @@ import structuras.DataTableObject;
  * @author Giovanni
  */
 @WebServlet(name = "ServletGuardarSeguimiento", urlPatterns = {"/ServletGuardarSeguimiento"})
-public class ServletGuardarSeguimiento extends HttpServlet {
+public class SaveSeguimiento extends HttpServlet {
 
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -63,33 +64,33 @@ public class ServletGuardarSeguimiento extends HttpServlet {
                 daoTicket.addSeguimiento(idTicket, seguimientoTicket);  
             }
     
-            response.setContentType("application/json");
-            
-            Ticket ticket = daoTicket.getByIdObject(idTicket);
-            List<Seguimiento> seguimientos = ticket.getSeguimientos(); 
-            DataTableObject dataTableObject = new DataTableObject();
+//            response.setContentType("application/json");
+//            
+//            Ticket ticket = daoTicket.getByIdObject(idTicket);
+//            List<Seguimiento> seguimientos = ticket.getSeguimientos(); 
+//            DataTableObject dataTableObject = new DataTableObject();
             
             //Se crea nueva Lista de objetos "objectSeguimientos" para solo incluir las propiedades Id, Fecha y Descripcion, 
             //ya que Gson no reconoce la lista de seguimientos por tener la propiedad de <Tickets> en su clase
-            List<Object> objectSeguimientos = new ArrayList<>();
-            
-            for (Iterator seguimientoIterator = seguimientos.iterator(); 
-                 seguimientoIterator.hasNext();
-                )
-            {
-            Seguimiento seguimiento = (Seguimiento) seguimientoIterator.next(); 
-            List<Object> object = new ArrayList<>();            
-            object.add(seguimiento.getId());
-            object.add(seguimiento.getFecha());
-            object.add(seguimiento.getDescripcion());
-            objectSeguimientos.add(object);
-            }
-            
-            dataTableObject.setAaData(objectSeguimientos);     
-            
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(dataTableObject);
-            out.print(json);
+//            List<Object> objectSeguimientos = new ArrayList<>();
+//            
+//            for (Iterator seguimientoIterator = seguimientos.iterator(); 
+//                 seguimientoIterator.hasNext();
+//                )
+//            {
+//            Seguimiento seguimiento = (Seguimiento) seguimientoIterator.next(); 
+//            List<Object> object = new ArrayList<>();            
+//            object.add(seguimiento.getId());
+//            object.add(seguimiento.getFecha());
+//            object.add(seguimiento.getDescripcion());
+//            objectSeguimientos.add(object);
+//            }
+//            
+//            dataTableObject.setAaData(objectSeguimientos);     
+//            
+//            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//            String json = gson.toJson(dataTableObject);
+//            out.print(json);
             
                         
     }

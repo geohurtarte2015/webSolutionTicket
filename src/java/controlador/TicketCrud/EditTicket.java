@@ -1,38 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package controlador;
+
+package controlador.TicketCrud;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import static java.lang.System.out;
 import dao.DaoTicket;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import pojo.Analista;
-import pojo.Seguimiento;
 import pojo.Ticket;
 import structuras.DataTableObject;
 
 
+public class EditTicket extends HttpServlet {
 
 
-public class ServletGuardarTicket extends HttpServlet {
-    
-     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-     
+
     }
 
     @Override
@@ -41,7 +32,7 @@ public class ServletGuardarTicket extends HttpServlet {
         
             String json=null;
             
-            this.save(response, request);
+            this.edit(response, request);
             
             json = this.listAll(response);
             out.print(json);  
@@ -94,8 +85,9 @@ public class ServletGuardarTicket extends HttpServlet {
         }
      
      
-     private void save(HttpServletResponse response,HttpServletRequest request) throws IOException{
+     private void edit(HttpServletResponse response,HttpServletRequest request) throws IOException{
         //TRAE LOS PARAMETROS ENVIADOS POR AJAX DESDE EL SERVLET
+            String idTicket = String.valueOf(request.getParameter("idTicket"));
             String titulo = String.valueOf(request.getParameter("titulo"));
             String idModulo = String.valueOf(request.getParameter("modulo"));
             String idServicio = String.valueOf(request.getParameter("servicio"));
@@ -117,7 +109,8 @@ public class ServletGuardarTicket extends HttpServlet {
          Ticket newTicket= new Ticket( titulo,  fechaInicio,  fechaFin,  descripcion,  causa,  solucion);    
         //Instancia de DAO
         DaoTicket daoTicket = new DaoTicket();  
-        resp=daoTicket.save(Integer.parseInt(idServidor), Integer.parseInt(idEstado), Integer.parseInt(idImpacto),Integer.parseInt(idRaiz), Integer.parseInt(idAnalista),Integer.parseInt(idServicioModulo),Integer.parseInt(idModulo),Integer.parseInt(idServicio),newTicket); 
+        Ticket ticket = new Ticket();
+        ticket=daoTicket.update(Integer.parseInt(idTicket),Integer.parseInt(idServidor), Integer.parseInt(idEstado), Integer.parseInt(idImpacto),Integer.parseInt(idRaiz), Integer.parseInt(idAnalista),Integer.parseInt(idServicioModulo),Integer.parseInt(idModulo),Integer.parseInt(idServicio),causa,descripcion,fechaFin,fechaInicio,solucion,titulo); 
         
         PrintWriter outHtml = response.getWriter(); 
         if(!resp.contains("ok")){
@@ -130,7 +123,7 @@ public class ServletGuardarTicket extends HttpServlet {
             }
             
         }else{
-            outHtml.println("Guardado");
+            outHtml.println("Modificado");
         }
             outHtml.close();
             

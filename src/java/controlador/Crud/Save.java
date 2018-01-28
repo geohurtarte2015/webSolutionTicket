@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador;
+package controlador.Crud;
 
 
 import dao.DaoGeneric;
@@ -60,10 +60,7 @@ public class Save extends HttpServlet {
             }
 
             DaoGeneric daoGeneric = new DaoGeneric();
-            daoGeneric.save(newObject);
-            ListObject listObject = new ListObject();
-            //out.print(listObject.objectStringJson(newObject, className));
-           response.getWriter().write(listObject.getObjectStringJson(newObject, className));
+            daoGeneric.save(newObject);   
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Save.class.getName()).log(Level.SEVERE, null, ex);

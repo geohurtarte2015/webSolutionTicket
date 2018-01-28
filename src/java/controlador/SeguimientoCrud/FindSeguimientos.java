@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador;
+package controlador.SeguimientoCrud;
 
 import structuras.DataTableObject;
 import com.google.gson.Gson;
@@ -23,7 +23,7 @@ import pojo.Seguimiento;
 import pojo.Ticket;
 
 
-public class ServletVerSeguimientos extends HttpServlet {
+public class FindSeguimientos extends HttpServlet {
     
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -44,16 +44,7 @@ public class ServletVerSeguimientos extends HttpServlet {
       if(valTicket.equals("null")|| valTicket.equals(null)|| valTicket==null){
           valTicket="0";
         }
-          
-        
-          
           int idTicket = Integer.parseInt(valTicket);
-        
-            //int idTicket = Integer.parseInt(request.getParameter("idTicketSel"));
-            //temporal
-            
-            
-            
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();           
             DaoTicket daoTicket = new DaoTicket();  

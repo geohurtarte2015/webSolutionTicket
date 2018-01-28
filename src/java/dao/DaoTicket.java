@@ -73,9 +73,10 @@ public class DaoTicket {
         sesion.persist(servicioModulo);
         sesion.persist(modulo);
         sesion.persist(servicio);  
-        sesion.persist(ticket);
+        sesion.persist(ticket);   
         tx.commit();
         resp="ok";
+       
     
     }catch(HibernateException he)
     {
@@ -87,8 +88,10 @@ public class DaoTicket {
     
     } finally
     {
-                
-        sesion.close();
+  
+        sesion.close();   
+       
+ 
     
     }
     
@@ -106,6 +109,8 @@ public class DaoTicket {
       
        } finally
        {
+        tx.commit();
+        sesion.clear();
         sesion.close();
         
        }
@@ -130,7 +135,9 @@ public class DaoTicket {
        
        } finally {
            
-           sesion.close();
+             tx.commit();
+             sesion.clear();
+             sesion.close();
        }
        
        
@@ -169,7 +176,7 @@ public class DaoTicket {
            //ticket.getSeguimientos().set(idRaiz);
 
            sesion.update(ticket);
-           tx.commit();
+           
        }catch(HibernateException he){
        
         trueExcepcion(he); 
@@ -177,7 +184,9 @@ public class DaoTicket {
        
        } finally {
            
-           sesion.close();
+             tx.commit();
+             sesion.clear();
+             sesion.close();
        }
        
        
@@ -193,6 +202,7 @@ public class DaoTicket {
            ticket = (Ticket) sesion.get(Ticket.class, idTicket);                    
            sesion.delete(ticket);
            tx.commit();
+   
            
        }catch(HibernateException he){
        
@@ -201,7 +211,9 @@ public class DaoTicket {
        
        } finally {
            
-           sesion.close();
+             
+             sesion.clear();
+             sesion.close();
        }
        
        
@@ -229,6 +241,7 @@ public class DaoTicket {
        } finally
        {
                 
+            sesion.clear();
             sesion.close();
     
        }
