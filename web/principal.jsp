@@ -112,6 +112,7 @@
       appendText("Servicio");
       appendText("ServicioModulo");
       appendText("Servidor");
+      appendText("Raiz");
         
      //INICIALIZACION DEL DATA_TABLE SEGUIMIENTOS "table_seguimientos"
      var t= $('#table_seguimientos').DataTable( {
@@ -412,6 +413,42 @@
                         }
                         ]
                     });
+     
+       //INICIALIZACION DEL DATA_TABLE SERVICIO MODULO "table_serviciomodulo
+     var tableRaiz= $('#table_raiz').DataTable( {
+                    "ajax" : {
+                        "url": "Show",
+                        "type": "GET",
+                        "data" : function(d){                            
+                            d.className = "Raiz";
+                            d.limitFields = "0";
+                            }
+                    },                   
+                    "global" : false,
+                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
+                    "dataType" : "json",
+                    "columns" : [
+                     {"title": "Id"},
+                     {"title": "ServicioModulo"},                     
+                     {"title": ""},
+                     {"title": ""}
+                    ],
+                    "columnDefs": [ {
+                        "targets": 2,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogRaiz' id='seleccionarRaiz'>"+                          
+                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        },
+                        {
+                        "targets": 3,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogRaiz2' id='eliminarRaiz'>"+                          
+                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        }
+                        ]
+                    });
                     
                     
       //Seleccion de Ticket   
@@ -685,6 +722,36 @@
           var request = "Save";
           var message = "Servicio Modulo guardado";
           requestAjax(array,className,request,message,tableName);
+        }); 
+        
+        //Seleccion de Raiz   
+     $('#table_raiz tbody').on( 'click','#seleccionarRaiz', function () {
+                    var dataRaiz = tableRaiz.row( $(this).parents('tr') ).data();
+                    idRaiz=dataRaiz[0];  
+                    raizNombreTxt.value=dataRaiz[1];
+               } );
+               
+      //Eliminacion de Raiz
+     $('#table_raiz tbody').on( 'click','#eliminarRaiz', function () {                  
+            var dataEliminarRaiz = tableRaiz.row( $(this).parents('tr') ).data();
+            id=dataEliminarRaiz[0];  
+            var tableName = tableRaiz;
+            var array = [id];
+            var className = "Raiz";
+            var request = "Delete";
+            var message = "Servicio Raiz eliminado";
+            requestAjax(array,className,request,message,tableName);
+        } );  
+               
+      //Guardar Raiz
+      $("#guardarRaiz").click(function(){ 
+          raizNombre=$('#raizNombreTxt').val();  
+          var tableName = tableRaiz;
+          var array = [raizNombre];
+          var className = "Raiz";
+          var request = "Save";
+          var message = "Raiz guardado";
+          requestAjax(array,className,request,message,tableName);
         });  
       
    
@@ -736,7 +803,7 @@
            servicioModulo=$('select[id=serviciomodulotxt]').val();           
            nombreServidor=$('select[id=nombreservidortxt]').val();           
            impacto=$('select[id=impactotxt]').val();
-           estado=$('select[id=vestadotxt]').val();       
+           estado=$('select[id=estadotxt]').val();       
            analista =<%=String.valueOf(id)%>;   
            fechaInicio=$('#fechainiciotxt').val();
            fechaFin=$('#fechafinaltxt').val();
@@ -1137,6 +1204,9 @@
                                 </li>
                                 <li>
                                     <a href="#" data-toggle="modal" data-target="#myModalServidor" data-backdrop="static" data-keyboard="false">Servidores</a>
+                                </li>
+                                <li>
+                                    <a href="#" data-toggle="modal" data-target="#myModalRaiz" data-backdrop="static" data-keyboard="false">Raiz</a>
                                 </li>
                               </ul>
                         </li>
@@ -1645,9 +1715,13 @@
                  <div id="divServidor"></div> 
                  <!-- /.modal Servidor-->
                  
-                    <!-- Modal ServicioModulo -->
+                 <!-- Modal ServicioModulo -->
                  <div id="divServicioModulo"></div> 
                  <!-- /.modal ServicioModulo-->
+                 
+                 <!-- Modal Raiz -->
+                 <div id="divRaiz"></div> 
+                 <!-- /.modal Raiz-->
              
              
                 </div>
