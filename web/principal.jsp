@@ -90,15 +90,18 @@
      var idAnalista;
      var idTicketUpdate;
      
+    
+     
      var transaccion;
      
      var valAnalista = $('#idAnalista').html();
      
-      function appendText(title) {        
+
+      function appendText(title,tableObjectN) {        
         div="#div"+title;  
         nameModal="myModal"+title;
         lowerCaseTitle=title.toLowerCase();
-        var varDiv = $('<div style="display: none;" class="modal fade" id="'+nameModal+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar '+title+'</h4> </div><div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body --> <div class="panel-body"> <div class="row"> <div class="col-xs-6"> <div class="form-group"> <label>Descripcion</label> <input class="form-control" name="'+lowerCaseTitle+'NombreTxt" id="'+lowerCaseTitle+'NombreTxt" placeholder="Nombre"> </div> </div>  </div><!-- /.Descripcion -->  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button id="guardar'+title+'" type="button" class="btn btn-primary">Guardar</button>  <button type="button" class="btn btn-primary " id="myBtn'+title+'Show" >Crear</button> </div> <!-- /.dataTable -->  <div class="modal-footer">  <table id="table_'+lowerCaseTitle+'" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  </div>  </div> </div>  </div>  <!-- /.modal-content -->  </div>  <!-- /.modal-dialog -->  </div> ');
+        var varDiv = $('<div style="display: none;" class="modal fade" id="'+nameModal+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar '+title+'</h4> </div><div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body --> <div class="panel-body"> <div class="row"> <div class="col-xs-6"> <div class="form-group"> <label>Descripcion</label> <input class="form-control" name="'+lowerCaseTitle+'NombreTxt" id="'+lowerCaseTitle+'NombreTxt" placeholder="Nombre"> </div> </div>  </div><!-- /.Descripcion -->  <button type="button"  class="btn btn-default" data-dismiss="modal">Cerrar</button> <button id="guardar'+title+'" type="button"  class="btn btn-primary">Guardar</button>  <button type="button" class="btn btn-primary " id="myBtn'+title+'Show" >Crear</button> </div> <!-- /.dataTable -->  <div class="modal-footer">  <table id="table_'+lowerCaseTitle+'" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  </div>  </div> </div>  </div>  <!-- /.modal-content -->  </div>  <!-- /.modal-dialog -->  </div> ');
         $(div).append(varDiv);
       }        
     
@@ -106,13 +109,17 @@
      
     $(document).ready(function() {
       
-      appendText("Impacto");
-      appendText("Estado");
-      appendText("Modulo");
-      appendText("Servicio");
-      appendText("ServicioModulo");
-      appendText("Servidor");
-      appendText("Raiz");
+     
+    
+     appendText("Impacto");
+     appendText("Estado");
+     appendText("Modulo");
+     appendText("Servicio");
+     appendText("ServicioModulo");
+     appendText("Servidor");
+     appendText("Raiz");
+     appendText("Grupo");
+      
         
      //INICIALIZACION DEL DATA_TABLE SEGUIMIENTOS "table_seguimientos"
      var t= $('#table_seguimientos').DataTable( {
@@ -196,7 +203,7 @@
                                           "</a></center>"
                         }
                         ]
-                    });
+                    }); 
                     
      //INICIALIZACION DEL DATA_TABLE ESTADO "table_estado
      var tableEstado= $('#table_estado').DataTable( {
@@ -449,7 +456,43 @@
                         }
                         ]
                     });
+     
+     var tableGrupo= $('#table_grupo').DataTable( {
+                    "ajax" : {
+                        "url": "Show",
+                        "type": "GET",
+                        "data" : function(d){                            
+                            d.className = "Grupo";
+                            d.limitFields = "0";
+                            }
+                    },                   
+                    "global" : false,
+                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
+                    "dataType" : "json",
+                    "columns" : [
+                     {"title": "Id"},
+                     {"title": "ServicioGrupo"},                     
+                     {"title": ""},
+                     {"title": ""}
+                    ],
+                    "columnDefs": [ {
+                        "targets": 2,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogGrupo' id='seleccionarGrupo'>"+                          
+                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        },
+                        {
+                        "targets": 3,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogGrupo2' id='eliminarGrupo'>"+                          
+                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        }
+                        ]
+                    });
                     
+       
                     
       //Seleccion de Ticket   
      $('#table_ticket_show tbody').on( 'click','#editaricon', function () {
@@ -538,221 +581,144 @@
                 requestAjax(array,className,request,message,tableName);
                 });
       
-      //Seleccion de Estado   
-     $('#table_estado tbody').on( 'click','#seleccionarEstado', function () {
-                   
-                    var dataEstado = tableEstado.row( $(this).parents('tr') ).data();
-                    idEstado=dataEstado[0];  
-                    estadoNombreTxt.value=dataEstado[1];
-               } );
-               
-      //Eliminacion de Estado
-     $('#table_estado tbody').on( 'click','#eliminarEstado', function () {                  
-            var dataEliminarEstado = tableEstado.row( $(this).parents('tr') ).data();
-            id=dataEliminarEstado[0];   
-            var tableName = tableEstado;
-            var array = [id];
-            var className = "Estado";
-            var request = "Delete";
-            var message = "Estado eliminado";
-            requestAjax(array,className,request,message,tableName);
-        } );  
-               
-      //Guardar Estado
-      $("#guardarEstado").click(function(){ 
-          estadoNombre=$('#estadoNombreTxt').val();  
-          var tableName = tableEstado;
-          var array = [estadoNombre];
-          var className = "Estado";
-          var request = "Save";
-          var message = "Estado guardado";
-          requestAjax(array,className,request,message,tableName);
-        });
-        
-      //Seleccion de Impacto   
-     $('#table_impacto tbody').on( 'click','#seleccionarImpacto', function () {
-                   
-                    var dataImpacto = tableImpacto.row( $(this).parents('tr') ).data();
-                    idImpacto=dataImpacto[0];  
-                    impactoNombreTxt.value=dataImpacto[1];
-               } );
-               
-      //Eliminacion de Impacto
-     $('#table_impacto tbody').on( 'click','#eliminarImpacto', function () {                  
-            var dataEliminarImpacto = tableImpacto.row( $(this).parents('tr') ).data();
-            id=dataEliminarImpacto[0];  
-            var tableName = tableImpacto;
-            var array = [id];
-            var className = "Impacto";
-            var request = "Delete";
-            var message = "Impacto eliminado";
-            requestAjax(array,className,request,message,tableName);
-        } );  
-               
-      //Guardar Impacto
-      $("#guardarImpacto").click(function(){ 
-          impactoNombre=$('#impactoNombreTxt').val();  
-          var tableName = tableImpacto;
-          var array = [impactoNombre];
-          var className = "Impacto";
-          var request = "Save";
-          var message = "Impacto guardado";
-          requestAjax(array,className,request,message,tableName);
+
+     //Guardar   
+     $("#guardarServidor").click(function(){ 
+            guardar("Servidor",tableServidor);
+      });
+     $("#guardarRaiz").click(function(){ 
+            guardar("Raiz",tableRaiz);
+      }); 
+     $("#guardarServicioModulo").click(function(){ 
+          guardar("ServicioModulo",tableServicioModulo)
         });  
-        
-       //Seleccion de Modulo   
-     $('#table_modulo tbody').on( 'click','#seleccionarModulo', function () {
-                   
-                    var dataModulo = tableModulo.row( $(this).parents('tr') ).data();
-                    idModulo=dataModulo[0];  
-                    moduloNombreTxt.value=dataModulo[1];
-               } );
-               
-      //Eliminacion de Modulo
-     $('#table_modulo tbody').on( 'click','#eliminarModulo', function () {                  
-            var dataEliminarModulo = tableModulo.row( $(this).parents('tr') ).data();
-            id=dataEliminarModulo[0];  
-            var tableName = tableModulo;
-            var array = [id];
-            var className = "Modulo";
-            var request = "Delete";
-            var message = "Modulo eliminado";
-            requestAjax(array,className,request,message,tableName);
-        } );  
-               
-      //Guardar Modulo
-      $("#guardarModulo").click(function(){ 
-          moduloNombre=$('#moduloNombreTxt').val();  
-          var tableName = tableModulo;
-          var array = [moduloNombre];
-          var className = "Modulo";
-          var request = "Save";
-          var message = "Modulo guardado";
-          requestAjax(array,className,request,message,tableName);
+     $("#guardarServicio").click(function(){ 
+          guardar("Servicio",tableServicio)
         });  
-        
-      //Seleccion de Servicio   
-     $('#table_servicio tbody').on( 'click','#seleccionarServicio', function () {
-                   
-                    var dataServicio = tableServicio.row( $(this).parents('tr') ).data();
-                    idServicio=dataServicio[0];  
-                    servicioNombreTxt.value=dataServicio[1];
-               } );
-               
-      //Eliminacion de Servicio
-     $('#table_servicio tbody').on( 'click','#eliminarServicio', function () {                  
-            var dataEliminarServicio = tableServicio.row( $(this).parents('tr') ).data();
-            id=dataEliminarServicio[0];  
-            var tableName = tableServicio;
-            var array = [id];
-            var className = "Servicio";
-            var request = "Delete";
-            var message = "Servicio eliminado";
-            requestAjax(array,className,request,message,tableName);
-        } );  
-               
-      //Guardar Servidor
-      $("#guardarServicio").click(function(){ 
-          servicioNombre=$('#servicioNombreTxt').val();  
-          var tableName = tableServicio;
-          var array = [servicioNombre];
-          var className = "Servicio";
-          var request = "Save";
-          var message = "Servicio guardado";
-          requestAjax(array,className,request,message,tableName);
-        }); 
-        
-     //Seleccion de Servidor   
-     $('#table_servidor tbody').on( 'click','#seleccionarServidor', function () {
-                   
-                    var dataServidor = tableServidor.row( $(this).parents('tr') ).data();
-                    idServidor=dataServidor[0];  
-                    servidorNombreTxt.value=dataServidor[1];
-               } );
-               
-      //Eliminacion de Servidor
+     $("#guardarModulo").click(function(){ 
+          guardar("Modulo",tableModulo)
+        });  
+     $("#guardarImpacto").click(function(){ 
+          guardar("Impacto",tableImpacto)
+        });    
+     $("#guardarEstado").click(function(){ 
+          guardar("Estado",tableEstado)
+        });   
+     $("#guardarGrupo").click(function(){ 
+          guardar("Grupo",tableGrupo)
+        });   
+       
+      
+     //Eliminar
      $('#table_servidor tbody').on( 'click','#eliminarServidor', function () {                  
-            var dataEliminarServidor = tableServidor.row( $(this).parents('tr') ).data();
-            id=dataEliminarServidor[0];  
-            var tableName = tableServidor;
-            var array = [id];
-            var className = "Servidor";
-            var request = "Delete";
-            var message = "Servidor eliminado";
-            requestAjax(array,className,request,message,tableName);
+            var dataEliminar = tableServidor.row( $(this).parents('tr') ).data();
+            eliminar("Servidor",tableServidor,dataEliminar);
+        } );         
+     $('#table_raiz tbody').on( 'click','#eliminarRaiz', function () {    
+               var dataEliminar = tableRaiz.row( $(this).parents('tr') ).data();
+            eliminar("Raiz",tableRaiz,dataEliminar);
         } );  
-               
-      //Guardar Servidor
-      $("#guardarServidor").click(function(){ 
-          servidorNombre=$('#servidorNombreTxt').val();  
-          var tableName = tableServidor;
-          var array = [servidorNombre];
-          var className = "Servidor";
-          var request = "Save";
-          var message = "Servidor guardado";
-          requestAjax(array,className,request,message,tableName);
-        });  
+     $('#table_serviciomodulo tbody').on( 'click','#eliminarServicioModulo', function () {    
+            var dataEliminar = tableServicioModulo.row( $(this).parents('tr') ).data();
+            eliminar("ServicioModulo",tableServicioModulo,dataEliminar);
+        } );     
+     $('#table_servicio tbody').on( 'click','#eliminarServicio', function () {    
+            var dataEliminar = tableServicio.row( $(this).parents('tr') ).data();
+            eliminar("Servicio",tableServicio,dataEliminar);
+        } ); 
+     $('#table_modulo tbody').on( 'click','#eliminarModulo', function () {    
+            var dataEliminar = tableModulo.row( $(this).parents('tr') ).data();
+            eliminar("Modulo",tableModulo,dataEliminar)
+        } );  
+     $('#table_impacto tbody').on( 'click','#eliminarImpacto', function () {    
+            var dataImpacto = tableImpacto.row( $(this).parents('tr') ).data();
+            eliminar("Impacto",tableImpacto,dataImpacto);
+        } );
+     $('#table_estado tbody').on( 'click','#eliminarEstado', function () {    
+            var dataEstado = tableEstado.row( $(this).parents('tr') ).data();
+            eliminar("Estado",tableEstado,dataEstado);
+        } ); 
+     $('#table_grupo tbody').on( 'click','#eliminarGrupo', function () {    
+            var dataGrupo = tableGrupo.row( $(this).parents('tr') ).data();
+            eliminar("Grupo",tableGrupo,dataGrupo);
+        } );   
         
-       //Seleccion de ServicioModulo   
+        
+        
+     //Seleccion   
      $('#table_servidor tbody').on( 'click','#seleccionarServidor', function () {
-                   
-                    var dataServidor = tableServidor.row( $(this).parents('tr') ).data();
-                    idServidor=dataServidor[0];  
-                    servidorNombreTxt.value=dataServidor[1];
-               } );
-               
-      //Eliminacion de ServicioModulo
-     $('#table_serviciomodulo tbody').on( 'click','#eliminarServicioModulo', function () {                  
-            var dataEliminarServicioModulo = tableServicioModulo.row( $(this).parents('tr') ).data();
-            id=dataEliminarServicioModulo[0];  
-            var tableName = tableServicioModulo;
-            var array = [id];
-            var className = "ServicioModulo";
-            var request = "Delete";
-            var message = "Servicio Modulo eliminado";
-            requestAjax(array,className,request,message,tableName);
-        } );  
-               
-      //Guardar ServicioModulo
-      $("#guardarServicioModulo").click(function(){ 
-          servicioModuloNombre=$('#serviciomoduloNombreTxt').val();  
-          var tableName = tableServicioModulo;
-          var array = [servicioModuloNombre];
-          var className = "ServicioModulo";
-          var request = "Save";
-          var message = "Servicio Modulo guardado";
-          requestAjax(array,className,request,message,tableName);
-        }); 
-        
-        //Seleccion de Raiz   
+          var dataEliminar = tableServidor.row( $(this).parents('tr') ).data();
+          seleccion("Servidor",tableServidor,dataEliminar,dataEliminar)
+     } );     
      $('#table_raiz tbody').on( 'click','#seleccionarRaiz', function () {
-                    var dataRaiz = tableRaiz.row( $(this).parents('tr') ).data();
-                    idRaiz=dataRaiz[0];  
-                    raizNombreTxt.value=dataRaiz[1];
+           var dataEliminar = tableRaiz.row( $(this).parents('tr') ).data();
+          seleccion("Raiz",tableRaiz,dataEliminar)
+     } );
+     $('#table_serviciomodulo tbody').on( 'click','#seleccionarServicioModulo', function () {
+           var dataEliminar = tableServicioModulo.row( $(this).parents('tr') ).data();
+          seleccion("Raiz",tableRaiz,dataEliminar)
+     } );
+     $('#table_servicio tbody').on( 'click','#seleccionarServicio', function () {
+           var dataEliminar = tableServicio.row( $(this).parents('tr') ).data();
+          seleccion("Servicio",tableServicio,dataEliminar);
+     } );
+     $('#table_modulo tbody').on( 'click','#seleccionarModulo', function () {
+              var dataEliminar = tableModulo.row( $(this).parents('tr') ).data();
+              seleccion("Modulo",tableModulo,dataEliminar);
                } );
-               
-      //Eliminacion de Raiz
-     $('#table_raiz tbody').on( 'click','#eliminarRaiz', function () {                  
-            var dataEliminarRaiz = tableRaiz.row( $(this).parents('tr') ).data();
-            id=dataEliminarRaiz[0];  
-            var tableName = tableRaiz;
-            var array = [id];
-            var className = "Raiz";
-            var request = "Delete";
-            var message = "Servicio Raiz eliminado";
-            requestAjax(array,className,request,message,tableName);
-        } );  
-               
-      //Guardar Raiz
-      $("#guardarRaiz").click(function(){ 
-          raizNombre=$('#raizNombreTxt').val();  
-          var tableName = tableRaiz;
-          var array = [raizNombre];
-          var className = "Raiz";
+     $('#table_impacto tbody').on( 'click','#seleccionarImpacto', function () {
+              var dataEliminar = tableImpacto.row( $(this).parents('tr') ).data();
+              seleccion("Impacto",tableImpacto,dataEliminar);
+               } );
+     $('#table_estado tbody').on( 'click','#seleccionarEstado', function () {
+              var dataEliminar = tableEstado.row( $(this).parents('tr') ).data();
+              seleccion("Estado",tableEstado,dataEliminar);
+               } );
+     $('#table_grupo tbody').on( 'click','#seleccionarGrupo', function () {
+              var dataEliminar = tableGrupo.row( $(this).parents('tr') ).data();
+              seleccion("Grupo",tableGrupo,dataEliminar);
+               } );
+      
+      
+        
+      function guardar(nameObject,tableObject){
+          text="#"+nameObject.toLowerCase()+"NombreTxt";
+          nameObjectGlobal=nameObject;
+          tableBody="#table_"+nameObject.toLowerCase()+" tbody";  
+            
+          dataNombre=$(text).val();  
+          var tableName = tableObject;
+          var array = [dataNombre];
+          var className = nameObjectGlobal;
           var request = "Save";
-          var message = "Raiz guardado";
+          var message = nameObject+" "+"guardado";
           requestAjax(array,className,request,message,tableName);
-        });  
+            
+            
+        }
+        
+      function eliminar(nameObject,tableObject,idArray){
+            text="#"+nameObject.toLowerCase()+"NombreTxt";
+            nameObjectGlobal=nameObject;
+            tableBody="#table_"+nameObject.toLowerCase()+" tbody";  
+            id=idArray[0];  
+            var tableName = tableObject;
+            var array = [id];
+            var className = nameObject;
+            var request = "Delete";
+            var message = nameObject+" eliminado";
+            requestAjax(array,className,request,message,tableName);
+            
+            
+        }
+      
+      function seleccion(nameObject,tableObject,idArray){
+            text="#"+nameObject.toLowerCase()+"NombreTxt";
+            nameObjectGlobal=nameObject;   
+                    idRaiz=idArray[0];  
+                    $(text).val(idArray[1]);
+        }
+   
       
    
      //En la carga hecha en la ta seguimientos
@@ -914,7 +880,8 @@
                     size: 'small'
                     });
       }
-               
+     
+
    });
     
     </script>
@@ -1207,6 +1174,9 @@
                                 </li>
                                 <li>
                                     <a href="#" data-toggle="modal" data-target="#myModalRaiz" data-backdrop="static" data-keyboard="false">Raiz</a>
+                                </li>
+                                <li>
+                                    <a href="#" data-toggle="modal" data-target="#myModalGrupo" data-backdrop="static" data-keyboard="false">Grupo</a>
                                 </li>
                               </ul>
                         </li>
@@ -1663,10 +1633,27 @@
                                     </div>
                                 </div>
                             </div><!-- /.Usuario Contraseña -->  
+                            <div class="row">
+                                  <div class="col-xs-6">
+                                       <div class="form-group">
+                                          <label>Grupo</label>
+                                             <select id="estadotxt" class="form-control">
+                                                <option>Seleccionar</option>
+                                                 <%                                                
+                                                    for(Object objectName: listObject.getListArrayObject(new Estado(), "Grupo")){
+                                                    List<Object> objectArray = (List<Object>)objectName;                                                   
+                                                 %>  
+                                       
+                                                <option name="option" value=<%= objectArray.get(0) %>><%= objectArray.get(1) %>  </option>      
+                                                <%}%>   
+                                             </select>
+                                        </div> <!-- /.Impacto -->  
+                                   </div>
+                             </div>
                              
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                 <button id="guardarAnalista" type="button" class="btn btn-primary">Guardar</button>                             
-                                <button type="button" class="btn btn-primary " id="myBtnAnalistaShow" >Crear</button>
+                                <button type="button" class="btn btn-primary " id="myBtnAnalistaShow" >Crear Grupo</button>
                             </div>
                             <div class="modal-footer">
                                 <table id="table_analista" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
@@ -1721,6 +1708,10 @@
                  
                  <!-- Modal Raiz -->
                  <div id="divRaiz"></div> 
+                 <!-- /.modal Raiz-->
+                 
+                 <!-- Modal Raiz -->
+                 <div id="divGrupo"></div> 
                  <!-- /.modal Raiz-->
              
              

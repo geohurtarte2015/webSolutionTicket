@@ -89,6 +89,11 @@ public class Ticket {
     public Raiz raiz;
     
     
+    @ManyToOne(optional = false)
+    @JoinColumn(name="ID_AGENCIA")
+    public Agencia agencia;
+    
+    
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "TICKET_SEGUIMIENTO", 
         joinColumns = { @JoinColumn(name = "ID_TICKET") }, 

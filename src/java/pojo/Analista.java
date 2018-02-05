@@ -7,11 +7,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="ANALISTA")
 public class Analista implements Serializable {
+
+  
     
     
     @Id
@@ -29,7 +33,13 @@ public class Analista implements Serializable {
     public String usuario;
     
     @Column(name="PASSWORD")
-    public String password;
+    public String password;    
+     
+    @ManyToOne(optional = false)
+    @JoinColumn(name="ID_GRUPO")
+    private Grupo grupo;  
+    
+    
     
     public Analista() {
  
@@ -97,6 +107,16 @@ public class Analista implements Serializable {
     
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
     }
     
     

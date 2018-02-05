@@ -23,5 +23,8 @@
         <mapping class="pojo.ServicioModulo"/>
         <mapping class="pojo.Seguimiento"/>    
         <mapping class="pojo.Ticket"/>         
+        <mapping class="pojo.Interfaz"/>  
+        <mapping class="pojo.Agencia"/>  
+        <mapping class="pojo.Grupo"/> 
     </session-factory>
 </hibernate-configuration>
