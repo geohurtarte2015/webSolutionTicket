@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import pojo.Analista;
+import pojo.Grupo;
 import structuras.ListObject;
 
 
@@ -43,23 +44,47 @@ public class Save extends HttpServlet {
             throws ServletException, IOException {
         
         try {
+            DaoGeneric daoGeneric = new DaoGeneric();
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
+            Constructor<?> constructorRelation = null;
+            Object newObjectRelation = null; 
+            Class<?> classObjectRelationObject = null;
+            boolean result=false;
 
             String className = String.valueOf(request.getParameter("className"));
+            String classNameRelation = String.valueOf(request.getParameter("classNameRelation"));
+            boolean undefined = "undefined".matches(classNameRelation);
             String[] parametersRequest = request.getParameterValues("array[]");
             int sizeParametersRequest = parametersRequest.length;
 
             Class<?> classObject = Class.forName("pojo." + className);
+
+            
             Constructor<?> constructor = classObject.getConstructor();
             Object newObject = constructor.newInstance();
+            
+            if(!undefined){
+            classObjectRelationObject = Class.forName("pojo." + classNameRelation);
+            constructorRelation = classObjectRelationObject.getConstructor();
+            newObjectRelation = constructorRelation.newInstance();
+            }
+            
             Field[] arrayObject = classObject.getFields();
 
+
             for (int index = 1; index <= sizeParametersRequest; index++) {
-                arrayObject[index].set(newObject, parametersRequest[index-1]);         
+                if(!undefined){
+                     result = classNameRelation.matches(arrayObject[index].getType().getSimpleName());
+                }
+                if(result){              
+                    newObjectRelation = daoGeneric.getByIdObject(Integer.parseInt(parametersRequest[index-1]), classObjectRelationObject);
+                    arrayObject[index].set(newObject, newObjectRelation);  
+                }else{
+                    arrayObject[index].set(newObject, parametersRequest[index-1]);  
+                }
             }
 
-            DaoGeneric daoGeneric = new DaoGeneric();
             daoGeneric.save(newObject);   
 
         } catch (ClassNotFoundException ex) {

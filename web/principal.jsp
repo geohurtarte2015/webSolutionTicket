@@ -180,6 +180,7 @@
                         "data" : function(d){
                             d.transaccion = "inicializar",
                             d.className = "Analista";
+                            d.relationName = ["Descripcion"],
                             d.limitFields = "0";
                             }
                     },
@@ -573,16 +574,19 @@
                 apellido=$('#txtapellido').val();
                 user=$('#txtuser').val();
                 password=$('#txtpassword').val();
+                grupoanalista=$('#grupoanalistatxt').val();
+                
                 var tableName = tableAnalista;
-                var array = [nombre,apellido,user,password];   
+                var array = [nombre,apellido,user,password,grupoanalista];   
                 var className = "Analista";
+                var classNameRelation = "Grupo";
                 var request = "Save";
                 var message = "Analista guardado";
-                requestAjax(array,className,request,message,tableName);
+                requestAjax(array,className,request,message,tableName,classNameRelation);
                 });
       
 
-     //Guardar   
+     //Guardar 
      $("#guardarServidor").click(function(){ 
             guardar("Servidor",tableServidor);
       });
@@ -862,7 +866,7 @@
           
       });      
       
-      function requestAjax(array,className,request,message,tableName){
+      function requestAjax(array,className,request,message,tableName,classNameRelation){
                     $.ajax({
                     type: "GET",
                     url: String(request),
@@ -870,7 +874,8 @@
                     async : false,
                     data: {
                         array: array,
-                        className:String(className)
+                        className:String(className),
+                        classNameRelation:String(classNameRelation)
                     }
                     });
                     
@@ -1637,7 +1642,7 @@
                                   <div class="col-xs-6">
                                        <div class="form-group">
                                           <label>Grupo</label>
-                                             <select id="estadotxt" class="form-control">
+                                             <select id="grupoanalistatxt" class="form-control">
                                                 <option>Seleccionar</option>
                                                  <%                                                
                                                     for(Object objectName: listObject.getListArrayObject(new Estado(), "Grupo")){

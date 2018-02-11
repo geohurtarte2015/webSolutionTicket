@@ -39,6 +39,8 @@ public class Show extends HttpServlet {
             response.setContentType("application/json");
             String className = String.valueOf(request.getParameter("className"));
             Integer limitFields = Integer.valueOf(request.getParameter("limitFields"));
+            String[] relationNameDescription = request.getParameterValues("relationName[]");
+            
             
             PrintWriter out = response.getWriter();
             ListObject listObject = new ListObject();

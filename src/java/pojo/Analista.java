@@ -37,7 +37,7 @@ public class Analista implements Serializable {
      
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_GRUPO")
-    private Grupo grupo;  
+    public Grupo grupo;  
     
     
     
@@ -45,13 +45,13 @@ public class Analista implements Serializable {
  
     }
     
-    public Analista(String nombre, String apellido, String usuario, String password) {
+    public Analista(String nombre, String apellido, String usuario, String password, Grupo grupo) {
         
         this.nombre=nombre;
         this.apellido=apellido;
         this.usuario=usuario;
         this.password=password;
- 
+        this.grupo=grupo;
     }
 
 
