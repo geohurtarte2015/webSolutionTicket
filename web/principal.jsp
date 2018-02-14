@@ -111,9 +111,9 @@
         var varDiv = $('<div style="display: none;" class="modal fade" id="'+nameModal+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar '+title+'</h4> </div><div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body --> <div class="panel-body"> <div class="row"> <div class="col-xs-6"> <div class="form-group"> <label>'+title+'</label> <input class="form-control" name="'+lowerCaseTitle+'NombreTxt" id="'+lowerCaseTitle+'NombreTxt" placeholder="Nombre"> </div> </div>  <div class="col-xs-6"> <div class="form-group"> <label>'+title2+'</label> <input class="form-control" name="'+lowerCaseTitle2+'NombreTxt" id="'+lowerCaseTitle2+'NombreTxt" placeholder="Nombre"> </div> </div>   </div>  <!-- /.Descripcion -->  <button type="button"  class="btn btn-default" data-dismiss="modal">Cerrar</button> <button id="guardar'+title+'" type="button"  class="btn btn-primary">Guardar</button>  <button type="button" class="btn btn-primary " id="myBtn'+title+'Show" >Crear</button> </div> <!-- /.dataTable -->  <div class="modal-footer">  <table id="table_'+lowerCaseTitle+'" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  </div>  </div> </div>  </div>  <!-- /.modal-content -->  </div>  <!-- /.modal-dialog -->  </div> ');
 
         $(div).append(varDiv);
-      }      
+      } 
+      
     
-     
      
     $(document).ready(function() {
     
@@ -125,6 +125,7 @@
      appendText("Servidor");
      appendText("Raiz");
      appendText("Grupo");
+     appendText("InterfazAgencia")
      appendText2("Agencia","Ip");
       
         
@@ -518,7 +519,9 @@
                      {"title": "Id"},
                      {"title": "Agencia"},                     
                      {"title": ""},
+                     {"title": ""},
                      {"title": ""}
+                     
                     ],
                     "columnDefs": [ {
                         "targets": 2,
@@ -532,6 +535,13 @@
                         "data": null,
                         "defaultContent": "<center><a href='#dialogAgencia2' id='eliminarAgencia'>"+                          
                                            "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        },
+                         {
+                        "targets": 4,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialog' id='seguimientosicon'  data-toggle='modal' data-target='#myModalSeguimiento' data-backdrop='static' data-keyboard='false'>"+                          
+                                           "<img  src='img/pencil.png' width='16' height='16'  border='0' />"+       
                                           "</a></center>"
                         }
                         ]
@@ -1605,7 +1615,7 @@
                  </div>
                  
                 <!-- Modal Seguimientos -->                            
-                 <div style="display: none;" class="modal fade" id="myModalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div style="display: none;" class="modal fade" id="myModalSeguimiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -1645,7 +1655,7 @@
                                     <!-- /.modal-content -->
                                 </div>
                                 <!-- /.modal-dialog -->
-                            </div>
+                </div>
                
                 <!-- Modal Analista -->
                  <div style="display: none;" class="modal fade" id="myModaAnalista" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1778,6 +1788,8 @@
                   <!-- Modal Agencia -->
                  <div id="divAgencia"></div> 
                  <!-- /.modal Agencia-->
+                 
+                 
              
              
                 </div>
