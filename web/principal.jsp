@@ -90,26 +90,32 @@
      var idAnalista;
      var idTicketUpdate;
      
-    
-     
      var transaccion;
      
      var valAnalista = $('#idAnalista').html();
      
 
-      function appendText(title,tableObjectN) {        
+      function appendText(title) {        
+        div="#div"+title;  
+        nameModal="myModal"+title;
+        lowerCaseTitle=title.toLowerCase();     
+        var varDiv = $('<div style="display: none;" class="modal fade" id="'+nameModal+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar '+title+'</h4> </div><div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body --> <div class="panel-body"> <div class="row"> <div class="col-xs-6"> <div class="form-group"> <label>'+title+'</label> <input class="form-control" name="'+lowerCaseTitle+'NombreTxt" id="'+lowerCaseTitle+'NombreTxt" placeholder="Nombre"> </div> </div> </div>  <!-- /.Descripcion -->  <button type="button"  class="btn btn-default" data-dismiss="modal">Cerrar</button> <button id="guardar'+title+'" type="button"  class="btn btn-primary">Guardar</button>  <button type="button" class="btn btn-primary " id="myBtn'+title+'Show" >Crear</button> </div> <!-- /.dataTable -->  <div class="modal-footer">  <table id="table_'+lowerCaseTitle+'" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  </div>  </div> </div>  </div>  <!-- /.modal-content -->  </div>  <!-- /.modal-dialog -->  </div> ');
+
+        $(div).append(varDiv);
+      }     
+      function appendText2(title,title2) {        
         div="#div"+title;  
         nameModal="myModal"+title;
         lowerCaseTitle=title.toLowerCase();
-        var varDiv = $('<div style="display: none;" class="modal fade" id="'+nameModal+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar '+title+'</h4> </div><div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body --> <div class="panel-body"> <div class="row"> <div class="col-xs-6"> <div class="form-group"> <label>Descripcion</label> <input class="form-control" name="'+lowerCaseTitle+'NombreTxt" id="'+lowerCaseTitle+'NombreTxt" placeholder="Nombre"> </div> </div>  </div><!-- /.Descripcion -->  <button type="button"  class="btn btn-default" data-dismiss="modal">Cerrar</button> <button id="guardar'+title+'" type="button"  class="btn btn-primary">Guardar</button>  <button type="button" class="btn btn-primary " id="myBtn'+title+'Show" >Crear</button> </div> <!-- /.dataTable -->  <div class="modal-footer">  <table id="table_'+lowerCaseTitle+'" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  </div>  </div> </div>  </div>  <!-- /.modal-content -->  </div>  <!-- /.modal-dialog -->  </div> ');
+        lowerCaseTitle2=title2.toLowerCase();  
+        var varDiv = $('<div style="display: none;" class="modal fade" id="'+nameModal+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar '+title+'</h4> </div><div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body --> <div class="panel-body"> <div class="row"> <div class="col-xs-6"> <div class="form-group"> <label>'+title+'</label> <input class="form-control" name="'+lowerCaseTitle+'NombreTxt" id="'+lowerCaseTitle+'NombreTxt" placeholder="Nombre"> </div> </div>  <div class="col-xs-6"> <div class="form-group"> <label>'+title2+'</label> <input class="form-control" name="'+lowerCaseTitle2+'NombreTxt" id="'+lowerCaseTitle2+'NombreTxt" placeholder="Nombre"> </div> </div>   </div>  <!-- /.Descripcion -->  <button type="button"  class="btn btn-default" data-dismiss="modal">Cerrar</button> <button id="guardar'+title+'" type="button"  class="btn btn-primary">Guardar</button>  <button type="button" class="btn btn-primary " id="myBtn'+title+'Show" >Crear</button> </div> <!-- /.dataTable -->  <div class="modal-footer">  <table id="table_'+lowerCaseTitle+'" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  </div>  </div> </div>  </div>  <!-- /.modal-content -->  </div>  <!-- /.modal-dialog -->  </div> ');
+
         $(div).append(varDiv);
-      }        
+      }      
     
      
      
     $(document).ready(function() {
-      
-     
     
      appendText("Impacto");
      appendText("Estado");
@@ -119,6 +125,7 @@
      appendText("Servidor");
      appendText("Raiz");
      appendText("Grupo");
+     appendText2("Agencia","Ip");
       
         
      //INICIALIZACION DEL DATA_TABLE SEGUIMIENTOS "table_seguimientos"
@@ -386,7 +393,7 @@
                         ]
                     });
                     
-      //INICIALIZACION DEL DATA_TABLE SERVICIO MODULO "table_serviciomodulo
+     //INICIALIZACION DEL DATA_TABLE SERVICIO MODULO "table_serviciomodulo
      var tableServicioModulo= $('#table_serviciomodulo').DataTable( {
                     "ajax" : {
                         "url": "Show",
@@ -422,7 +429,7 @@
                         ]
                     });
      
-       //INICIALIZACION DEL DATA_TABLE SERVICIO MODULO "table_serviciomodulo
+     //INICIALIZACION DEL DATA_TABLE SERVICIO MODULO "table_raiz"
      var tableRaiz= $('#table_raiz').DataTable( {
                     "ajax" : {
                         "url": "Show",
@@ -458,6 +465,7 @@
                         ]
                     });
      
+     //INICIALIZACION DEL DATA_TABLE SERVICIO MODULO "table_grupo"
      var tableGrupo= $('#table_grupo').DataTable( {
                     "ajax" : {
                         "url": "Show",
@@ -493,7 +501,41 @@
                         ]
                     });
                     
-       
+     //INICIALIZACION DEL DATA_TABLE SERVICIO MODULO "table_agencia"
+     var tableAgencia= $('#table_agencia').DataTable( {
+                    "ajax" : {
+                        "url": "Show",
+                        "type": "GET",
+                        "data" : function(d){                            
+                            d.className = "Agencia";
+                            d.limitFields = "0";
+                            }
+                    },                   
+                    "global" : false,
+                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
+                    "dataType" : "json",
+                    "columns" : [
+                     {"title": "Id"},
+                     {"title": "Agencia"},                     
+                     {"title": ""},
+                     {"title": ""}
+                    ],
+                    "columnDefs": [ {
+                        "targets": 2,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogAgencia' id='seleccionarAgencia'>"+                          
+                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        },
+                        {
+                        "targets": 3,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogAgencia2' id='eliminarAgencia'>"+                          
+                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        }
+                        ]
+                    });
                     
       //Seleccion de Ticket   
      $('#table_ticket_show tbody').on( 'click','#editaricon', function () {
@@ -610,7 +652,10 @@
         });   
      $("#guardarGrupo").click(function(){ 
           guardar("Grupo",tableGrupo)
-        });   
+        });  
+       $("#guardarAgencia").click(function(){ 
+          guardar("Agencia",tableAgencia)
+        });  
        
       
      //Eliminar
@@ -645,6 +690,10 @@
      $('#table_grupo tbody').on( 'click','#eliminarGrupo', function () {    
             var dataGrupo = tableGrupo.row( $(this).parents('tr') ).data();
             eliminar("Grupo",tableGrupo,dataGrupo);
+        } );
+     $('#table_agencia tbody').on( 'click','#eliminarAgencia', function () {    
+            var dataAgencia = tableAgencia.row( $(this).parents('tr') ).data();
+            eliminar("Agencia",tableGrupo,dataAgencia);
         } );   
         
         
@@ -681,6 +730,10 @@
      $('#table_grupo tbody').on( 'click','#seleccionarGrupo', function () {
               var dataEliminar = tableGrupo.row( $(this).parents('tr') ).data();
               seleccion("Grupo",tableGrupo,dataEliminar);
+               } );
+      $('#table_agencia tbody').on( 'click','#seleccionarAgencia', function () {
+              var dataEliminar = tableAgencia.row( $(this).parents('tr') ).data();
+              seleccion("Agencia",tableAgencia,dataEliminar);
                } );
       
       
@@ -1182,6 +1235,9 @@
                                 </li>
                                 <li>
                                     <a href="#" data-toggle="modal" data-target="#myModalGrupo" data-backdrop="static" data-keyboard="false">Grupo</a>
+                                </li>
+                                <li>
+                                    <a href="#" data-toggle="modal" data-target="#myModalAgencia" data-backdrop="static" data-keyboard="false">Agencia</a>
                                 </li>
                               </ul>
                         </li>
@@ -1715,9 +1771,13 @@
                  <div id="divRaiz"></div> 
                  <!-- /.modal Raiz-->
                  
-                 <!-- Modal Raiz -->
+                 <!-- Modal Grupo -->
                  <div id="divGrupo"></div> 
-                 <!-- /.modal Raiz-->
+                 <!-- /.modal Grupo-->
+                 
+                  <!-- Modal Agencia -->
+                 <div id="divAgencia"></div> 
+                 <!-- /.modal Agencia-->
              
              
                 </div>
