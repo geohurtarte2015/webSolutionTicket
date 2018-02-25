@@ -86,7 +86,8 @@
            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
        <![endif]-->
     <script>
-     var ticket;   
+     var ticket; 
+     var agencia;
      var idAnalista;
      var idTicketUpdate;
      
@@ -104,21 +105,10 @@
         div="#div"+title;  
         nameModal="myModal"+title;
         lowerCaseTitle=title.toLowerCase();     
-        var varDiv = $('<div style="display: none;" class="modal fade" id="'+nameModal+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar '+title+'</h4> </div><div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body --> <div class="panel-body"> <div class="row"> <div class="col-xs-6"> <div class="form-group"> <label>'+title+'</label> <input class="form-control" name="'+lowerCaseTitle+'NombreTxt" id="'+lowerCaseTitle+'NombreTxt" placeholder="Nombre"> </div> </div> </div>  <!-- /.Descripcion -->  <button type="button"  class="btn btn-default" data-dismiss="modal">Cerrar</button> <button id="guardar'+title+'" type="button"  class="btn btn-primary">Guardar</button>  <button type="button" class="btn btn-primary " id="myBtn'+title+'Show" >Crear</button> </div> <!-- /.dataTable -->  <div class="modal-footer">  <table id="table_'+lowerCaseTitle+'" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  </div>  </div> </div>  </div>  <!-- /.modal-content -->  </div>  <!-- /.modal-dialog -->  </div> ');
+        var varDiv = $('<div style="display: none;" class="modal fade" id="'+nameModal+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar '+title+'</h4> </div><div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body --> <div class="panel-body"> <div class="row"> <div class="col-xs-6"> <div class="form-group"> <label>'+title+'</label> <input class="form-control" name="'+lowerCaseTitle+'NombreTxt" id="'+lowerCaseTitle+'NombreTxt" placeholder="Nombre"> </div> </div> </div>  <!-- /.Descripcion -->  <button type="button"   class="btn btn-default" data-dismiss="modal">Cerrar</button> <button id="myBtnGuardar'+title+'" type="button"  class="btn btn-primary">Guardar</button>  <button type="button" class="btn btn-primary " id="myBtn'+title+'Show" >Crear</button> </div> <!-- /.dataTable -->  <div class="modal-footer">  <table id="table_'+lowerCaseTitle+'" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  </div>  </div> </div>  </div>  <!-- /.modal-content -->  </div>  <!-- /.modal-dialog -->  </div> ');
 
         $(div).append(varDiv);
       }     
-      
-      function appendText2(title,title2) {        
-        div="#div"+title;  
-        nameModal="myModal"+title;
-        lowerCaseTitle=title.toLowerCase();
-        lowerCaseTitle2=title2.toLowerCase();  
-        var varDiv = $('<div style="display: none;" class="modal fade" id="'+nameModal+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar '+title+'</h4> </div><div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body --> <div class="panel-body"> <div class="row"> <div class="col-xs-6"> <div class="form-group"> <label>'+title+'</label> <input class="form-control" name="'+lowerCaseTitle+'NombreTxt" id="'+lowerCaseTitle+'NombreTxt" placeholder="Nombre"> </div> </div>  <div class="col-xs-6"> <div class="form-group"> <label>'+title2+'</label> <input class="form-control" name="'+lowerCaseTitle2+'NombreTxt" id="'+lowerCaseTitle2+'NombreTxt" placeholder="Nombre"> </div> </div>   </div>  <!-- /.Descripcion -->  <button type="button"  class="btn btn-default" data-dismiss="modal">Cerrar</button> <button id="guardar'+title+'" type="button"  class="btn btn-primary">Guardar</button>  <button type="button" class="btn btn-primary " id="myBtn'+title+'Show" >Crear</button> </div> <!-- /.dataTable -->  <div class="modal-footer">  <table id="table_'+lowerCaseTitle+'" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  </div>  </div> </div>  </div>  <!-- /.modal-content -->  </div>  <!-- /.modal-dialog -->  </div> ');
-
-        $(div).append(varDiv);
-      } 
-      
     
      
     $(document).ready(function() {
@@ -130,11 +120,7 @@
      appendText("ServicioModulo");
      appendText("Servidor");
      appendText("Raiz");
-     appendText("Grupo");
-     appendText("InterfazAgencia")
-     appendText("Agencia");
-     appendModal("Agencia","Interfaz");
-     
+     appendText("Grupo");     
       
         
      //INICIALIZACION DEL DATA_TABLE SEGUIMIENTOS "table_seguimientos"
@@ -438,7 +424,7 @@
                         ]
                     });
      
-     //INICIALIZACION DEL DATA_TABLE SERVICIO MODULO "table_raiz"
+     //INICIALIZACION DEL DATA_TABLE RAIZ MODULO "table_raiz"
      var tableRaiz= $('#table_raiz').DataTable( {
                     "ajax" : {
                         "url": "Show",
@@ -474,7 +460,7 @@
                         ]
                     });
      
-     //INICIALIZACION DEL DATA_TABLE SERVICIO MODULO "table_grupo"
+     //INICIALIZACION DEL DATA_TABLE GRUPO MODULO "table_grupo"
      var tableGrupo= $('#table_grupo').DataTable( {
                     "ajax" : {
                         "url": "Show",
@@ -510,14 +496,14 @@
                         ]
                     });
                     
-     //INICIALIZACION DEL DATA_TABLE SERVICIO MODULO "table_agencia"
+     //INICIALIZACION DEL DATA_TABLE AGENCIA MODULO "table_agencia"
      var tableAgencia= $('#table_agencia').DataTable( {
                     "ajax" : {
                         "url": "Show",
                         "type": "GET",
                         "data" : function(d){                            
                             d.className = "Agencia";
-                            d.limitFields = "0";
+                            d.limitFields = "2";
                             }
                     },                   
                     "global" : false,
@@ -548,13 +534,50 @@
                          {
                         "targets": 4,
                         "data": null,
-                        "defaultContent": "<center><a href='#dialog' id='seguimientosicon'  data-toggle='modal' data-target='#myModalInterfaz' data-backdrop='static' data-keyboard='false'>"+                          
+                        "defaultContent": "<center><a href='#dialog' id='verInterfaz'  data-toggle='modal' data-target='#myModalInterfaz' data-backdrop='static' data-keyboard='false'>"+                          
                                            "<img  src='img/pencil.png' width='16' height='16'  border='0' />"+       
                                           "</a></center>"
                         }
                         ]
                     });
+     
+     var tableInterfaz= $('#table_interfaz').DataTable( {
+                    "ajax" : {
+                        "url": "FindInterface",
+                        "type": "GET",
+                        "data" : function(d){ 
+                            d.agencia = agencia;                     
+                            }
+                    },                   
+                    "global" : false,
+                    "lengthMenu": [[ 2, -1], [ 2,"All"]],
+                    "dataType" : "json",
+                    "columns" : [
+                     {"title": "Id"},
+                     {"title": "Descripcion"},                     
+                     {"title": "Ip"},
+                     {"title": ""},
+                     {"title": ""}                    
+                    ],
+                    "columnDefs": [ {
+                        "targets": 3,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogInterfaz' id='seleccionarInterfaz'>"+                          
+                                           "<img  src='img/lupa.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        },
+                        {
+                        "targets": 4,
+                        "data": null,
+                        "defaultContent": "<center><a href='#dialogInterfaz2' id='eliminarInterfaz'>"+                          
+                                           "<img  src='img/eliminar.png' width='16' height='16'  border='0' />"+       
+                                          "</a></center>"
+                        }
+                        ]
+                    });
                     
+     
+
       //Seleccion de Ticket   
      $('#table_ticket_show tbody').on( 'click','#editaricon', function () {
                    
@@ -644,34 +667,47 @@
                 var message = "Analista guardado";
                 requestAjax(array,className,request,message,tableName,classNameRelation);
                 });
+                
+     //Guardar Interfaz             
+     $("#myBtnGuardarInterfaz").click(function(){ 
+                interfaz=$('#interfazNombreTxt').val();
+                ip=$('#ipNombreTxt').val();                
+                var tableName = tableInterfaz;
+                var array = [agencia,interfaz,ip];   
+                var className = "Interfaz";
+                var classNameRelation;
+                var request = "SaveInterface";
+                var message = "Interfaz guardado";
+                requestAjax(array,className,request,message,tableName,classNameRelation);
+                });
       
 
      //Guardar 
-     $("#guardarServidor").click(function(){ 
+     $("#myBtnGuardarServidor").click(function(){ 
             guardar("Servidor",tableServidor);
       });
-     $("#guardarRaiz").click(function(){ 
+     $("#myBtnGuardarRaiz").click(function(){ 
             guardar("Raiz",tableRaiz);
       }); 
-     $("#guardarServicioModulo").click(function(){ 
+     $("#myBtnGuardarServicioModulo").click(function(){ 
           guardar("ServicioModulo",tableServicioModulo)
         });  
-     $("#guardarServicio").click(function(){ 
+     $("#myBtnGuardarServicio").click(function(){ 
           guardar("Servicio",tableServicio)
         });  
-     $("#guardarModulo").click(function(){ 
+     $("#myBtnGuardarModulo").click(function(){ 
           guardar("Modulo",tableModulo)
         });  
-     $("#guardarImpacto").click(function(){ 
+     $("#myBtnGuardarImpacto").click(function(){ 
           guardar("Impacto",tableImpacto)
         });    
-     $("#guardarEstado").click(function(){ 
+     $("#myBtnGuardarEstado").click(function(){ 
           guardar("Estado",tableEstado)
         });   
-     $("#guardarGrupo").click(function(){ 
+     $("#myBtnGuardarGrupo").click(function(){ 
           guardar("Grupo",tableGrupo)
         });  
-       $("#guardarAgencia").click(function(){ 
+     $("#myBtnGuardarAgencia").click(function(){ 
           guardar("Agencia",tableAgencia)
         });  
        
@@ -711,8 +747,12 @@
         } );
      $('#table_agencia tbody').on( 'click','#eliminarAgencia', function () {    
             var dataAgencia = tableAgencia.row( $(this).parents('tr') ).data();
-            eliminar("Agencia",tableGrupo,dataAgencia);
-        } );   
+            eliminar("Agencia",tableAgencia,dataAgencia);
+        } );  
+     $('#table_interfaz tbody').on( 'click','#eliminarInterfaz', function () {    
+            var dataInterfaz = tableInterfaz.row( $(this).parents('tr') ).data();
+            eliminar("Interfaz",tableInterfaz,dataInterfaz);
+        } ); 
         
         
         
@@ -750,10 +790,24 @@
               seleccion("Grupo",tableGrupo,dataEliminar);
                } );
       $('#table_agencia tbody').on( 'click','#seleccionarAgencia', function () {
-              var dataEliminar = tableAgencia.row( $(this).parents('tr') ).data();
+              var dataEliminar = tableAgencia.row( $(this).parents('tr') ).data();         
               seleccion("Agencia",tableAgencia,dataEliminar);
                } );
-      
+      $('#table_interfaz tbody').on( 'click','#seleccionarInterfaz', function () {
+              var idArray = tableInterfaz.row( $(this).parents('tr') ).data();         
+              idRaiz=idArray[0];  
+              $("#interfazNombreTxt").val(idArray[1]);
+              $("#ipNombreTxt").val(idArray[2]);
+              
+            seleccion("Interfaz",tableInterfaz,dataEliminar);
+               } );
+  
+      $('#table_agencia tbody').on( 'click','#verInterfaz', function () {
+              var dataAgencia = tableAgencia.row( $(this).parents('tr') ).data();   
+              agencia = dataAgencia[0];
+              tableInterfaz.ajax.reload();
+              
+      } );
       
         
       function guardar(nameObject,tableObject){
@@ -1795,8 +1849,74 @@
                  
                   <!-- Modal Agencia -->
                   <div id="divAgencia">
-                 
-                  </div> 
+                    <div style="display: none;" class="modal fade" id="myModalAgencia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+                        <div class="modal-dialog"> <div class="modal-content"> 
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                    <h4 class="modal-title" id="myModalLabel">Agregar Agencia</h4> 
+                                </div>
+                                <div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body -->
+                                        <div class="panel-body"> 
+                                            <div class="row"> 
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>Agencia</label> <input class="form-control" name="agenciaNombreTxt" id="agenciaNombreTxt" placeholder="Nombre"> 
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                            <!-- /.Descripcion --> 
+                                            <button id="myBtnCerrarAgencia" type="button"  class="btn btn-default" data-dismiss="modal">Cerrar</button> 
+                                            <button id="myBtnGuardarAgencia" type="button"  class="btn btn-primary">Guardar</button> 
+                                            <button id="myBtnCrearAgencia" type="button" class="btn btn-primary " id="myBtnAgenciaShow" >Crear</button>
+                                        </div> <!-- /.dataTable --> 
+                                        <div class="modal-footer">  <table id="table_agencia" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>  <!-- /.modal-content --> 
+                        </div>  <!-- /.modal-dialog --> 
+
+                        <div style="display: none;" class="modal fade" id="myModalInterfaz" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+                            <div class="modal-dialog"> <div class="modal-content"> 
+                                    <div class="modal-header">       
+                                        <h4 class="modal-title" id="myModalLabel">Agregar Interfaz</h4> 
+                                    </div>
+                                    <div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body -->
+                                            <div class="panel-body"> <div class="row"> 
+                                                    <div class="col-xs-6">
+                                                        <div class="form-group">
+                                                            <label>Interfaz</label> <input class="form-control" name="interfazNombreTxt" id="interfazNombreTxt" placeholder="Nombre"> 
+                                                        </div>                                                       
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                      <div class="form-group">
+                                                            <label>Ip</label> <input class="form-control" name="ipNombreTxt" id="ipNombreTxt" placeholder="Ip"> 
+                                                      </div> 
+                                                    </div> 
+                                                </div>
+                                                <!-- /.Descripcion --> 
+                                                <button id="myBtnCerrarInterfaz" type="button"  class="btn btn-default">Cerrar</button> 
+                                                <button id="myBtnGuardarInterfaz" type="button"  class="btn btn-primary">Guardar</button> 
+                                                <button id="myBtnCrearInterfaz" type="button" class="btn btn-primary " id="myBtnInterfazShow" >Crear</button>
+                                            </div> <!-- /.dataTable --> 
+                                            <div class="modal-footer">  <table id="table_interfaz" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>  <!-- /.modal-content --> 
+                            </div>  <!-- /.modal-dialog --> 
+
+
+
+
+
+                        </div> 
+
+
+
+
+                    </div> 
+                  </div>
                  <!-- /.modal Agencia-->
                  
                  
@@ -1864,10 +1984,16 @@
                     
                     
                     $(document).ready(function(){
-                        $("#myBtnAnalistaShow").click(function(){
-                            
+                        $("#myBtnAnalistaShow").click(function(){                            
                             $("#myModalAnalista").modal();
                           
+                        });
+                    });
+                    
+                    $(document).ready(function(){
+                        $("#myBtnCerrarInterfaz").click(function() {    
+                            $("#myModalInterfaz").modal('hide');
+                            
                         });
                     });
                     

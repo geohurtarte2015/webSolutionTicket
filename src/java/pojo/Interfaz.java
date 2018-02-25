@@ -24,7 +24,7 @@ public class Interfaz implements Serializable {
      public int id;
  
     @Column(name = "DESCRIPCION")
-      String descripcion;   
+     public String descripcion;   
     
     @Column(name = "IP")
      public String ip;

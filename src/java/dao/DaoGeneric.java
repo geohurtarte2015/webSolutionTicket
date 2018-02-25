@@ -14,6 +14,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import pojo.Seguimiento;
+import pojo.Ticket;
 
 
 public class DaoGeneric {
@@ -48,7 +50,7 @@ public class DaoGeneric {
     
 
 }
-   
+  
    public List<?> listAll(String cls){
        
        List<?> object = null;

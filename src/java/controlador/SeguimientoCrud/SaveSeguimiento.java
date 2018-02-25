@@ -63,36 +63,7 @@ public class SaveSeguimiento extends HttpServlet {
             //agrega seguimientos despues de haber guardado un ticket
                 daoTicket.addSeguimiento(idTicket, seguimientoTicket);  
             }
-    
-//            response.setContentType("application/json");
-//            
-//            Ticket ticket = daoTicket.getByIdObject(idTicket);
-//            List<Seguimiento> seguimientos = ticket.getSeguimientos(); 
-//            DataTableObject dataTableObject = new DataTableObject();
-            
-            //Se crea nueva Lista de objetos "objectSeguimientos" para solo incluir las propiedades Id, Fecha y Descripcion, 
-            //ya que Gson no reconoce la lista de seguimientos por tener la propiedad de <Tickets> en su clase
-//            List<Object> objectSeguimientos = new ArrayList<>();
-//            
-//            for (Iterator seguimientoIterator = seguimientos.iterator(); 
-//                 seguimientoIterator.hasNext();
-//                )
-//            {
-//            Seguimiento seguimiento = (Seguimiento) seguimientoIterator.next(); 
-//            List<Object> object = new ArrayList<>();            
-//            object.add(seguimiento.getId());
-//            object.add(seguimiento.getFecha());
-//            object.add(seguimiento.getDescripcion());
-//            objectSeguimientos.add(object);
-//            }
-//            
-//            dataTableObject.setAaData(objectSeguimientos);     
-//            
-//            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//            String json = gson.toJson(dataTableObject);
-//            out.print(json);
-            
-                        
+                            
     }
 
    
