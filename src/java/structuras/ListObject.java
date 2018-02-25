@@ -24,8 +24,6 @@ public class ListObject {
      String json = null;
 
       try { 
-          
-            
             DataTableObject dataTableObject = new DataTableObject();
 
             //Se crea nueva Lista de objetos "objectSeguimientos" para solo incluir las propiedades Id, Fecha y Descripcion, 
