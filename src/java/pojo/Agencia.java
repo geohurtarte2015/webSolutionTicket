@@ -23,7 +23,7 @@ public class Agencia implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID_AGENCIA")
-    public int idServidor;
+    public int idAgencia;
     
     @Column(name="DESCRIPCION")
     public String descripcion;    
@@ -45,17 +45,14 @@ public class Agencia implements Serializable {
         this.descripcion=descripcion;
     }
 
-    public Agencia(String descripcion, String ip){        
-        this.descripcion = descripcion;
-    }
     
-    public int getIdServidor() {
-        return idServidor;
+    public int getIdAgencia() {
+        return idAgencia;
     }
   
     
-    public void setIdServidor(int idServidores) {
-        this.idServidor = idServidores;
+    public void setIdAgencia(int idInterfaces) {
+        this.idAgencia = idInterfaces;
     }
   
     

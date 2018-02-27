@@ -45,7 +45,33 @@ public class DaoInterfaz {
        return agencias;
    }  
     
+   
+   public void save(Agencia agencia) throws HibernateException {
+  
+    try{     
+  
+        initOperation();
+        sesion.persist(agencia);        
+        tx.commit();
+    
+    }catch(HibernateException he)
+    {
+        
+        trueExcepcion(he); 
+        throw he; 
+    
+    
+    } finally
+    {
+        
+        sesion.clear();
+        sesion.close();
+    
+    }
+    
+    
 
+}
 
    
    public void addInterfaz(int idAgencia, Interfaz interfaz )
@@ -81,7 +107,7 @@ public class DaoInterfaz {
            agencia = (Agencia) sesion.get(Agencia.class, idAgencia); 
            if(agencia==null){
                
-             agencia = new Agencia("","");
+             agencia = new Agencia("");
            }
        }catch(HibernateException he){
        

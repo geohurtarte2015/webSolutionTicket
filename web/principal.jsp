@@ -105,7 +105,7 @@
         div="#div"+title;  
         nameModal="myModal"+title;
         lowerCaseTitle=title.toLowerCase();     
-        var varDiv = $('<div style="display: none;" class="modal fade" id="'+nameModal+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar '+title+'</h4> </div><div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body --> <div class="panel-body"> <div class="row"> <div class="col-xs-6"> <div class="form-group"> <label>'+title+'</label> <input class="form-control" name="'+lowerCaseTitle+'NombreTxt" id="'+lowerCaseTitle+'NombreTxt" placeholder="Nombre"> </div> </div> </div>  <!-- /.Descripcion -->  <button type="button"   class="btn btn-default" data-dismiss="modal">Cerrar</button> <button id="myBtnGuardar'+title+'" type="button"  class="btn btn-primary">Guardar</button>  <button type="button" class="btn btn-primary " id="myBtn'+title+'Show" >Crear</button> </div> <!-- /.dataTable -->  <div class="modal-footer">  <table id="table_'+lowerCaseTitle+'" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  </div>  </div> </div>  </div>  <!-- /.modal-content -->  </div>  <!-- /.modal-dialog -->  </div> ');
+        var varDiv = $('<div style="display: none;" class="modal fade" id="'+nameModal+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> <h4 class="modal-title" id="myModalLabel">Agregar '+title+'</h4> </div><div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body --> <div class="panel-body"> <div class="row"> <div class="col-xs-6"> <div class="form-group"> <label>'+title+'</label> <input class="form-control" name="'+lowerCaseTitle+'NombreTxt" id="'+lowerCaseTitle+'NombreTxt" placeholder="Nombre"> </div> </div> </div>  <!-- /.Descripcion -->  <button type="button"   class="btn btn-default" data-dismiss="modal">Cerrar</button> <button id="myBtnGuardar'+title+'" type="button"  class="btn btn-primary">Guardar</button>  <button type="button" onclick="location.href ='+'\'principal.jsp\''+';" class="btn btn-primary " id="myBtn'+title+'Show" >Actualizar</button> </div> <!-- /.dataTable -->  <div class="modal-footer">  <table id="table_'+lowerCaseTitle+'" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  </div>  </div> </div>  </div>  <!-- /.modal-content -->  </div>  <!-- /.modal-dialog -->  </div> ');
 
         $(div).append(varDiv);
       }     
@@ -1658,6 +1658,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                 <button id="guardarticket" type="button" class="btn btn-primary">Guardar Ticket</button>
+                                <button id="myBtnGuardarInterfazAgencia" type="button" class="btn btn-primary">Bitacora Interfaces</button>
                                 <button id="editticket" type="button" class="btn btn-primary">Modificar Ticket</button>
                                 <button id="myBtnSeguimientoShow"  type="button" class="btn btn-primary " >Crear Seguimiento</button>
                             </div>
@@ -1674,6 +1675,52 @@
                             
                                     </div>
                  <!-- /.modal-content -->
+                 
+                 <div id="divBusquedaAgencia">
+                        <div style="display: none;" class="modal fade" id="myModalInterfazAgencia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+                        <div class="modal-dialog"> <div class="modal-content"> 
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+                                    <h4 class="modal-title" id="myModalLabel">Interfaces por Agencia</h4> 
+                                </div>
+                                <div class="modal-body"> <div class="panel panel-default"> <!-- /.panel-body -->
+                                        <div class="panel-body"> 
+                                            <div class="row"> 
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>Selects</label>
+                                                        <select class="form-control">
+                                                            <option>CentraNorte</option>
+                                                            <option>CentraSur</option>
+                                                            <option>Centro</option>
+                                                            <option>Zona1</option>
+                                                            <option>Zona2</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /.Descripcion --> 
+                                            <button id="myBtnGuardarBitacora" type="button"  class="btn btn-default">Agregar Interfaces</button> 
+                                        </div> 
+                                        <div class="form-group">
+                                            <label>Seleccionar Interfaces (press Ctrl + select moouse)</label>
+                                            <select name="mySel" id="mySel" multiple="multiple" class="form-control">
+                                                <option>192.168.1.1</option>
+                                                <option>192.168.1.2</option>
+                                                <option>192.168.1.3</option>
+                                                <option>192.168.1.4</option>
+                                                <option>192.168.1.5</option>
+                                            </select>
+                                        </div>
+                                        
+                                    </div>
+                                </div> 
+                                
+                            </div>  <!-- /.modal-content --> 
+                        </div>  <!-- /.modal-dialog --> 
+                    </div> 
+                 </div>
+                 
                  </div>
                  
                 <!-- Modal Seguimientos -->                            
@@ -1786,7 +1833,7 @@
                              
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                 <button id="guardarAnalista" type="button" class="btn btn-primary">Guardar</button>                             
-                                <button type="button" class="btn btn-primary " id="myBtnAnalistaShow" >Crear Grupo</button>
+                                <button type="button" onclick="location.href ='principal.jsp';" class="btn btn-primary" id="myBtnAnalistaShow" >Actualizar</button>
                             </div>
                             <div class="modal-footer">
                                 <table id="table_analista" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  
@@ -1867,7 +1914,7 @@
                                             <!-- /.Descripcion --> 
                                             <button id="myBtnCerrarAgencia" type="button"  class="btn btn-default" data-dismiss="modal">Cerrar</button> 
                                             <button id="myBtnGuardarAgencia" type="button"  class="btn btn-primary">Guardar</button> 
-                                            <button id="myBtnCrearAgencia" type="button" class="btn btn-primary " id="myBtnAgenciaShow" >Crear</button>
+                                            <button id="myBtnCrearAgencia" type="button" onclick="location.href = 'principal.jsp';" class="btn btn-primary " id="myBtnAgenciaShow" >Actualizar</button>
                                         </div> <!-- /.dataTable --> 
                                         <div class="modal-footer">  <table id="table_agencia" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">  </table>  
                                         </div>
@@ -1981,6 +2028,28 @@
                             $("#guardarticket").show();                          
                         });
                     });
+                    
+                    
+                    
+                    $(document).ready(function(){
+                        $("#myBtnGuardarBitacora").click(function(){
+                            var valueSelected=""
+                            valueSelected=$("#descripciontxt").val();
+                            var dataIp = $('#mySel').val(); 
+                            for(i=0; i < dataIp.length; i++ ){                            
+                                 valueSelected=valueSelected+" "+dataIp[i]+"\n";
+                                }
+                            
+                           $("#descripciontxt").val(valueSelected);
+                        });
+                    });
+                    
+                    $(document).ready(function(){
+                        $("#myBtnGuardarInterfazAgencia").click(function(){
+                            $("#myModalInterfazAgencia").modal();
+                        });
+                    });
+                    
                     
                     
                     $(document).ready(function(){
