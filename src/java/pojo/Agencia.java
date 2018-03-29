@@ -31,8 +31,12 @@ public class Agencia implements Serializable {
        
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "AGENCIA_INTERFAZ", 
-        joinColumns = { @JoinColumn(name = "ID_AGENCIA") }, 
-        inverseJoinColumns = { @JoinColumn(name = "ID_INTERFAZ") })
+        joinColumns = { @JoinColumn(name = "ID_AGENCIA",
+            referencedColumnName="ID_AGENCIA",
+            nullable=false) }, 
+        inverseJoinColumns = { @JoinColumn(name = "ID_INTERFAZ",
+            referencedColumnName="ID_INTERFAZ",
+            nullable=false) })
     public List<Interfaz> interfaces = new ArrayList<Interfaz>();
 
     
