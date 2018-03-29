@@ -7,7 +7,6 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.transaction.Transactional;
 import modelo.HibernateUtil;
 
 import org.hibernate.Criteria;
@@ -15,8 +14,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-import pojo.Agencia;
-import pojo.Interfaz;
 import pojo.Seguimiento;
 import pojo.Ticket;
 
@@ -149,16 +146,12 @@ public class DaoGeneric {
    
    }
    
-
-
-   
-   
    public String delete(int id,Class<?> object){
      String resp=null;
-       try{                 
-           initOperation();              
-          Object ob = sesion.load(object, id);
-          sesion.delete(ob);
+       try{           
+           initOperation();
+           Object ob = sesion.load(object, id);
+           sesion.delete(ob);
        }catch(HibernateException he){        
         trueExcepcion(he); 
         resp=he.toString(); 
@@ -171,8 +164,6 @@ public class DaoGeneric {
        }       
        return resp;
    }
-   
-   
         
    private void initOperation() throws HibernateException 
 
@@ -180,7 +171,6 @@ public class DaoGeneric {
     
     sesion = HibernateUtil.getSessionFactory().openSession(); 
         tx = sesion.beginTransaction(); 
-        
     
 }
 

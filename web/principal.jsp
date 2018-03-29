@@ -650,7 +650,7 @@
             var message = "Analista eliminado";
             requestAjax(array,className,request,message,tableName);
         } );     
-           
+      
      //Guardar Analista                 
      $("#guardarAnalista").click(function(){ 
                 nombre=$('#txtnombre').val();
@@ -668,21 +668,6 @@
                 requestAjax(array,className,request,message,tableName,classNameRelation);
                 });
                 
-     
-        
-     //Eliminacion de Interfaz
-     $('#table_interfaz tbody').on( 'click','#eliminarInterfaz', function () {  
-            var dataExample = tableInterfaz.row( $(this).parents('tr') ).data();
-            var tableName = tableInterfaz;
-            id=dataExample[0];
-            var array = [id];  
-            var className = "Interfaz";
-            var classNameRelation;
-            var request = "DeleteInterface";
-            var message = "Interfaz eliminado";
-            requestAjax(array,className,request,message,tableName,classNameRelation);
-        } );     
-         
      //Guardar Interfaz             
      $("#myBtnGuardarInterfaz").click(function(){ 
                 interfaz=$('#interfazNombreTxt').val();
@@ -729,23 +714,23 @@
       
      //Eliminar
      $('#table_servidor tbody').on( 'click','#eliminarServidor', function () {                  
-            var dataServidor = tableServidor.row( $(this).parents('tr') ).data();
-            eliminar("Servidor",tableServidor,dataServidor);
+            var dataEliminar = tableServidor.row( $(this).parents('tr') ).data();
+            eliminar("Servidor",tableServidor,dataEliminar);
         } );         
      $('#table_raiz tbody').on( 'click','#eliminarRaiz', function () {    
-               var dataRaiz = tableRaiz.row( $(this).parents('tr') ).data();
-            eliminar("Raiz",tableRaiz,dataRaiz);
+               var dataEliminar = tableRaiz.row( $(this).parents('tr') ).data();
+            eliminar("Raiz",tableRaiz,dataEliminar);
         } );  
      $('#table_serviciomodulo tbody').on( 'click','#eliminarServicioModulo', function () {    
-            var dataServicioModulo = tableServicioModulo.row( $(this).parents('tr') ).data();
-            eliminar("ServicioModulo",tableServicioModulo,dataServicioModulo);
+            var dataEliminar = tableServicioModulo.row( $(this).parents('tr') ).data();
+            eliminar("ServicioModulo",tableServicioModulo,dataEliminar);
         } );     
      $('#table_servicio tbody').on( 'click','#eliminarServicio', function () {    
-            var dataServicio = tableServicio.row( $(this).parents('tr') ).data();
-            eliminar("Servicio",tableServicio,dataServicio);
+            var dataEliminar = tableServicio.row( $(this).parents('tr') ).data();
+            eliminar("Servicio",tableServicio,dataEliminar);
         } ); 
      $('#table_modulo tbody').on( 'click','#eliminarModulo', function () {    
-            var dataModulo = tableModulo.row( $(this).parents('tr') ).data();
+            var dataEliminar = tableModulo.row( $(this).parents('tr') ).data();
             eliminar("Modulo",tableModulo,dataEliminar)
         } );  
      $('#table_impacto tbody').on( 'click','#eliminarImpacto', function () {    
@@ -764,7 +749,11 @@
             var dataAgencia = tableAgencia.row( $(this).parents('tr') ).data();
             eliminar("Agencia",tableAgencia,dataAgencia);
         } );  
-
+     $('#table_interfaz tbody').on( 'click','#eliminarInterfaz', function () {    
+            var dataInterfaz = tableInterfaz.row( $(this).parents('tr') ).data();
+            eliminar("Interfaz",tableInterfaz,dataInterfaz);
+        } ); 
+        
         
         
      //Seleccion   
@@ -1584,7 +1573,7 @@
                                 </div>
                                  
                                  
-                            <div class="col-lg-4">
+                              <div class="col-lg-4">
                                     <div class="form-group">
                                             <label>Impacto</label>
                                             <select id="impactotxt" class="form-control">
@@ -1599,27 +1588,9 @@
                                      
                                             </select>
                                         </div> <!-- /.Impacto -->  
-                            </div>
+                                </div>
                                   
-                            <div class="col-lg-4">
-                                    <div class="form-group">
-                                            <label>Agencia</label>
-                                            <select id="agenciatxt" class="form-control">
-                                                <option>Seleccionar</option>
-                                                 <%                                                
-                                                    for(Object objectName: listObject.getListArrayObject(new Impacto(), "Agencia")){
-                                                    List<Object> objectArray = (List<Object>)objectName;                                                   
-                                                 %>  
-                                       
-                                                <option name="option" value=<%= objectArray.get(0) %>><%= objectArray.get(1) %>  </option>      
-                                                <%}%>   
-                                     
-                                            </select>
-                                        </div> <!-- /.Impacto -->  
-                            </div>
-                            
-                            
-                            </div><!-- /.Impacto en  -->
+                            </div><!-- /.Impacto en Servidor -->
                             <div class="row">
                                 <div class='col-lg-4'>
                                     <div class="form-group">

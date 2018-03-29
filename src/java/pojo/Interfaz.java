@@ -28,13 +28,10 @@ public class Interfaz implements Serializable {
     
     @Column(name = "IP")
      public String ip;
-    
+     
+     
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="interfaces")
     public List<Agencia> agencias = new ArrayList<Agencia>();
-
-     
-//    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="interfaces")
-//    public List<Agencia> agencias = new ArrayList<Agencia>();
      
     public Interfaz(){
          

@@ -9,8 +9,6 @@ package controlador.Crud;
 import dao.DaoGeneric;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -39,24 +37,20 @@ public class Delete extends HttpServlet {
             processRequest(request, response);
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
-            String[] parametersRequest = request.getParameterValues("array[]");        
+            String[] parametersRequest = request.getParameterValues("array[]");
 
             int id = Integer.parseInt(parametersRequest[0]);
-            String className = String.valueOf(request.getParameter("className"));             
-        
-                DaoGeneric daoGeneric = new DaoGeneric();
-                Class classObject = Class.forName("pojo."+className);    
-                daoGeneric.delete(id, classObject); 
-        
+            String className = String.valueOf(request.getParameter("className"));   
             
-            
+            DaoGeneric daoGeneric = new DaoGeneric();
+            Class classObject = Class.forName("pojo."+className);    
+            daoGeneric.delete(id, classObject);         
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Delete.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalArgumentException ex) {
             Logger.getLogger(Delete.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(Delete.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
   

@@ -126,33 +126,6 @@ public class DaoInterfaz {
    }
    
    
-   public String delete(int id){
-     Interfaz interfaz = new Interfaz();
-     String resp=null;
-       try{  
-           initOperation();        
-           interfaz = (Interfaz) sesion.get(Interfaz.class, id);
-           List<Agencia> agencias = interfaz.getAgencias();
-           for(Agencia agencia : agencias){               
-               agencia.getInterfaces().remove(interfaz);
-               
-           }
-
-       
-       }catch(HibernateException he){        
-        trueExcepcion(he); 
-        resp=he.toString(); 
-        throw he; 
-       
-       } finally {
-           tx.commit();
-           resp="ok";
-           sesion.close();
-       }       
-       return resp;
-   }
-   
-   
    
    private void initOperation() throws HibernateException 
 
