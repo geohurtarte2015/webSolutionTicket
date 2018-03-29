@@ -52,6 +52,10 @@
         <servlet-name>FindInterface</servlet-name>
         <servlet-class>controlador.InterfaceCrud.FindInterface</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteInterface</servlet-name>
+        <servlet-class>controlador.InterfaceCrud.DeleteInterface</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FindSeguimientos</servlet-name>
         <url-pattern>/FindSeguimientos</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>FindInterface</servlet-name>
         <url-pattern>/FindInterface</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteInterface</servlet-name>
+        <url-pattern>/DeleteInterface</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
