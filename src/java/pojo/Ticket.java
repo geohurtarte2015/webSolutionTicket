@@ -26,6 +26,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TICKET")
 public class Ticket {
+
+   
  
     @Id
     @GeneratedValue
@@ -91,7 +93,7 @@ public class Ticket {
     
     @ManyToOne(optional = false)
     @JoinColumn(name="ID_AGENCIA")
-    public Agencia agencia;
+    private Agencia agencia;
     
     
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
@@ -286,6 +288,17 @@ public class Ticket {
    
     public void setServicioModulo(ServicioModulo servicioModulo) {
         this.servicioModulo = servicioModulo;
+    }
+    
+    
+ 
+    public Agencia getAgencia() {
+        return agencia;
+    }
+
+
+    public void setAgencia(Agencia agencia) {
+        this.agencia = agencia;
     }
 
   

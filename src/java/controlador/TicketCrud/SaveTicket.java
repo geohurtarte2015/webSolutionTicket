@@ -96,6 +96,7 @@ public class SaveTicket extends HttpServlet {
      
      private void save(HttpServletResponse response,HttpServletRequest request) throws IOException{
         //TRAE LOS PARAMETROS ENVIADOS POR AJAX DESDE EL SERVLET
+            String idAgencia = String.valueOf(request.getParameter("agencia"));
             String titulo = String.valueOf(request.getParameter("titulo"));
             String idModulo = String.valueOf(request.getParameter("modulo"));
             String idServicio = String.valueOf(request.getParameter("servicio"));
@@ -117,7 +118,7 @@ public class SaveTicket extends HttpServlet {
          Ticket newTicket= new Ticket( titulo,  fechaInicio,  fechaFin,  descripcion,  causa,  solucion);    
         //Instancia de DAO
         DaoTicket daoTicket = new DaoTicket();  
-        resp=daoTicket.save(Integer.parseInt(idServidor), Integer.parseInt(idEstado), Integer.parseInt(idImpacto),Integer.parseInt(idRaiz), Integer.parseInt(idAnalista),Integer.parseInt(idServicioModulo),Integer.parseInt(idModulo),Integer.parseInt(idServicio),newTicket); 
+        resp=daoTicket.save(Integer.parseInt(idServidor), Integer.parseInt(idEstado), Integer.parseInt(idImpacto),Integer.parseInt(idRaiz), Integer.parseInt(idAnalista),Integer.parseInt(idServicioModulo),Integer.parseInt(idModulo),Integer.parseInt(idServicio),Integer.parseInt(idAgencia),newTicket); 
         
         PrintWriter outHtml = response.getWriter(); 
         if(!resp.contains("ok")){

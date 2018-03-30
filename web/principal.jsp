@@ -128,9 +128,17 @@
                     "ajax" : {
                         "url": "FindSeguimientos",
                         "type": "POST",
+                        "scrollY":        "true",
+                        "scrollX":        "true",
                         "data" : function(d){
                             d.ticket = ticket;
-                            }
+                            },
+                         "columns" : [
+                     {"title": "id"},
+                     {"title": "fecha"},
+                     {"title": "descripcion"}
+                     
+                    ],    
                     },
                     "global" : false,
                     "lengthMenu": [ 2, 5 ],
@@ -903,7 +911,7 @@
      $("#guardarticket").click(function(){ 
          
            titulo=$('#titulotxt').val();
-
+           agencia=$('select[id=agenciatxt]').val();
            servicio=$('select[id=serviciotxt]').val();
            modulo=$('select[id=modulotxt]').val();
            servicioModulo=$('select[id=serviciomodulotxt]').val();           
@@ -934,7 +942,8 @@
                         causa: causa,
                         solucion: solucion,
                         estado: estado,
-                        analista: analista
+                        analista: analista,
+                        agencia: agencia
                        
                     },
                     success:
@@ -1784,7 +1793,8 @@
                                             <thead>
                                                 <tr>
                                                 <th>id</th>
-                                                <th>fecha</th>
+                                                <th>fecha</th>         
+                        
                                                 </tr>
                                             </thead>
                                             </table>

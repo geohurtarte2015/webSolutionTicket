@@ -5,6 +5,7 @@ import modelo.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import pojo.Agencia;
 import pojo.Analista;
 import pojo.Estado;
 import pojo.Impacto;
@@ -24,7 +25,7 @@ public class DaoTicket {
    private Transaction tx;
    
    public String save(int idServidor, int idEstado, int idImpacto, int idRaiz, int idAnalista,
-   int idServicioModulo, int idModulo,int idServicio, Ticket ticket ) throws HibernateException {
+   int idServicioModulo, int idModulo,int idServicio, int idAgencia, Ticket ticket ) throws HibernateException {
    String resp=null;
     try{
         //inicia persitencia y  guarda (commit)
@@ -53,6 +54,9 @@ public class DaoTicket {
         Servicio servicio = 
         (Servicio)sesion.get(Servicio.class, idServicio); 
         
+        Agencia agencia =
+         (Agencia)sesion.get(Agencia.class, idAgencia);
+        
         //Arma el objeto
         ticket.setAnalista(analista);
         ticket.setEstado(estado);
@@ -62,6 +66,7 @@ public class DaoTicket {
         ticket.setServicio(servicio); 
         ticket.setModulo(modulo);
         ticket.setServicioModulo(servicioModulo);
+        ticket.setAgencia(agencia);
        
       
    
@@ -73,7 +78,9 @@ public class DaoTicket {
         sesion.persist(servicioModulo);
         sesion.persist(modulo);
         sesion.persist(servicio);  
-        sesion.persist(ticket);   
+        sesion.persist(agencia); 
+        sesion.persist(ticket);  
+         
         tx.commit();
         resp="ok";
        
